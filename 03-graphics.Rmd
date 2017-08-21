@@ -314,7 +314,6 @@ is informative and attractive.
 ```{r, message=FALSE, echo=FALSE, out.width="95%", dev="png"}
 library("dplyr")
 library(hrbrthemes)
-load("data/bond.RData")
 g1 = count(bond, Actor) %>% 
   mutate(n=n) %>% 
   arrange(n) %>%
