@@ -17,9 +17,9 @@ Both of us are correct _and_ also wrong. This explains why data scientists are
 in such demand. The problems they face are complex, challenging (and interesting) 
 and require skills from multiple disciplines.
 
-The goal of this short book is to provide a short introduction into 
+The goal of this short book is to provide an introduction into 
 the wonderful world of data science from the statistical point of view. In 
-a tradional statistics course^[Clearly there is some poetic licence here.], we would look at small, datasets to illustrate key concepts.
+a tradional statistics course^[Clearly there is some poetic licence here.], we would look at small, data sets to illustrate key concepts.
 In a computing science course, we would start with a data base and move on from there. This
 book straddles both camps. Data sets that are small enough to be informative, but still 
 have real world interest.
@@ -40,9 +40,9 @@ missing data!
 
   * Missing not at random (MNAR): missing observations related to values of unobserved data.
   As a concrete example, a good predictor of whether someone survived the titanic disaster was whether or not they
-  had there age recorded.
+  had their age recorded.
 
-The key skills with data science are often being able to spot where the potential issues lay. Once
+The key skills with data science are often being able to spot where potential issues lie. Once
 we know the problems, we can formulate a strategy for overcoming them. Fortunately, 
 there are a few standard tools available to help us.
 
@@ -57,6 +57,7 @@ details. We aim to fill in some of the blanks.
 
 ## Data sets
 
+<!-- XXX Course or book? -->
 During this course, we'll use a few different data sets to illustrate the key points. 
 
 ### The relationship between beauty and teaching
@@ -78,15 +79,15 @@ The raters were told to use a 10 (highest) to 1 rating scale, to concentrate on 
 professor in the picture, to make their ratings independent of age, and to keep 5 in mind as an average. 
 The scores were then normalised.
  
-This dataset has $463$ rows and $7$ columns.
+This data set has $463$ rows and $7$ columns.
 
 ### Bond, James Bond
 
 This data set contains information about James bond movies. The data set contains $24$ movies
-with the following rows:
+with the following columns:
 
  * `Film`: the movie name.
- * `Actor`: the actor who played James Bond (to be clear, [Sean Connery](https://en.wikipedia.org/wiki/Sean_Connery) is clearly the best bond)
+ * `Actor`: the actor who played James Bond (to be clear, [Sean Connery](https://en.wikipedia.org/wiki/Sean_Connery) is clearly the best bond).
  * `Kills`: the number of kills by Bond.
  * `Relationships`: the number of romantic relationships by Bond.
  * `Alcohol_Units`: the number of Units of alcohol consumed by Bond.
@@ -94,13 +95,13 @@ with the following rows:
  * `Nationality`: the nationality of the Bond actor.
 
 __Credit__ Thanks to [Jack Prenter](http://www.knownman.com/james-bond-graph/) for
-collecting this data
+collecting this data.
 
 ### OKCupid
 
-This dataset was created with the use of a python script that pulled the data from public profiles on [okcupid](www.okcupid.com). There are a total of 59,946, profile which includes people within a 25 mile radius of San Francisco, who were online in the last year (06/30/2011), with at least one profile picture. Each user has 32 variables. 
-The overall dataset is around 150MB, while not "big", itis prohibitive for teaching. 
-So we've dropped 11 variables relating to "users essays". This results in an uncompressed dataset of around 12MB.
+This data set was created using a python script to pull data from public profiles on [okcupid](www.okcupid.com). There are a total of 59,946 profiles which includes people within a 25 mile radius of San Francisco, who were online between June 2011 and July 2012 and had at least one profile picture. Each user has 32 variables. 
+The overall data set is around 150MB, while not "big", it is prohibitive for teaching. 
+So we've dropped 11 variables relating to "users essays". This results in an uncompressed data set of around 12MB.
 
 __Credit__: Data and code for OkCupid Profile Data for Introductory Statistics and Data Science Courses (Journal of Statistics Education July 2015, Volume 23, Number 2); [GitHub](https://github.com/rudeboybert/JSE_OkCupid) page.
 

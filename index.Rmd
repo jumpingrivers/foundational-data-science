@@ -21,7 +21,7 @@ Colin Gillespie is the author of [Efficient R Programming](https://alexa.design/
 
 #### Prerequisites {-}
 
-We've have tried to keep the prerequisites to a minimum; no calculus, no matrices, 
+We have tried to keep the prerequisites to a minimum; no calculus, no matrices, 
 very little algebra. Throughout the book, we use the programming language [R](https://cran.r-project.org/) 
 to illustrate techniques. However, we've tried to keep the programming style general, 
 so translating into [Python](https://www.python.org/), should be straightforward.
