@@ -15,7 +15,9 @@ into a few key summaries. There are many possible choices when simplifying data
 and it is certainly not the case that "one size fits all".
 In this chapter, we will look at standard measures of location and spread, which are
 the building blocks for many statistical and machine learning algorithms. We discover
-that some measures fit naturally into a big data scenario.
+that some measures fit naturally into a big data scenario while others do not.
+
+<!-- XXX this one is just for me? Why the two different storages here? -->
 
 ```{r echo=FALSE}
 load("data/Beauty.RData")
@@ -26,8 +28,10 @@ cupid = readRDS("data/okcupid.rds")
 
 ### Sample mean
 
+<!-- XXX is it worth a note that average could mean lots of things? -->
+
 One of the most important and widely used measures of location is the (arithmetic) mean,
-or more commonly known as the average
+more commonly known as the average
 \[
  \bar x = \frac{x_1 + x_2 + \ldots + x_n}{n} = \frac{1}{n} \sum_{i=1}^n x_i 
 \]
@@ -51,8 +55,8 @@ Statistics uses the sample to inform us about the population.
 
 ### Example: The Beauty data set {-}
 
-The `Beauty` dataset contains results for `463` classes. After loading 
-the data set into R, can extract a particular column using the dollar 
+The `Beauty` data set contains results for `r nrow(Beauty)` classes. After loading 
+the data set into R, we can extract a particular column using the dollar 
 operator
 ```{r, results="hide"}
 ## Attractiveness score
@@ -63,13 +67,18 @@ Beauty$students
 We can use the built-in function `mean()` to calculate the
 average attractiveness score and class size
 ```{r}
-## Attractiveness score
+## Attractiveness score (normalised)
 mean(Beauty$beauty)
 ## Number of students per class
 mean(Beauty$students)
 ```
 
 ### Sample median
+
+<!-- XXX but not descending order? -->
+<!-- related (kind of) but interesting question -->
+<!-- why does the median.default source have the code x[FALSE][NA] rather than just NA? -->
+<!-- I think I can guess but wondered if you knew definiteively -->
 
 The sample median is the middle observation when the data are ranked in
 ascending order. Ranked observations are denoted as $x_{(1)}, x_{(2)}, \ldots,
@@ -81,6 +90,9 @@ x_{(n)}$. The sample median is defined as:
   \frac{1}{2}x_{(n/2)} + \frac{1}{2} x_{(n/2+1)}, & n \text{ even}\;.
 \end{cases}
 \]
+
+<!-- XXX robust how? -->
+
 The median is more robust than the sample mean, but has less useful mathematical properties. 
 
 For our simple data set $\{0,3,2,0\}$, to calculate the median we
@@ -89,16 +101,19 @@ observations, to get 1.
 
 #### Example: The Beauty data set {-}
 
-R has built-in function called `median()` that we can use to calculate the median.
+R has a built-in function called `median()` that we can use to calculate sample median.
 We'll use the same variables as previous
 ```{r}
 median(Beauty$beauty)
 median(Beauty$students)
 ```
 Notice that the mean and median beauty scores are approximately the same; this implies that the data
-is symmetric. However the class size values differ: $\bar x = 55$ and the median is $29$. This
-is because the class sizes are is [skewed](https://en.wikipedia.org/wiki/Skewness); 
+are roughly symmetric. However the class size values differ: $\bar x = 55$ and the median is $29$. This
+is because the class sizes are [skewed](https://en.wikipedia.org/wiki/Skewness); 
 there are many more large values than smaller values.
+<!-- XXX I don't think the previous is true barplot(table(Beauty$students)) -->
+
+
 
 ```{block type="rmdnote"}
 The classic case of where it can be misleading to use the mean, is income. Here
@@ -108,14 +123,14 @@ a few very rich individuals can dominate the statistic.
 ## Measures of spread
 <!-- (25 minutes) -->
   
-As well as knowing the location statistics of a data set, we also need to know how variable 
+As well as knowing the location statistics of a data set, we often also want to know how variable 
 or `spread-out' our data are.
   
 ### Range
   
 The range is easy to calculate. It is simply the largest minus the
 smallest.^[When you get a new data set, calculating the range is
-    useful when checking for obvious data-inputting errors.]
+    useful when checking for obvious data-input errors.]
 \[
 \text{Range }= x_{(n)} - x_{(1)} 
 \]
@@ -138,7 +153,7 @@ Perhaps a little on the high side?
 ### Sample variance and standard deviation
   
 In statistics, the mean and variance are used most often. 
-This is mainly because they have nice mathematical properties, unlike the median. 
+This is primarily because they have nice mathematical properties, unlike the median. 
 The sample variance, $s^2$, is defined as
 \[
 s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar x)^2
@@ -147,15 +162,16 @@ Essentially we are measuring the difference between the sample mean, $\bar x$,
 and each observation in turn. By squaring the difference, we avoid positive and negative
 values cancelling.
 
-The formula can also be rewritten as
+The formula can be rewritten as
 \[
 s^2= \frac{1}{(n-1)} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right\} \;.
 \]
 The second formula is easier for calculations.^[The divisor is $n-1$ rather than
   $n$ in order to correct for the bias which occurs because we are measuring
 deviations from the sample mean rather than the ``true" mean of the population
-  we are sampling from] However, since $\sum x^2$ becomes large, in practice we would 
+  we are sampling from.] However, since $\sum x^2$ becomes large, in practice we would 
 use
+<!-- XXX Whilst I don't necessarily disagree here it seems weird to mention this here since you haven't mentioned numerical stability yet, just feels odd, not saying it should definitely be removed, maybe reworded or better explained -->
 \[
 s^2= \sum_{i=1}^n \frac{x_i^2}{n-1}  - \left(\frac{n}{n-1}\right) \bar x^2  \;.
 \]  
@@ -170,7 +186,7 @@ s^2 = \frac{1}{n-1} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2
 \]
 The sample standard deviation, $s$, is the square root of the sample variance,
 i.e. for our toy example $s = \sqrt{2.25} = 1.5$. The standard
-deviation is preferred as a summary measure as it is in the units of the
+deviation is preferred as a summary measure as it is in the same units as the
 original data. However, it is often easier from a theoretical perspective to
 work with variances.
 
@@ -189,7 +205,7 @@ However, we don't and to correct for that we use $n - 1$.
 
 #### Example: R
 
-R has builtin functions to calculate the standard deviation and variance
+R has built-in functions to calculate the standard deviation and variance respectively
 ```{r}
 sd(Beauty$evaluation)
 var(Beauty$evaluation)
@@ -208,14 +224,18 @@ interquartile range is the difference between the third and first quartile, i.e.
 IQR = Q_3 - Q_1.
 \]
 Like the median, the IQR isn't influenced by large values (outliers). However it
-is computationally more difficult to calculate.
+is more computationally difficult to calculate.
 
 ### Numerical examples
   
 For the following data sets, calculate the inter-quartile range:
 
-1. $\{5, 6, 7, 8\}$ The lower quartile is the $5/4 = 1.25^{\text{th}}$ smallest
-  observation, i.e. $x_{(1.25)}$. The value of $x_{(1)} = 5$ and $x_{(2)} = 6$. So
+<!-- XXX The thing that sucks about quantiles of course is that quantile(5:8,0.25) != 5.25 similarly for the upper quartile, i thik type = 6 is the one that gives you "the right" answers , damn seen the note below now-->
+
+1. $\{5, 6, 7, 8\}$ 
+
+The lower quartile is the $5/4 = 1.25^{\text{th}}$ smallest
+  observation, i.e. $x_{(1.25)}$. The value of $x_{(1)} = 5$ and $x_{(2)} = 6$. So the first quartile is one quarter of the way between $x_{(1)}$ and $x_{(2)}$, i.e a quarter of the way between 5 and 6,
   \[
   x_{(1.25)} = x_{(1)} + 0.25 \times (x_{(2)} - x_{(1)}) = 5 + \frac{6-5}{4} = 5.25.
   \]
@@ -228,7 +248,9 @@ For the following data sets, calculate the inter-quartile range:
   IQR = 7.75 - 5.25 = 2.5.
   \]
   
-2. $\{10, 15, 20, 25, 50\}. The lower quartile is the $(5+1)/4 = 1.5^{\text{th}}$ smallest
+2. $\{10, 15, 20, 25, 50\}$. 
+
+The lower quartile is the $(5+1)/4 = 1.5^{\text{th}}$ smallest
   observation, i.e. $x_{1.5}$, so
   \[
   x_{(1.5)} = x_{(1)} + 0.5 \times (x_{(2)} - x_{(1)}) = 12.5.
@@ -275,8 +297,8 @@ Typically, the quantiles give approximately the same answer.
 
 Streaming data is data that is generated continuously by multiple sources. 
 Developing algorithms for dealing with streaming data is an active area of research,
-both statistical and computationally. Even though we've only covered a few statistics,
-some of them can be easily adapted to deal with streaming data.
+both statistically and computationally. Even though we've only covered a few statistics,
+some of them can be easily adapted to deal with streaming data while others can't.
 
 ### The mean and variance
 
@@ -295,13 +317,13 @@ We have a similar algorithm for the variance
 \[
 v_k = v_{k-1} + (x_k - m_{k-1})(x_k - m_k)
 \]
-Again this is algorithm is [numerically stable](https://en.wikipedia.org/wiki/Numerical_stability).
+Again this algorithm is [numerically stable](https://en.wikipedia.org/wiki/Numerical_stability).
 
 #### Example: R 
 
 The OKCupid data set contains almost 60,000 individuals. Figure \@ref(fig:2-1)
 plots the estimate of the mean age as we progress through the data set.
-```{r, 2-1, echo=FALSE, fig.cap = "The estimate of the mean age as we progress through the dataset."}
+```{r, 2-1, echo=FALSE, fig.cap = "The estimate of the mean age as we progress through the data set."}
 local(source("code/f2_average_age.R"))
 ```
 After some variation in the first few observations, we quickly settle to a consistent
