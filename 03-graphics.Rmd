@@ -1,0 +1,348 @@
+---
+knit: "bookdown::preview_chapter"
+editor_options: 
+  chunk_output_type: console
+---
+
+# What, why and how of visualisation {#chapter3}
+<!-- (90 minutes) -->
+```{r echo=FALSE}
+load("data/bond.RData")
+```
+
+> A picture paints a thousand words - _Frederick R. Barnard_
+
+Data visualisation is an old topic; but in the last few years, it's become particularly trendy.
+With the correct visualisation, we can highlight key features
+that doesn't require any fancy statistics.
+
+#### Prerequisites {-}
+
+We could have an entire course on creating graphics, but due to time we'll concentrate 
+on the fundamentals. To make this section concrete, we'll use the [**ggplot2**](http://ggplot2.tidyverse.org/)
+package within R. However, there are many libraries available to generate the  graphics
+in other languages.
+
+The **ggplot2** package can be easily installed via
+```{r, eval=FALSE}
+install.packages("ggplot2")
+````
+and loaded in the usual way
+```{r message = FALSE}
+library("ggplot2")
+```
+We'll also use the [**hrbrthemes**](https://github.com/hrbrmstr/hrbrthemes) package for styling the graph. 
+This is still developmental and can be installed using the devtools package
+```{r, eval=FALSE}
+install.packages("devtools")
+devtools::install_github("hrbrmstr/hrbrthemes")
+```
+
+## Historical visualisations 
+
+John Snow^[Not [that](https://en.wikipedia.org/wiki/Jon_Snow_(character)) Jon Snow] 
+created a simple dot map to illustrate the cluster of cholera cases around the pump - figure \@ref(fig:3-1).
+This allowed him to show the connection between the quality of the water source and cholera cases.
+He was able to demonstrate that the Southwark and Vauxhall Waterworks Company was taking water from sewage-polluted sections of the Thames and delivering the water to home. 
+Thereby leading to an increased incidence of cholera. This study is a major event in the history of public health and geography. It is regarded as the founding event of the science of epidemiology.
+
+(ref:3-1) John Snow dot map of cholera cases (https://en.wikipedia.org/wiki/John_Snow).
+
+```{r, 3-1, echo=FALSE, fig.cap = "(ref:3-1)"}
+knitr::include_graphics("graphics/Snow-cholera-map-1.jpg")
+```
+
+The Hereford Mappa Mundi dates from around 1300 - figure \@ref(fig:3-2). It is currently on display at Hereford Cathedral in [Hereford](https://goo.gl/maps/EQpxywNkjbB2), England. 
+It is the largest medieval map known still to exist. At the centre of the map is Jerusalem,
+in the bottom left is the UK, at the top is the garden of Eden (some of the data points are approximate!)
+
+(ref:3-2) Hereford Mappa Mundi (https://en.wikipedia.org/wiki/Hereford_Mappa_Mundi).
+
+```{r, 3-2, echo=FALSE, out.width = "60%", fig.cap="(ref:3-2)"}
+knitr::include_graphics("graphics/hereford.jpg")
+```
+
+[Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale) is described as "a true pioneer in the graphical representation of statistics". 
+Her diagram about the causes of mortality in the army (figure \@ref(fig:3-3)), was ground breaking.
+Florence's graph showed that sanitation was a major killer in the army. After 
+successfully lobbying the government, the mortality rate dropped from 69 to 18 per 1000.
+
+(ref:3-3) Diagram of the causes of mortality in the army in the East by [Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale).
+
+```{r, 3-3, echo=FALSE, out.width = "60%", fig.cap="(ref:3-3)"}
+knitr::include_graphics("graphics/Nightingale-mortality.jpg")
+```
+
+Visualisation is incredibly important. Whenever I get a data set, I automatically 
+start generating plots to get a feel for the data set. It helps us detect interesting
+patterns in the data; remember plotting can save lives (if you're Florence Nightingale).
+
+```{r echo=FALSE, out.width="80%", fig.cap = "https://github.com/stephlocke/datasauRus"}
+#knitr::include_graphics("graphics/DinoSequential.gif")
+```
+
+## Scatter plots
+
+A scatter plot has horizontal and vertical axes to plot data points.
+Typically they are used to show how one variables is affected by another. 
+Let's start with a simple scatter plot of looking at whether
+the Bond movies have become more violent over time. In ggplot, 
+we first specify a _canvas_ and then add subsequent layers using the 
+`+` operator
+```{r 3-4, fig.cap = "Has Bond got more violent?"}
+ggplot(bond, aes(x = Number, y = Kills)) + #Create a canvas
+  geom_point() # Add a layer of points
+```
+On the $x$-axis we have the movie number (chronological movie order) and on 
+the $y$-axis we have the number of kills made by Bond. The scatter plot
+does show a general trend with an increased number of deaths in latter movies.
+
+Figure \@ref(fig:3-4) is OK, but could be significantly improved. 
+
+```{block, type="rmdnote"}
+There's a lot going on in the code used to generate the figure. The 
+first argument is the data frame `bond`, while `aes` argument specifies what elements
+in the plot should change with a variable.
+```
+
+First we'll use colour to differentiate between actors and fix the axis limits
+```{r, 3-5, fig.cap = "Using colour to differentiate between actors."}
+g = ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
+  geom_point(aes(colour = Actor)) + # Add a layer of points
+  ylim(c(0, 50))  
+g # With ggplot we can store the graph construct
+```
+By using colour, we can see that Pierce was a particularly violent Bond, with the green points
+in the top right hand corner. 
+
+Next we can add a trend line to get a feel for the relationship over time. 
+The `stat_smooth()` layer adds a local trend linear. Essentially, the line moves 
+along the $x$-axis and the gradient is only affected by nearby points.
+```{r, 3-6, fig.cap = "Capturing the trend.", message=FALSE}
+g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE)
+g_smooth
+```
+This graph now contains some useful insight.
+
+1. The number of kills appears to be increasing with each bond movie.
+2. Pierce Brosnan (the green points) liked killing people.
+3. Daniel Craig's movies didn't contain (that) many deaths.
+
+
+### Styling your plot
+
+If the graph is only going to be consumed by the data scientist, then there
+is no need to spend time polishing the final product. However if the graph 
+is to be used to convince or highlight issues for other people, then some
+time and effort needs to be spent. 
+
+**ggplot2** has the concept of themes that can style the plot. Here we 
+use the [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) package. It provides
+
+> typography-centric themes and theme components for ggplot2
+
+Basically, it's opinionated. The package enables us to change the background colour, tweak the palette
+and add proper labels, with minimal effort
+```{r, 3-7, fig.cap="Pimping your graph with the hrbrthemes package.", message=FALSE, dev='png', out.width="75%", dpi=300}
+library(hrbrthemes)
+g_smooth + 
+  theme_ipsum() + 
+  scale_color_ipsum() +
+  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title="Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") 
+```
+With little effort, we've gone from something basic - figure \@ref(fig:3-4) - to a high 
+quality, publication ready figure, \@ref(fig:3-7). Unfortunately, 
+we have limited time to spend on graph aesthetics.
+
+#### Exercise / Q & A  {-}
+<!-- (25 minutes) -->
+
+  * Does alcohol consumption change through time?
+  * Does there appear to a relationship between alcohol and the number of kills?
+  * Change method from `smooth` to `lm`.
+
+## Histograms
+
+A histogram is a graphical representation of the distribution of numerical data.
+If the area under the graph adds up to one, then it is a _probability_ distribution.
+Constructing a histogram is straightforward; we divide the entire range into
+a series of intervals and count how many values fall into each interval.
+Bins do not have to be the same size (but they probably should be in general).
+
+We'll start with a histogram of users ages from the OKCupid dataset. To 
+create a histogram, we use the `geom_histogram()` function 
+```{r, fig.keep="none"}
+ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) 
+```
+This creates the left plot in figure \@ref(fig:3-8).
+
+```{r 3-8,echo=FALSE, fig.cap="Age distribution of the OKCupid data set.", out.width="80%"}
+g1 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 1")
+g2 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 5) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 5")
+g3 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 10) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 10")
+gridExtra::grid.arrange(g1, g2, g3, ncol=3)
+```
+Notice in the code we've specified `binwidth = 1`. This means that the binwidth is equal
+1 year. The default (in ggplot2) is to create a plot using 30 bins, it's always a good
+idea to explore the effect of varying the binwidth. In particular, if you look carefully
+at the plot where the `binwidth = 1`, we can see a spike at `age = 42`.
+Another interesting feature is the long tail - this is an example of a _right skewed_ data set.
+
+Often we want to split a plot up by different variables, for example, the 
+users `gender`. This is easy with **ggplot2**; we just add on an 
+additional call to `facet_wrap()`
+
+```{r, 3-9, fig.cap="OKCupid age distribution by gender.", out.width="70%"}
+ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) + 
+  facet_wrap(~ sex) + 
+  xlim(c(18, 80))
+```
+
+By splitting age by gender, two interesting features become obvious from figure \@ref(fig:3-9)
+
+1. There are many more male OK Cupid users than female (not surprising).
+2. The general age distribution looks similar between sexes.
+3. The most surprising aspect is that the spike in age 42 is due to female users. This
+could be by pure chance, user lying about their age, or a mistake in data entry.
+
+## Density plots
+
+A downside of using a histogram, is that putting two histograms on top of each other
+makes the graphic cluttered and unclear (of course you can use panels as above). 
+An alternative method is to use a _kernel density estimator_. Essentially we draw a 
+line around the histogram.
+
+
+```{r, 3-10, fig.cap="Kernel density plots of the ages.", message = FALSE}
+ggplot(cupid, aes(x = age)) + 
+  geom_density(aes(colour = sex)) +
+  xlim(c(18, 80))
+```
+Since the distributions are represented as lines, we can plot multiple 
+distributions on top of each other. By plotting in this way, it becomes
+obvious the distributions of each gender are similar. _However_, we have
+smoothed over the bump at age 42.
+
+
+### Detailed explanation
+
+This section aims to give gentle introduction to how kernel density plots
+are actually constructed. Behind the scenes, there's some nice mathematical 
+theory the underpins this graph. However, we'll avoid the maths and concentrate
+on the intuition. 
+
+Suppose we have three points: -2, -1, 2. These are shown in figure \@ref(fig:3-11) (a) as blue crosses. 
+Around each point we draw a _kernel_ - figure \@ref(fig:3-11) (b). The kernel can be any symmetric function. 
+For example, it could be a
+
+ * rectangle;
+ * triangle;
+ * Gaussian (or Normal) density;
+ * [Epanechnikov](https://en.wikipedia.org/wiki/Kernel_(statistics)#Kernel_functions_in_common_use) function.
+ 
+In this example, we'll use the most common kernel, a Gaussian or bell shaped curve. Next
+we combine the kernels around each point into a single common curve (figure  \@ref(fig:3-11) c). Finally, 
+we normalise the area under the kernel to be $1$. 
+
+```{r, 3-11, echo=FALSE, fig.cap="How to construct a kernel density estimate.", out.width="70%"}
+local(source("code/f3_kernel.R"))
+```
+
+The tricky mathematical part deals with what kernel should we use and how wide should that
+kernel be. Intuitively, when we have many points, the kernel should be narrower. 
+
+## Boxplots
+
+A box and whisker plot, sometimes called simply a boxplot, is another way to
+represent continuous data. This kind of plot is particularly useful for
+comparing two or more groups, by placing the boxplots side-by side. 
+
+The central bar in the "box" is the sample _median_. The top and bottom
+of the box represent the upper and lower sample _quartiles_. Just as the
+median represents the 50% point of the data, the lower and upper quartiles
+represent the 25% and 75% points respectively.
+
+```{r, 3-12, fig.cap="Boxplot description."}
+local(source("code/f3_boxplot.R"))
+```
+
+The lower whisker is drawn from the lower end of the box to the smallest value
+that is no smaller than 1.5IQR below the lower quartile. Similarly, the upper
+whisker is drawn from the middle of the upper end of the box to the largest
+value that is no larger than 1.5IQR above the upper quantile. Points outside the
+whiskers are classified as outliers.
+
+If we wanted to compared how age varies by income level^[Income level is discrete in this dataset]
+then a boxplot is perfect
+```{r, 3-13, fig.cap = "Income by age of the OKCupid data set.", out.width="70%"}
+ggplot(cupid, aes(x = income, y = age)) + 
+  geom_boxplot()
+```
+The figure highlights a gradual increase of income with age. However, for extreme
+incomes it drops. I suspect this pattern is particular to San Francisco!
+
+## Barplots
+
+A bar chart or bar graph is a chart that presents grouped data with rectangular bars 
+with lengths proportional to the values that they represent. 
+The bars can be plotted vertically or horizontally.
+
+Let's look again at the bond dataset. To determine the number movies by each star we
+use `geom_bar()`
+```{r}
+ggplot(bond) + 
+  geom_bar(aes(x = Actor))
+```
+
+Typically ordering the axis alphabetically isn't best. In this case, we could order
+the either by the number of movies, or by the date the actor first appeared.
+Again with a few minor tweaks we can go from a plot that is OK, to a plot that
+is informative and attractive.
+
+```{r, message=FALSE, echo=FALSE, out.width="95%", dev="png"}
+library("dplyr")
+library(hrbrthemes)
+load("data/bond.RData")
+g1 = count(bond, Actor) %>% 
+  mutate(n=n) %>% 
+  arrange(n) %>%
+  mutate(Actor=factor(Actor, levels=Actor)) %>%
+  ggplot(aes(x = Actor, y =n)) + 
+  geom_col() + 
+  coord_flip() + 
+  labs(x = NULL, y = "No. of Movies",
+       title="The Bond data set",
+       subtitle="Ordering a bar chart is a useful trick",
+       caption="jumpingrivers.com") + 
+  theme_ipsum(grid="X")
+g2 = count(bond, Actor) %>% 
+  mutate(n=n) %>% 
+  arrange(n) %>%
+  mutate(Actor=factor(Actor,
+                      levels=c("Sean Connery", "George Lazenby", "Roger Moore", 
+                                      "Timothy Dalton", "Pierce Brosnan", "Daniel Craig"))) %>%
+  ggplot(aes(x = Actor, y =n)) + 
+  geom_col() + 
+  coord_flip() + 
+  labs(x = NULL, y = "No. of Movies",
+       title="The Bond data set",
+       subtitle="Ordering by first appearance",
+       caption="jumpingrivers.com") + 
+  theme_ipsum(grid="X")
+
+gridExtra::grid.arrange(g1, g2, ncol=2)
+```
+
+

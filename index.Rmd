@@ -1,0 +1,40 @@
+--- 
+title: "Foundational Data Science"
+author: "Colin Gillespie"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+bibliography: [book.bib, packages.bib]
+biblio-style: apalike
+link-citations: yes
+twitter-handle: csgillespie
+description: "This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory."
+github-repo: csgillespie/foundational-data-science
+url: 'https\://csgillespie.github.io/foundational-data-science/'
+---
+
+This is still a work in progress. But pull requests and general comments are welcome.
+
+# Author {-}
+
+Colin Gillespie is the author of [Efficient R Programming](https://alexa.design/2pmfpf4), published by O'Reilly media. He is an Associate Professor of Statistics at Newcastle University, UK and regularly works with [Jumping Rivers](https://jumpingrivers.com) to provide data science training and consultancy. He is the only person in history to move to [Newcastle](https://en.wikipedia.org/wiki/Newcastle_upon_Tyne) for better weather.
+
+#### Prerequisites {-}
+
+We've have tried to keep the prerequisites to a minimum; no calculus, no matrices, 
+very little algebra. Throughout the book, we use the programming language [R](https://cran.r-project.org/) 
+to illustrate techniques. However, we've tried to keep the programming style general, 
+so translating into [Python](https://www.python.org/), should be straightforward.
+
+```{block type="rmdwarning"}
+This document is in flux. 
+Sections may appear/disappear.
+```
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+knitr::write_bib(c(
+  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+), 'packages.bib')
+```

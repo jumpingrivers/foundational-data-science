@@ -1,0 +1,75 @@
+
+## Colours
+
+There are multiple ways to specify colours. In the early days of the web, 
+many displays were limited and this led to a list of 256 "safe colours", with
+each colour having it's on [Name](https://en.wikipedia.org/wiki/Web_colors). In R, 
+we type
+
+```{r}
+# If you insist on US spelling colors()
+colours()[1:4]
+```
+
+we get a vector of 657 named colours.
+
+Many people will already be familiar with the RGB colour model, where __r__ed, __g__reen and __b__lue 
+are combined to produce a variety of colours. If you are forced to conform to a Corporate Visual Identity, 
+you probably have a list of approved rgb colours to use. 
+
+The RGB colour model is an additive colour model in which red, green and blue light are added together in various ways to reproduce a broad array of colors. The name of the model comes from the initials of the three additive primary colours, red, green and blue.
+
+The RGB framework is useful in the implementation of creating colours, but not great
+at selecting colours. Instead, you should use HSV (hue - saturation - value) 
+which separates luma (intensity) from chroma (colour).
+
+```{r echo=FALSE, out.width="80%", fig.cap = "https://en.wikipedia.org/wiki/HSL_and_HSV"}
+knitr::include_graphics("graphics/f3_hue.png")
+```
+
+> RGB has to do with implementation; HSV has to do with perception
+
+In general, try and avoid selecting your own colour palettes. It is really easy 
+to select a bad colour scheme. For example, around 7% of males from the USA are
+red-green colour blind. A couple of good sites I use are
+
+ * [Color Brewer](http://colorbrewer2.org/). See the associated R package **RColorBrewer**
+ * [I Want Hue](http://tools.medialab.sciences-po.fr/iwanthue/)
+ 
+
+### Rules of thumb for creating graphics {-}
+
+Here are some general rules to consider when creating graphics (partly based on partly the book by [Munzner](http://amzn.to/2v3DBJX))
+
+1. Maximize data-to-ink ratio ([Edward Tufte](http://amzn.to/2uE78sh))
+
+2. Beware of the lie-factor, e.g. where do the axis start and end?
+
+3. No unjustified 3D
+
+4. Focus + context; what do you want to show
+
+5. Overview first, zoom & filter, details on demand
+
+6. Don’t over engineer
+
+7. Avoid Excel!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Number of points – should you summarize? -->
+<!-- Transparency -->
+<!-- log scales -->

@@ -1,0 +1,4 @@
+before_chapter_script: ["code/before_script.R"]
+language:
+  ui:
+    chapter_name: "Chapter "

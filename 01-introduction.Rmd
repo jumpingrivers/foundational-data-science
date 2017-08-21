@@ -1,0 +1,106 @@
+# Introduction {#chapter1}
+
+<!-- (20 minutes) -->
+
+> It is the mark of a truly intelligent person to be moved by statistics
+> -- George Bernard Shaw
+
+
+## Book overview
+
+Data science is a vague term. While everyone can agree what a vet or a plumber does, an exact description of a data scientist is 
+still elusive. My background is in statistics and I see data science as
+the logical extension of applying statistical methods to large scale data sets.
+However my colleague comes from a computer science background, and their take 
+is switching that idea on it's head - large data sets first, analyics second. 
+Both of us are correct _and_ also wrong. This explains why data scientists are 
+in such demand. The problems they face are complex, challenging (and interesting) 
+and require skills from multiple disciplines.
+
+The goal of this short book is to provide a short introduction into 
+the wonderful world of data science from the statistical point of view. In 
+a tradional statistics course^[Clearly there is some poetic licence here.], we would look at small, datasets to illustrate key concepts.
+In a computing science course, we would start with a data base and move on from there. This
+book straddles both camps. Data sets that are small enough to be informative, but still 
+have real world interest.
+
+### The trouble with ~~tibbles~~ data
+
+The trouble with interesting data, is that there are so many potential problems. 
+For example, most real world data sets have missing data. However, there are different types of
+missing data!
+
+  * Missing completely at random (MCAR). This is the easiest to deal with. The data
+  are missing independently of both observed and unobserved data. For example, if I ask you
+  your age, and you flip a coin. If heads, you tell me the answer. If tails, you refuse.
+ 
+  * Missing at random (MAR): given the observed data, data are missing independently of unobserved data.
+  Example: Scottish participants are more likely to refuse a survey on soccer excellence,
+  but it does not depend on the level of their soccer skills.
+
+  * Missing not at random (MNAR): missing observations related to values of unobserved data.
+  As a concrete example, a good predictor of whether someone survived the titanic disaster was whether or not they
+  had there age recorded.
+
+The key skills with data science are often being able to spot where the potential issues lay. Once
+we know the problems, we can formulate a strategy for overcoming them. Fortunately, 
+there are a few standard tools available to help us.
+
+When a data scientist confronts a new data set, they have a powerful arsenal of statistical
+and machine learning algorithms at their disposal. However, before tackling a new data set, 
+we should always explore and try to understand the issues before throwing the machine learning
+[kitchen sink](https://en.wikipedia.org/wiki/Kitchen_sink_regression) at it.
+
+This book targets people who work with data, but don't come from a mathematics
+or statistics background. They know names of standard methods, but are a bit hazy on the
+details. We aim to fill in some of the blanks. 
+
+## Data sets
+
+During this course, we'll use a few different data sets to illustrate the key points. 
+
+### The relationship between beauty and teaching
+
+This data set is from a [study](https://doi.org/10.3386/w9853) where researchers were 
+interested in whether a lecturers' attractiveness affected 
+their course evaluation! This is a cleaned version of the
+data set and contains the following variables:
+
+ * evaluation: the questionnaire result
+ * tenured: does the lecturer have tenure; 1 == Yes. In R, this value is continuous.
+ * minority: does the lecturer come from an ethnic minority (in the USA)
+ * age: the lecturers' age
+ * gender: a factor: Female or Male
+ * students: number of students in the class
+ * beauty: each of the lecturers' pictures was rated by six undergraduate students: three women and three men. 
+ 
+The raters were told to use a 10 (highest) to 1 rating scale, to concentrate on the [physiognomy](https://en.wikipedia.org/wiki/Physiognomy) of the 
+professor in the picture, to make their ratings independent of age, and to keep 5 in mind as an average. 
+The scores were then normalised.
+ 
+This dataset has $463$ rows and $7$ columns.
+
+### Bond, James Bond
+
+This data set contains information about James bond movies. The data set contains $24$ movies
+with the following rows:
+
+ * `Film`: the movie name.
+ * `Actor`: the actor who played James Bond (to be clear, [Sean Connery](https://en.wikipedia.org/wiki/Sean_Connery) is clearly the best bond)
+ * `Kills`: the number of kills by Bond.
+ * `Relationships`: the number of romantic relationships by Bond.
+ * `Alcohol_Units`: the number of Units of alcohol consumed by Bond.
+ * `Alcohol`: a discretised version of `Alcohol_Units`.
+ * `Nationality`: the nationality of the Bond actor.
+
+__Credit__ Thanks to [Jack Prenter](http://www.knownman.com/james-bond-graph/) for
+collecting this data
+
+### OKCupid
+
+This dataset was created with the use of a python script that pulled the data from public profiles on [okcupid](www.okcupid.com). There are a total of 59,946, profile which includes people within a 25 mile radius of San Francisco, who were online in the last year (06/30/2011), with at least one profile picture. Each user has 32 variables. 
+The overall dataset is around 150MB, while not "big", itis prohibitive for teaching. 
+So we've dropped 11 variables relating to "users essays". This results in an uncompressed dataset of around 12MB.
+
+__Credit__: Data and code for OkCupid Profile Data for Introductory Statistics and Data Science Courses (Journal of Statistics Education July 2015, Volume 23, Number 2); [GitHub](https://github.com/rudeboybert/JSE_OkCupid) page.
+
