@@ -1,0 +1,183 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Capturing relationships with linear regression {#chapter6}
+<!-- (90 minutes) -->
+
+In many data science problems, we wish to use information about some variables
+to help predict the outcome of another variable. For example, in banking, we 
+might wish to a persons financial history to predict the likelihood of them defaulting
+on a mortgage. In our final chapter, we will look at standard modelling techniques.  
+We'll start with the simplest measure, correlation, before moving onto more 
+linear regression models.
+
+## Capturing linear relationships
+
+The easiest way to quantify the relationship between two variables is to calculate the
+correlation coefficient. This is a measure of the _linear_ association. The sample correlation
+coefficient is defined as
+\[
+r=\frac {\sum _{i=1}^{n}(x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{\sqrt {\sum _{i=1}^{n}(x_{i}-{\bar {x}})^{2}}}{\sqrt {\sum _{i=1}^{n}(y_{i}-{\bar {y}})^{2}}}}
+\]
+where
+
+ * n is the sample size;
+ * $x_{i},y_{i}$ are the single samples indexed with i
+ * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean)
+
+The value of $r$ lies between $-1$ and $1$. A value of $1$ implies that all
+data points lie on a line a $X$ and $Y$ increase. A values of $-1$ implies that 
+all data points lie on a line $Y$ decreases,  $X$ increases. 
+A value of 0 implies that there is no linear correlation between the variables.
+
+(ref:6-1) Several sets of (x, y) points, with the Pearson correlation coefficient of x and y for each set. Credit: [Wikipedia](https://en.wikipedia.org/wiki/Correlation_and_dependence)
+
+```{r 6-1,echo=FALSE, fig.cap="(ref:6-1)"}
+local(source("code/f6_correlation.R"))
+```
+
+```{r echo=FALSE}
+source("code/load_data.R")
+```
+
+### Example: Starbucks calorie content
+
+The Starbucks data set contains nutritional value of `r nrow(starbucks)` items. 
+For each item on the menu we have the number Calories, and the Carbohydrate, Fat, Fiber and Protein
+amount. 
+
+We can quickly get an overview in R, 
+```{r}
+head(starbucks)
+```
+and generate a few scatter plots \@ref(fig:6-2).
+```{r 6-2,echo=FALSE, message=FALSE, out.width="90%", fig.cap="Relationships of Calories content and ingredients."}
+library("tidyr")
+library(ggplot2)
+dd = gather(starbucks, Type, Value, -Calories, -Product )
+ggplot(dd, aes(Value, Calories)) + 
+  geom_point(size=0.75) + 
+  facet_grid(~Type, scales="free_x") + 
+  ylim(c(0, 800)) + 
+  theme_bw() + 
+  xlab(NULL)
+```
+The scatter plots show a clear linear trend. To work out the sample pairwise
+correlations we use the `cor()` function
+```{r}
+## Drop the first column since it's the food names
+cor(starbucks[,2:6])
+```
+The R output returns all pairwise correlations between the 5 variables:
+
+ * There is a diagonal of 1, since the correlation of a variable with itself is 1.
+ * The matrix is _symmetric_ since the correlation between $X$ and $Y$ is the same
+ as the correlation between $Y$ and $X$.
+
+Out of the four component parts, `Fat` is very highly correlated with `Calories`.
+ 
+## Linear Regression
+
+The next step is use information about one variable to inform you about another. 
+The simplest model is to assume a linear relationship $Y$, the variable we want to predictor
+and $x$ the predictor (or covariate). This gives the equation
+\[
+Y = \beta_0 + \beta_1 x
+\]
+where
+ 
+ * $\beta_0$ is the $y$-intercept. So if $x = 0$, the value we would predict for $Y$ is $\beta_0$.
+ * $\beta_1$ is the gradient, that is the increase in $Y$ for a unit increase in $x$.
+
+To fit the model in R, we use the `lm()`^[`lm` is short of linear model; this model is _linear_ in the 
+model coefficients.] function
+
+```{r}
+(m = lm(Calories ~ Fat, data = starbucks))
+```
+The output from R gives estimates of $\beta_0$ (148.0) and $\beta_1$ (12.8).
+
+### Prediction and Interpretation 
+
+The estimated model,
+\[
+\text{Calories} = 148 + 12.8 \times \text{Fat}
+\]
+allows us to predict the calorie content based on the fat. For example, if the fat content
+was 10, then the estimated calorie content would be 276. However this simple example also 
+highlights the potential dangers of using the model for prediction. If we wished to predict the
+calorie content of fat-free food, i.e. $\text{Fat} = 0$, then our model would estimate the calorie
+content as $148$. This seems a bit high for a glass of water?
+
+### How do we estimate the model coefficients?
+
+We estimate the model parameters by "minimising the sum of squared residuals". A
+residual is the difference between the observed value and the predicted 
+value. In figure \@ref(fig:6-3), the observed values, i.e. the data are the
+black dots and the residuals are the solid lines. The line of best fit is the dash line.
+In figure \@ref(fig:6-3) we have five data points, so we must have residuals. The sum of
+squared residuals _always_ equals $0$. 
+
+The classical _statistics interpretation_ of a linear regression model, is to assume the
+underlying model is actually
+
+\[
+Y = \beta_0 + \beta_1 x + \epsilon
+\]
+where $\epsilon$ is normally distributed. By assuming that the errors ($\epsilon$) follow
+a normal distribution, this is equivalent to minimising the sum of squared residuals. Furthermore,
+by fitting a model with a known error structure, we can assess the model assumptions by 
+plotting the residuals and ensuring they have a random scatter.
+
+```{r, 6-3,echo=FALSE, fig.cap = "Residuals and linear regression."}
+local(source("code/f6_residual_illustration.R"))
+```
+
+The _machine learning_ interpretation is that we have a cost function that we wish to minimise. 
+It just so happens that in this particular case, that the cost function corresponds to 
+assuming normality. But we could have used any cost function. To assess model fit, 
+we would typically use [Cross validation](https://en.wikipedia.org/wiki/Cross-validation_(statistics))
+or a similar method.
+
+One approach isn't better than the other. The statistics approach gives more insight 
+into the mechanisms, but the _machine learning_ approach leads to a better predictive model.
+As in most cases, a combination of both methods is the optimal approach.
+
+## Multiple linear regression models
+
+A multiple linear regression model is the natural extension of the simple linear 
+regression model. If we have two predictors, e.g.
+\[
+Y = \beta_0 + \beta_1 \text{Fat} + \beta_2 \text{Carb}
+\]
+This is equivalent to fitting a plane (a sheet of paper) through the points (figure \@ref(fig:6-4)).
+
+```{r 6-4, echo=FALSE,fig.cap = "Illustration of multiple linear regression with two predictor variables.", out.width="95%"}
+local(source("code/f6_3d.R"))
+```
+When we have more than two predictor variable, the geometric interpretation 
+gets messy, but it's still the same idea.
+
+The parameter estimating procedure is identical to simple linear regression - we wish to minimise
+the sum of squared residuals. Furthermore, we still have the two views of the model: the 
+statistical and machine learning.
+
+Fitting the model in R is a simple extension
+
+```{r}
+(m = lm(Calories ~ Fat + Carb , data = starbucks))
+```
+Notice that the coefficient  for `Fat` has decreased from 12.8 to 10.52 due to the influence
+of the Carbohydrate component.
+
+<!-- Correlation: linear relationship between two variables -->
+<!-- Examples -->
+<!-- Exercise / Q&A -->
+<!-- Simple linear regression -->
+<!-- Assumptions -->
+<!-- Residuals: Observed - expected -->
+<!-- Examples -->
+<!-- Exercise / Q&A -->
+
