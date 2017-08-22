@@ -1,5 +1,8 @@
 # Introduction {#chapter1}
 
+```{r echo=FALSE}
+source("code/load_data.R")
+```
 <!-- (20 minutes) -->
 
 > It is the mark of a truly intelligent person to be moved by statistics
@@ -79,14 +82,12 @@ The raters were told to use a 10 (highest) to 1 rating scale, to concentrate on 
 professor in the picture, to make their ratings independent of age, and to keep 5 in mind as an average. 
 The scores were then normalised.
 
-<!-- XXX I hate this personally nrow(...) is much better  -->
-<!-- I have changed this somewhere in chapter 2 already  -->
- 
-This data set has $463$ rows and $7$ columns.
+
+This data set has `r nrow(Beauty)` rows and `r ncol(Beauty)` columns.
 
 ### Bond, James Bond
 
-This data set contains information about James bond movies. The data set contains $24$ movies
+This data set contains information about James bond movies. The data set contains `r nrow(bond)` movies
 with the following columns:
 
  * `Film`: the movie name.
@@ -102,7 +103,7 @@ collecting this data.
 
 ### OKCupid
 
-This data set was created using a python script to pull data from public profiles on [okcupid](www.okcupid.com). There are a total of 59,946 profiles which includes people within a 25 mile radius of San Francisco, who were online between June 2011 and July 2012 and had at least one profile picture. Each user has 32 variables. 
+This data set was created using a python script to pull data from public profiles on [okcupid](www.okcupid.com). There are a total of `r nrow(cupid)` profiles which includes people within a 25 mile radius of San Francisco, who were online between June 2011 and July 2012 and had at least one profile picture. Each user has 32 variables. 
 The overall data set is around 150MB, while not "big", it is prohibitive for teaching. 
 So we've dropped 11 variables relating to "users essays". This results in an uncompressed data set of around 12MB.
 

@@ -17,18 +17,14 @@ In this chapter, we will look at standard measures of location and spread, which
 the building blocks for many statistical and machine learning algorithms. We discover
 that some measures fit naturally into a big data scenario while others do not.
 
-<!-- XXX this one is just for me? Why the two different storages here? -->
 
 ```{r echo=FALSE}
-load("data/Beauty.RData")
-cupid = readRDS("data/okcupid.rds")
+source("code/load_data.R")
 ```
 
 ## Measures of location
 
 ### Sample mean
-
-<!-- XXX is it worth a note that average could mean lots of things? -->
 
 One of the most important and widely used measures of location is the (arithmetic) mean,
 more commonly known as the average
@@ -75,11 +71,6 @@ mean(Beauty$students)
 
 ### Sample median
 
-<!-- XXX but not descending order? -->
-<!-- related (kind of) but interesting question -->
-<!-- why does the median.default source have the code x[FALSE][NA] rather than just NA? -->
-<!-- I think I can guess but wondered if you knew definiteively -->
-
 The sample median is the middle observation when the data are ranked in
 ascending order. Ranked observations are denoted as $x_{(1)}, x_{(2)}, \ldots,
 x_{(n)}$. The sample median is defined as:
@@ -91,9 +82,7 @@ x_{(n)}$. The sample median is defined as:
 \end{cases}
 \]
 
-<!-- XXX robust how? -->
-
-The median is more robust than the sample mean, but has less useful mathematical properties. 
+The median is less sensitive to outliers than the sample mean, but has less useful mathematical properties. 
 
 For our simple data set $\{0,3,2,0\}$, to calculate the median we
 re-order it to: $\{0,0,2,3\}$; then take the average of the middle two
@@ -111,9 +100,6 @@ Notice that the mean and median beauty scores are approximately the same; this i
 are roughly symmetric. However the class size values differ: $\bar x = 55$ and the median is $29$. This
 is because the class sizes are [skewed](https://en.wikipedia.org/wiki/Skewness); 
 there are many more large values than smaller values.
-<!-- XXX I don't think the previous is true barplot(table(Beauty$students)) -->
-
-
 
 ```{block type="rmdnote"}
 The classic case of where it can be misleading to use the mean, is income. Here
@@ -169,9 +155,9 @@ s^2= \frac{1}{(n-1)} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right
 The second formula is easier for calculations.^[The divisor is $n-1$ rather than
   $n$ in order to correct for the bias which occurs because we are measuring
 deviations from the sample mean rather than the ``true" mean of the population
-  we are sampling from.] However, since $\sum x^2$ becomes large, in practice we would 
+  we are sampling from.] However $\sum x^2$ becomes very large as $n$ increases.
+This could lead to a potential loss of precision, in practice we would 
 use
-<!-- XXX Whilst I don't necessarily disagree here it seems weird to mention this here since you haven't mentioned numerical stability yet, just feels odd, not saying it should definitely be removed, maybe reworded or better explained -->
 \[
 s^2= \sum_{i=1}^n \frac{x_i^2}{n-1}  - \left(\frac{n}{n-1}\right) \bar x^2  \;.
 \]  
@@ -229,8 +215,6 @@ is more computationally difficult to calculate.
 ### Numerical examples
   
 For the following data sets, calculate the inter-quartile range:
-
-<!-- XXX The thing that sucks about quantiles of course is that quantile(5:8,0.25) != 5.25 similarly for the upper quartile, i thik type = 6 is the one that gives you "the right" answers , damn seen the note below now-->
 
 1. $\{5, 6, 7, 8\}$ 
 

@@ -2,8 +2,10 @@
 
 I have put some commented out XXX in the source in true Gillespie style so you can search for the X rated stuff. I may have missed some XXX by accident though so after looking at XXX just seach for the html comment string
 
-* You have a mixture of data sets and datasets. I have tried to correct them all but there may be other occurences. Obviously you are also likely to write this phrase again at some point I imagine. 
-* similarly builtin built-in
-* I grew up believing that data are plural (i.e in sentence should be data are rather than data is ...) However it would appear dictionary boffins have decided that both are ok in modern society. Still if it were me I would correct them but I defer to a Scotsmans expertise on the English language and therefore have left them as is (as are?)
+### Response to XXX
 
-if you want to see all the changes that have been made just `git diff`
+  * Data loading is in chaos. In a week, I'll make it consistent. Either via a
+  package, or CSV file
+  * I've never yet seen average to mean anything other than mean. I know that's what we teach to UG, but...
+  * Median question: doesn't matter about ascending/descending
+  * I don't think the previous is true barplot(table(Beauty$beauty)) - use `hist()`
