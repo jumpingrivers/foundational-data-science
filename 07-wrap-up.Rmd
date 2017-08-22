@@ -1,0 +1,8 @@
+# Wrap-up {#chapter7}
+
+<!-- Weak-->
+The goal of this short book is provide a short introduction into 
+the wonderful world of data science, from a statistics view point. 
+Using the simplest of statistical techniques, from summary statistics to 
+graphics, we can highlight unusual and interesting patterns in our data.
+These techniques lay the analysis foundations for more advanced techniques.
