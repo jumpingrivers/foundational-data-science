@@ -18,14 +18,10 @@ that don't require any fancy statistics.
 
 #### Prerequisites {-}
 
-<!-- XXX due to time ... is this a book or just course notes? -->
-
-We could have an entire course on creating graphics, but due to time we'll concentrate 
+We could have an entire course on creating graphics, but in this chapter we'll concentrate 
 on the fundamentals. To make this section concrete, we'll use the [**ggplot2**](http://ggplot2.tidyverse.org/)
 package within R. However, there are many libraries available to generate the graphics
-in other languages.
-
-<!-- XXX Do you mean things like javascript here? is it worth a note -->
+in other languages. For example, in Javascript we could use `d3`, or `seaborn` in python.
 
 The **ggplot2** package can be easily installed via
 ```{r, eval=FALSE}
@@ -123,7 +119,7 @@ Next we can add a trend line to get a feel for the relationship over time.
 The `stat_smooth()` layer adds a local trend line. Essentially, the line moves 
 along the $x$-axis and the gradient is only affected by nearby points.
 ```{r, 3-6, fig.cap = "Capturing the trend.", message=FALSE}
-g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE)
+g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE, method = "smooth")
 g_smooth
 ```
 This graph now contains some useful insight.
@@ -169,11 +165,9 @@ we have limited time to spend on graph aesthetics.
   * Does there appear to a relationship between alcohol and the number of kills?
   * Change method from `smooth` to `lm`.
 
-<!-- XXX potentially confusing since you haven't used method = anywhere, i would suggest either having method = smooth in your notes, or specifically saying in the stat_smooth function set the method argument to lm (it's default is smooth), if i was a noob i would be tempted to try stat_lm -->
-
 ## Histograms
 
-A histogram is a graphical representation of the distribution of numerical data.
+A histogram is a graphical representation of the distribution of continuous, numerical data.
 If the area under the graph adds up to one, then it is a _probability_ distribution.
 Constructing a histogram is straightforward; we divide the entire range into
 a series of intervals and count how many values fall into each interval.
@@ -213,10 +207,8 @@ additional call to `facet_wrap()`
 ggplot(cupid, aes(x = age)) + 
   geom_histogram(binwidth = 1) + 
   facet_wrap(~ sex) + 
-  xlim(c(18, 80))
+  coord_cartesian(xlim = c(18, 80))
 ```
-
-<!-- XXX Either should be a note about things being removed in the output warning or use coord_cartesian -->
 
 By splitting age by gender, two interesting features become apparent from figure \@ref(fig:3-9)
 
@@ -252,10 +244,8 @@ theory the underpins this graph. However, we'll avoid the maths and concentrate
 on the intuition. 
 
 Suppose we have three points: -2, -1, 2. These are shown in figure \@ref(fig:3-11) (a) as blue crosses. 
-Around each point we draw a _kernel_ - figure \@ref(fig:3-11) (b). The kernel can be any symmetric function. 
-For example, it could be a
-
-<!-- XXX not strictly true, can be any non-negative function that integrates to 1. no requirement to be symmetric, it just makes sense. I think the integrates to one is important though, or area under the curve if you are trying to avoid being overly mathematical. could just say that kernel is a fancy word for probability distribution or similar -->
+Around each point we draw a _kernel_ - figure \@ref(fig:3-11) (b). The kernel can be any non-negative (but typically
+symmetric) function that integrates to one. For example, it could be a
 
  * rectangle;
  * triangle;
@@ -271,14 +261,10 @@ local(source("code/f3_kernel.R"))
 ```
 
 The tricky mathematical part deals with what kernel we should use and how wide that
-kernel should be. Intuitively, when we have many points, the kernel should be narrower. 
+kernel should be. A wide kernel has the effect of flattening out our histogram shape, similar to having fewer bins. A narrow kernel has the opposite effect. Intuitively, when we have many points, the kernel should be narrower. 
 
-<!-- XXX A wide kernel has the effect of flattening out our histogram shape, similar to having fewer bins. A narrow kernel has the opposite effect. -->
 
 ## Boxplots
-
-
-<!-- XXX you haven't actually mentioned continuous data in the prior graphics examples -->
 
 A box and whisker plot, sometimes simply called a boxplot, is another way to
 represent continuous data. This kind of plot is particularly useful for
@@ -302,13 +288,12 @@ whiskers are classified as outliers.
 If we wanted to compared how age varies by income level^[Income level is discrete in this dataset]
 then a boxplot is perfect
 ```{r, 3-13, fig.cap = "Income by age of the OKCupid data set.", out.width="70%"}
+# Missing values are represented with a -1
 ggplot(cupid, aes(x = income, y = age)) + 
   geom_boxplot()
 ```
 The figure highlights a gradual increase of income with age. However, for extreme
 incomes it drops. I suspect this pattern is particular to San Francisco!
-
-<!-- XXX is it worht mentioning the -1? -->
 
 ## Barplots
 
@@ -347,8 +332,8 @@ g2 = count(bond, Actor) %>%
   mutate(n=n) %>% 
   arrange(n) %>%
   mutate(Actor=factor(Actor,
-                      levels=c("Sean Connery", "George Lazenby", "Roger Moore", 
-                                      "Timothy Dalton", "Pierce Brosnan", "Daniel Craig"))) %>%
+                      levels=rev(c("Sean Connery", "George Lazenby", "Roger Moore", 
+                                      "Timothy Dalton", "Pierce Brosnan", "Daniel Craig")))) %>%
   ggplot(aes(x = Actor, y =n)) + 
   geom_col() + 
   coord_flip() + 
@@ -360,5 +345,3 @@ g2 = count(bond, Actor) %>%
 
 gridExtra::grid.arrange(g1, g2, ncol=2)
 ```
-
-<!-- XXX i would argue this is reverse order of first appearance -->
