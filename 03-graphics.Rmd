@@ -14,14 +14,18 @@ load("data/bond.RData")
 
 Data visualisation is an old topic; but in the last few years, it's become particularly trendy.
 With the correct visualisation, we can highlight key features
-that doesn't require any fancy statistics.
+that don't require any fancy statistics.
 
 #### Prerequisites {-}
 
+<!-- XXX due to time ... is this a book or just course notes? -->
+
 We could have an entire course on creating graphics, but due to time we'll concentrate 
 on the fundamentals. To make this section concrete, we'll use the [**ggplot2**](http://ggplot2.tidyverse.org/)
-package within R. However, there are many libraries available to generate the  graphics
+package within R. However, there are many libraries available to generate the graphics
 in other languages.
+
+<!-- XXX Do you mean things like javascript here? is it worth a note -->
 
 The **ggplot2** package can be easily installed via
 ```{r, eval=FALSE}
@@ -40,8 +44,8 @@ devtools::install_github("hrbrmstr/hrbrthemes")
 
 ## Historical visualisations 
 
-John Snow^[Not [that](https://en.wikipedia.org/wiki/Jon_Snow_(character)) Jon Snow] 
-created a simple dot map to illustrate the cluster of cholera cases around the pump - figure \@ref(fig:3-1).
+John Snow^[Not [that](https://en.wikipedia.org/wiki/Jon_Snow_(character)) Jon Snow, he knows nothing.] 
+created a simple dot map to illustrate the cluster of cholera cases around a water pump - figure \@ref(fig:3-1).
 This allowed him to show the connection between the quality of the water source and cholera cases.
 He was able to demonstrate that the Southwark and Vauxhall Waterworks Company was taking water from sewage-polluted sections of the Thames and delivering the water to home. 
 Thereby leading to an increased incidence of cholera. This study is a major event in the history of public health and geography. It is regarded as the founding event of the science of epidemiology.
@@ -74,7 +78,7 @@ knitr::include_graphics("graphics/Nightingale-mortality.jpg")
 ```
 
 Visualisation is incredibly important. Whenever I get a data set, I automatically 
-start generating plots to get a feel for the data set. It helps us detect interesting
+start generating plots to get a feel for the data. It helps us to detect interesting
 patterns in the data; remember plotting can save lives (if you're Florence Nightingale).
 
 ```{r echo=FALSE, out.width="80%", fig.cap = "https://github.com/stephlocke/datasauRus"}
@@ -95,7 +99,7 @@ ggplot(bond, aes(x = Number, y = Kills)) + #Create a canvas
 ```
 On the $x$-axis we have the movie number (chronological movie order) and on 
 the $y$-axis we have the number of kills made by Bond. The scatter plot
-does show a general trend with an increased number of deaths in latter movies.
+does show a general trend, with an increased number of deaths in latter movies.
 
 Figure \@ref(fig:3-4) is OK, but could be significantly improved. 
 
@@ -116,7 +120,7 @@ By using colour, we can see that Pierce was a particularly violent Bond, with th
 in the top right hand corner. 
 
 Next we can add a trend line to get a feel for the relationship over time. 
-The `stat_smooth()` layer adds a local trend linear. Essentially, the line moves 
+The `stat_smooth()` layer adds a local trend line. Essentially, the line moves 
 along the $x$-axis and the gradient is only affected by nearby points.
 ```{r, 3-6, fig.cap = "Capturing the trend.", message=FALSE}
 g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE)
@@ -165,6 +169,8 @@ we have limited time to spend on graph aesthetics.
   * Does there appear to a relationship between alcohol and the number of kills?
   * Change method from `smooth` to `lm`.
 
+<!-- XXX potentially confusing since you haven't used method = anywhere, i would suggest either having method = smooth in your notes, or specifically saying in the stat_smooth function set the method argument to lm (it's default is smooth), if i was a noob i would be tempted to try stat_lm -->
+
 ## Histograms
 
 A histogram is a graphical representation of the distribution of numerical data.
@@ -197,7 +203,7 @@ Notice in the code we've specified `binwidth = 1`. This means that the binwidth 
 1 year. The default (in ggplot2) is to create a plot using 30 bins, it's always a good
 idea to explore the effect of varying the binwidth. In particular, if you look carefully
 at the plot where the `binwidth = 1`, we can see a spike at `age = 42`.
-Another interesting feature is the long tail - this is an example of a _right skewed_ data set.
+Another interesting feature is the long tail - this is an example of a _right skewed_ or _positively skewed_ data set.
 
 Often we want to split a plot up by different variables, for example, the 
 users `gender`. This is easy with **ggplot2**; we just add on an 
@@ -210,12 +216,14 @@ ggplot(cupid, aes(x = age)) +
   xlim(c(18, 80))
 ```
 
-By splitting age by gender, two interesting features become obvious from figure \@ref(fig:3-9)
+<!-- XXX Either should be a note about things being removed in the output warning or use coord_cartesian -->
+
+By splitting age by gender, two interesting features become apparent from figure \@ref(fig:3-9)
 
 1. There are many more male OK Cupid users than female (not surprising).
 2. The general age distribution looks similar between sexes.
 3. The most surprising aspect is that the spike in age 42 is due to female users. This
-could be by pure chance, user lying about their age, or a mistake in data entry.
+could be by pure chance, users lying about their age, or a mistake in data entry.
 
 ## Density plots
 
@@ -247,6 +255,8 @@ Suppose we have three points: -2, -1, 2. These are shown in figure \@ref(fig:3-1
 Around each point we draw a _kernel_ - figure \@ref(fig:3-11) (b). The kernel can be any symmetric function. 
 For example, it could be a
 
+<!-- XXX not strictly true, can be any non-negative function that integrates to 1. no requirement to be symmetric, it just makes sense. I think the integrates to one is important though, or area under the curve if you are trying to avoid being overly mathematical. could just say that kernel is a fancy word for probability distribution or similar -->
+
  * rectangle;
  * triangle;
  * Gaussian (or Normal) density;
@@ -260,12 +270,17 @@ we normalise the area under the kernel to be $1$.
 local(source("code/f3_kernel.R"))
 ```
 
-The tricky mathematical part deals with what kernel should we use and how wide should that
-kernel be. Intuitively, when we have many points, the kernel should be narrower. 
+The tricky mathematical part deals with what kernel we should use and how wide that
+kernel should be. Intuitively, when we have many points, the kernel should be narrower. 
+
+<!-- XXX A wide kernel has the effect of flattening out our histogram shape, similar to having fewer bins. A narrow kernel has the opposite effect. -->
 
 ## Boxplots
 
-A box and whisker plot, sometimes called simply a boxplot, is another way to
+
+<!-- XXX you haven't actually mentioned continuous data in the prior graphics examples -->
+
+A box and whisker plot, sometimes simply called a boxplot, is another way to
 represent continuous data. This kind of plot is particularly useful for
 comparing two or more groups, by placing the boxplots side-by side. 
 
@@ -292,6 +307,8 @@ ggplot(cupid, aes(x = income, y = age)) +
 ```
 The figure highlights a gradual increase of income with age. However, for extreme
 incomes it drops. I suspect this pattern is particular to San Francisco!
+
+<!-- XXX is it worht mentioning the -1? -->
 
 ## Barplots
 
@@ -344,4 +361,4 @@ g2 = count(bond, Actor) %>%
 gridExtra::grid.arrange(g1, g2, ncol=2)
 ```
 
-
+<!-- XXX i would argue this is reverse order of first appearance -->
