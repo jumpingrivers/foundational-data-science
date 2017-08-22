@@ -1,0 +1,227 @@
+---
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+# Margin of Error
+
+```{r, echo=FALSE}
+source("code/load_data.R")
+```
+
+
+<!-- This chapter is terse (I'm running out of time). Any additional material 
+helpful-->
+
+
+The idea of a confidence interval is central to statistics. When we get answer, 
+we don't just want a point estimate, i.e. a single number, we want a plausible
+range. In fact whenever you see opinion polls in newspapers, they typically come 
+with a margin of error of $\pm 3$%. It's always amusing to see the fuss that people 
+make when an opinion poll raises by 1% which is likely to be down to random noise.
+
+Central to the idea of margin of error, is the [_central limit theorem_](https://en.wikipedia.org/wiki/Central_limit_theorem).
+
+## The Central Limit Therem (CLT)
+
+One of the reasons the normal distribution is so useful is the central limit theorem. 
+This theorem states that if we average a large number (say 30^[Puts big data into perspective!]) of variables^[The key phase is independent and
+identically distributed random variables.], then the result is approximately normally distributed.
+
+So if we observe data, $x_1, x_2, \ldots, x_n$,  where the mean and variance of $x_i$ are $\mu$ and $\sigma^2$, then
+\[
+S_n = \frac{x_1 + x_2 + \ldots + x_n}{n}
+\]
+has a normal distribution with mean $\mu$ and variance $\sigma^2/n$. 
+
+The standard error of the mean is defined as the standard deviation of the sample mean, i.e.
+$\sigma/\sqrt{n}$. Remember that $\sigma$ is the population standard deviation, so we _estimate_ the
+standard error using $s/\sqrt{n}$
+
+```{block, type="rmdnote"}
+According to the central limit theorem, the standard deviation decreases as $1/\sqrt{n}$.
+```
+
+### Example: Customer waiting times
+
+```{r, 5-1, echo=FALSE, results="hide", fig.cap = "Waiting times from 40 customers. The data is skewed and is not normally distributed."}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,1))
+set.seed(1)
+x = signif(rexp(40, rate = 0.5), 2)
+plot(x, xlab="Customer", ylab="Wait (minutes)", 
+     panel.first = grid(), pch=21, bg="steelblue")
+(m = mean(x))
+(s = sqrt(var(x)/20))
+m - 2*s; m + 2*s
+```
+Figure \@ref(fig:5-1) shows the waiting time (in minutes) of
+$40$ customers. The figure shows that the average wait is around 1 to 2 minutes, but some unfortunate 
+customers have a significantly longer wait. The data 
+are clearly not normal, as waiting times must be positive and the distribution isn't symmetric.
+ 
+From chapter 2, we can quickly estimate the mean and standard deviation as `r mean(x)` and `r s`, i.e. $S_n=$`r mean(x)`. The CLT allows us to take this inference one step further. Since we know that $S_n$ is approximately normal, that implies
+that with probability 95%, the true mean lies between $2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).$
+
+```{block, type="rmdwarning"}
+Mathematically the central limit theorem only holds as $n$ tends to infinity. However
+in this simple example, the underlying distribution is clearly not normal, 
+so the confidence interval isn't actually 95%, it's more like 91%. Which is still not too bad.
+```
+
+### Big picture
+
+The central limit theorem is a powerful idea. It allows to get a handle on the uncertainty
+whenever we estimate means. One word of warning though. If the distribution is particularly odd, 
+then we'll need a larger sample size of the normality approximation to be accurate.
+
+### Example: A/B testing
+
+Suppose we're comparing two advert designs. At great expense, it has been decided to 
+change the font to Comic Sans. Does this change work? Being a (data) scientist we decide to (humanely^[Is using Comic Sans humane? Discuss.]) experiment on people by randomly showing them the advert. From past experience, you know that the
+probability of clicking on the standard advert is $0.35$. In your experiment, 
+advert 2 was shown to 125 people and 50 people clicked on it. 
+
+#### What is the probability of clicking on an advert {-}
+
+The data is binomial, so the mean number of clicks is given by $n \times p$. Hence, 
+the probability of clicking on a new advert is $p = 50/125 = 0.4$.
+ 
+Since this follows a Bernoulli distribution, the variance is $p \times (1-p) = 0.24$. 
+Hence the uncertainty interval
+\[
+(0.4 - 2 \times \sqrt(0.24/120), 0.4 + 2 \times \sqrt(0.24/120)) = (0.312, 0.488).
+\]
+
+#### Which advert is better? {-}
+
+This is a difficult question. On average the new advert is better ($p = 0.4$ vs $p =0.35$). 
+However there is some uncertainty around the new advert and it could in fact be worst.
+
+This leads us on to the subject of hypothesis testing.
+
+## Hypothesis testing
+
+The approach used is to come up with two competing hypothesis:
+
+ * $H_0$: the null (or dull) hypothesis. This is like "innocent until proven guilty". There
+ is no evidence to suggest a difference. 
+ * $H_1$: the alternate (or exciting) hypothesis. We have strong evidence to the contrary.
+ 
+Assuming that $H_0$ is true, we calculate the probability (the $p$-value) of
+observing the data (based on the CLT). If this probability is small, then we would reject $H_0$ in favour 
+of $H_1$. For no good reason, the typical cut-off many people use is 0.05, i.e. if the $p$-value is
+less than 0.05 we reject $H_0$. 
+
+### Example: tossing a coin
+
+Suppose we gave you a coin and said it was perfectly fair. You know on average, that if
+you throw the coin ten times, you would expect to see five heads and five tails. But random variation
+means you will see other combinations. 
+
+If you throw the coin ten times, how many heads would you need to observe before becoming suspicious
+about the coin?
+
+ * Six heads out of ten?
+ * Seven heads out of ten?
+ * Eight heads out of ten?
+ 
+In this scenario, the two competing hypotheses are
+
+ * $H_0$: the coin is fair (you can trust me, honest), so $p = 0.5$.
+ * $H_1$: the coin is suspicious, so $p \ne 0.5$.
+
+Let's denote $p$ to be the true probability of obtaining a head and $\hat p$ the estimated
+(or observed) probability. We know that the standard error is $\sqrt{p (1-p)/n}$, then we can show
+\[
+Z = \frac{\hat p - p}{\sqrt{\hat p (1-\hat p)/n}}
+\]
+has an approximated standard normal distribution under $H_0$. Since we know the distribution, 
+we can start to make statements about how likely it is to observe the sequence. 
+
+Now recall that $-1.96$ and $1.96$ are the lower- and upper-2.5% points
+of the $N(0,1)$ distribution. So
+\[
+\Pr(Z < -1.96  \text{ or } Z > 1.96) \simeq 0.05
+\]
+Let's return to our coin toss example, if observe six heads, then $\hat p = 6/10$, hence 
+\[
+Z = \frac{0.6 - 0.5}{\sqrt(0.6 \times 0.4/10)} = 0.6455 .
+\]
+Since this is between $\pm$1.96, there isn't enough evidence to suggest a difference (the
+actual $p$-value is 0.26).
+
+We can calculate the $Z$ score for the other possible outcomes
+ 
+ * Seven heads, $\hat p = 0.7$, $Z = 1.38$, p-value = 0.08
+ * Eight heads, $\hat p = 0.8$, $Z = 2.372$, p-value = 0.009
+
+Due to vague historical reasons, people set a threshold of $0.05$ for reject $H_0$. So in
+this case observing six and seven heads, isn't that unusual, but eight heads would
+be suspicious!
+
+
+```{r eval=FALSE, echo=FALSE}
+p = 0.6; (Z  = (p - 0.5)/sqrt(p * (1-p)/10)); 1- pnorm(Z)
+p = 0.7; (Z  = (p - 0.5)/sqrt(p * (1-p)/10)); 1- pnorm(Z)
+p = 0.8; (Z  = (p - 0.5)/sqrt(p * (1-p)/10)); 1- pnorm(Z)
+
+```
+
+### Example: click rate
+
+In the click rate example, our estimate for $p$, hence the our $Z$ statistic is
+\[
+Z = \frac{0.4 - 0.35}{\sqrt{0.24/120}} = 1.18
+\]
+Again based on the $\pm$1.96 threshold there doesn't appear to be any evidence 
+that switching advert would be worthwhile
+
+### $z$-tests vs $t$-tests
+
+A $z$-test is a special case of a $t$-test that you may have come across before. 
+When the sample size is large; $>10$, the $t$-test and the $z$-test gives the same result. 
+So for simplicity, we'll just use the $z$-test.
+
+### OKCupid
+
+The OKCupid dataset provides heights of their users. An interesting question, is
+how consistent are the heights given by users with the average height across the USA?
+First we need to extract the necessary information. R makes subsetting straightforward
+
+```{r}
+## Select Males
+height = cupid$height[cupid$sex == "m"]
+## Remove missing values
+height = height[!is.na(height)]
+## Convert to cm
+height = height * 2.54
+mean(height)
+```
+From the [CDC](https://www.cdc.gov/nchs/data/series/sr_11/sr11_252.pdf) paper
+we discover the average height distribution in the USA is 162.1. So the $t$-test function in R 
+(since the sample size is large, is equivalent to a $z$-test), we can obtain 
+a $p$-value
+
+```{r}
+t.test(height, mu = 162.1)
+```
+Since the $p$-value is small, we reject $H_0$ and conclude that 
+males in San Francesco are different to the rest of the USA (or just lie!)
+
+## Designing the experiment
+
+Designing a suitable experimental isn't as easier you would first think. For example, 
+let's suppose the two adverts were displayed on facebook. An initial idea would be 
+to display advert 1 followed by advert 2. However, a number of _confounding_ factors
+now become important. For example
+
+ * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
+ * Is the week before Christmas the same as the week after Christmas?
+ * Was your advert on the same page as a more popular advert?
+ 
+The easiest way to circumvent these issues is with randomised sampling. Essentially,
+instead of always display each advert, we display the advert with a probability. The
+probability could be equal, or if you were trying a new and untested approach, you have
+probability $0.95$ standard advert, $0.05$ new advert.
+
+
