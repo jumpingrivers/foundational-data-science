@@ -10,9 +10,9 @@ A probability distribution is a mathematical function that can be thought of as 
 occurrence of different possible outcomes in an experiment. It is our way of trying
 to capture the real world using mathematics. The most famous distribution
 is the Normal or Gaussian distribution. Instead of producing this distribution from 
-thin air, we will provide some background to explain how this naturally distribution
-arises with few assumptions. In later chapters, the Normal distribution
-will form basis for our _inferential_ models.
+thin air, we will provide some background to explain how this distribution
+naturally arises with few assumptions. In later chapters, the Normal distribution
+will form the basis for our _inferential_ models.
 
 ```{block type="rmdnote"}
 _Do I need to know this for data science?_ There are many people 
@@ -27,11 +27,13 @@ technology is essential.
 
 ## The Bernoulli distribution
 
-The simplest distribution is Bernoulli distribution. It models events that
+The simplest distribution is the Bernoulli distribution. It models events that
 have only two outcomes and so is a _discrete_ distribution.
 This distribution forms the building block for all other distributions.
 
 ### Motivating example
+
+<!-- XXX failure of what? might be easier with better context, a server? -->
 
 Suppose you are using a data centre where the probability of failure is 0.001 per day.
 What is the probability of a failure in 1 year?
@@ -66,6 +68,8 @@ Beware of the [law of averages](https://en.wikipedia.org/wiki/Law_of_averages). 
 just because you observe 3 heads in a row, the chance of observing a fourth head is still 0.5.
 ```
 
+<!-- XXX Don't know whether it's worth saying something abut independence somewhere -->
+
 ### Example
 
 Suppose you are using a data centre where the probability of failure is 0.001 per day.
@@ -76,7 +80,7 @@ that it will work every day for a year is
 0.999 \times 0.999 \times \ldots =  0.999^{365} = 0.694.
 \]That means that even though
 we only expect one failure every one thousand days. The chance of a failure happening in the coming
-year is 1 in 3, or $1- 0.694 \simeq 0.3.$
+year is approximately 1 in 3, or $1- 0.694 \simeq 0.3.$
 
 ## The Binomial distribution
 
@@ -106,13 +110,15 @@ where
 \binom {n}{k} = \frac {n!}{k!(n-k)!}
 \]
 and $n! = n \times (n-1) \times (n-2) \times (n-3) \ldots$. 
-Notice that when $n = 1$, the Binomial just become the Bernoulli distribution:
+Notice that when $n = 1$, the Binomial distribution just becomes the Bernoulli distribution:
 \[
 \Pr(X = 0) = \binom{1}{0} p^0 (1-p)^{1-0} = 1 \times 1 \times (1-p) = (1-p) .
 \]
-With a little bit of mathematics, we can show that if performed $n$ experiments, with
+With a little bit of mathematics, we can show that if we performed $n$ experiments, with
 each experiment having probability $p$ of success, then the mean number of successful outcomes
 is $n \times p$ and the variance is $n \times p \times (1 - p)$.
+
+<!-- XXX Is it worth saying something about n choose k, what it represents? -->
 
 ### What does the Binomial distribution look like?
 
@@ -122,6 +128,8 @@ The probability distributions are shown in figure \@ref(fig:4-1).
 ```{r 4-1, echo=FALSE, out.width="95%", fig.cap = "The Binomial distribution with $n=100$ and $p =0.25$, $0.5$ and $0.75$."}
 local(source("code/f4_binomial.R"))
 ```
+
+<!-- XXX personally really don't like the scatterplot for this, I think a bar chart would be better but obviously up to you -->
 
 Some points to note:
 
@@ -136,9 +144,13 @@ Some points to note:
 
 In our example we have $n = 1000$ hard drives that fail with rate $p = 0.05$. On average we would expect $n \times p = 1000 \times 0.05 = 50$ failures per year. To obtain an upper bound, we would look at the cumulative distribution, that is,
 
-  * What is the probability of 0 successes;
-  * What is the probability of 1 success;
-  * What is the probability of 2 successes, etc.
+\[
+Pr(X \le k) = Pr(X = 0) + Pr(X = 1) + \ldots + Pr(X = k)
+\]
+
+<!--   * What is the probability of 0 successes; -->
+<!--   * What is the probability of 1 success; -->
+<!--   * What is the probability of 2 successes, etc. -->
 
 This is easily done in R. The function `pbinom()` calculates the probability of observing less than 
 or equal to the value of it's first argument. So to obtain a reasonable 
@@ -206,7 +218,7 @@ distribution gives you the probability of observing a particular event such as
 rolling a dice or tossing a coin. For a discrete distribution, the probabilities 
 will sum to $1$, e.g. we will either get a head or tail, but one of the two events must happen.
 
-A continuous distribution is a bit different. Looking at formula for normal distribution 
+A continuous distribution is a bit different. Looking at the formula for the normal distribution 
 we see that it is valid for all values of $x$. That means if we added up $f_X(x)$ for
 all values of $x$, we would reach $\infty$, since $x$ has infinitely many decimal places. Instead, for continuous distributions we look
 at area under the curve. So the area under the normal distribution sums (or integrates) to
@@ -233,23 +245,24 @@ This is way the mean and variance are useful summary statistics.
 
 ### The Z-Score
 
-The $z$-score is where we transform or scale the  data set to have mean $0$ and variance $1$. If our original data is $x$,  then our _transformed_ data $z$ is defined as
+The $z$-score is where we transform, or scale, the dataset to have mean $0$ and variance $1$. If our original data is $x$,  then our _transformed_ data $z$ is defined as
 \[
 z = \frac{x - \bar x}{s}
 \] 
-where $\bar x$ is the mean of $x$ and $s$ is the standard deviation. If our data is normal, this would produce
+where $\bar x$ is the mean of $x$ and $s$ is the standard deviation. The transformed data tells us how many standard deviations above or below the mean each data point is. If our data is normal, this would produce
 a standard normal distribution.
 
-This is also known as "slide and squash rule". Looking the OKCupid data set again. 
-The original distribution of ages if shown in figure \@ref(fig:4-4) a.
+This is also known as "slide and squash rule". Looking at the OKCupid data set again. 
+The original distribution of ages is shown in figure \@ref(fig:4-4) a.
 
  * Subtract the mean, slides the distribution to $0$ - figure \@ref(fig:4-4) b.
  * Dividing by the standard deviation, squashes the distribution to have a variance of $1$ -
  figure \@ref(fig:4-4) c.
 
-Using $Z$ score is a standard technique to put different variables on the same scale. This
-help many machine learning algorithms converge quicker.
+Using $Z$-scores is a standard technique to put different variables on the same scale. This also
+helps many machine learning algorithms converge quicker.
 
+<!-- XXX graph titles, also why different bin rules? -->
  
 ```{r, 4-4, echo=FALSE, message=FALSE, fig.cap = "The slide and squash rule."}
 cupid = readRDS("data/okcupid.rds")

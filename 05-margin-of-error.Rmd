@@ -14,7 +14,7 @@ source("code/load_data.R")
 helpful-->
 
 
-The idea of a confidence interval is central to statistics. When we get answer, 
+The idea of a confidence interval is central to statistics. When we get an answer, 
 we don't just want a point estimate, i.e. a single number, we want a plausible
 range. In fact whenever you see opinion polls in newspapers, they typically come 
 with a margin of error of $\pm 3$%. It's always amusing to see the fuss that people 
@@ -24,8 +24,10 @@ Central to the idea of margin of error, is the [_central limit theorem_](https:/
 
 ## The Central Limit Therem (CLT)
 
+<!-- XXX That have finite mean and variance -->
+
 One of the reasons the normal distribution is so useful is the central limit theorem. 
-This theorem states that if we average a large number (say 30^[Puts big data into perspective!]) of variables^[The key phase is independent and
+This theorem states that if we average a large number (say 30^[Puts big data into perspective!]) of variables^[The key phrase is independent and
 identically distributed random variables.], then the result is approximately normally distributed.
 
 So if we observe data, $x_1, x_2, \ldots, x_n$,  where the mean and variance of $x_i$ are $\mu$ and $\sigma^2$, then
@@ -37,6 +39,8 @@ has a normal distribution with mean $\mu$ and variance $\sigma^2/n$.
 The standard error of the mean is defined as the standard deviation of the sample mean, i.e.
 $\sigma/\sqrt{n}$. Remember that $\sigma$ is the population standard deviation, so we _estimate_ the
 standard error using $s/\sqrt{n}$
+
+<!-- XXX think this note reads funny, but struggling to think of what I would put -->
 
 ```{block, type="rmdnote"}
 According to the central limit theorem, the standard deviation decreases as $1/\sqrt{n}$.
@@ -54,25 +58,30 @@ plot(x, xlab="Customer", ylab="Wait (minutes)",
 (s = sqrt(var(x)/20))
 m - 2*s; m + 2*s
 ```
+
+<!-- XXX might be easier to see if you had a histogram next to it? -->
+
 Figure \@ref(fig:5-1) shows the waiting time (in minutes) of
 $40$ customers. The figure shows that the average wait is around 1 to 2 minutes, but some unfortunate 
 customers have a significantly longer wait. The data 
 are clearly not normal, as waiting times must be positive and the distribution isn't symmetric.
  
-From chapter 2, we can quickly estimate the mean and standard deviation as `r mean(x)` and `r s`, i.e. $S_n=$`r mean(x)`. The CLT allows us to take this inference one step further. Since we know that $S_n$ is approximately normal, that implies
+From chapter 2, we can quickly estimate the mean and standard deviation as `r mean(x)` and `r s`, i.e. $S_n = `r mean(x)`$ . The CLT allows us to take this inference one step further. Since we know that $S_n$ is approximately normal, that implies
 that with probability 95%, the true mean lies between $2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).$
 
 ```{block, type="rmdwarning"}
 Mathematically the central limit theorem only holds as $n$ tends to infinity. However
 in this simple example, the underlying distribution is clearly not normal, 
-so the confidence interval isn't actually 95%, it's more like 91%. Which is still not too bad.
+so the confidence interval, given our finite sample, isn't actually 95%, it's more like 91%. Which is still not too bad.
 ```
+
+<!-- XXX you haven't mentioned the term confidence interval yet -->
 
 ### Big picture
 
 The central limit theorem is a powerful idea. It allows to get a handle on the uncertainty
 whenever we estimate means. One word of warning though. If the distribution is particularly odd, 
-then we'll need a larger sample size of the normality approximation to be accurate.
+then we'll need a larger sample size for the normality approximation to be accurate.
 
 ### Example: A/B testing
 
@@ -106,11 +115,15 @@ The approach used is to come up with two competing hypothesis:
  * $H_0$: the null (or dull) hypothesis. This is like "innocent until proven guilty". There
  is no evidence to suggest a difference. 
  * $H_1$: the alternate (or exciting) hypothesis. We have strong evidence to the contrary.
+
+<!-- XXX not quite what a p-value is though -->
  
 Assuming that $H_0$ is true, we calculate the probability (the $p$-value) of
 observing the data (based on the CLT). If this probability is small, then we would reject $H_0$ in favour 
 of $H_1$. For no good reason, the typical cut-off many people use is 0.05, i.e. if the $p$-value is
 less than 0.05 we reject $H_0$. 
+
+<!-- XXX no good reason? but fisher said it should be so. Also because of him we have the *, ** and *** in R summary output -->
 
 ### Example: tossing a coin
 
@@ -147,7 +160,10 @@ Let's return to our coin toss example, if observe six heads, then $\hat p = 6/10
 \[
 Z = \frac{0.6 - 0.5}{\sqrt(0.6 \times 0.4/10)} = 0.6455 .
 \]
-Since this is between $\pm$1.96, there isn't enough evidence to suggest a difference (the
+
+<!-- XXX does \pm render properly for you? I have tried 3 browsers and it does not for me but I can't figure out why -->
+
+Since this is between $ \pm 1.96 $ , there isn't enough evidence to suggest a difference (the
 actual $p$-value is 0.26).
 
 We can calculate the $Z$ score for the other possible outcomes
@@ -155,10 +171,13 @@ We can calculate the $Z$ score for the other possible outcomes
  * Seven heads, $\hat p = 0.7$, $Z = 1.38$, p-value = 0.08
  * Eight heads, $\hat p = 0.8$, $Z = 2.372$, p-value = 0.009
 
+<!-- XXX you said no good reason earlier?, i.e you already said this -->
+
 Due to vague historical reasons, people set a threshold of $0.05$ for reject $H_0$. So in
 this case observing six and seven heads, isn't that unusual, but eight heads would
 be suspicious!
 
+<!-- XXX what is unusual? less than 1 in 10 seems quite unusual, like lefties -->
 
 ```{r eval=FALSE, echo=FALSE}
 p = 0.6; (Z  = (p - 0.5)/sqrt(p * (1-p)/10)); 1- pnorm(Z)
@@ -169,14 +188,19 @@ p = 0.8; (Z  = (p - 0.5)/sqrt(p * (1-p)/10)); 1- pnorm(Z)
 
 ### Example: click rate
 
-In the click rate example, our estimate for $p$, hence the our $Z$ statistic is
+In the click rate example, our estimate for $p$ was $0.4$, hence our $Z$ statistic is
 \[
 Z = \frac{0.4 - 0.35}{\sqrt{0.24/120}} = 1.18
 \]
-Again based on the $\pm$1.96 threshold there doesn't appear to be any evidence 
-that switching advert would be worthwhile
+
+<!-- XXX \pm as above -->
+
+Based on the $\pm$1.96 threshold there doesn't appear to be any evidence 
+that switching advert would be worthwhile.
 
 ### $z$-tests vs $t$-tests
+
+<!-- XXX dont think > 10 is right here, maybe 100? -->
 
 A $z$-test is a special case of a $t$-test that you may have come across before. 
 When the sample size is large; $>10$, the $t$-test and the $z$-test gives the same result. 
@@ -184,7 +208,7 @@ So for simplicity, we'll just use the $z$-test.
 
 ### OKCupid
 
-The OKCupid dataset provides heights of their users. An interesting question, is
+The OKCupid dataset provides heights of their users. An interesting question is,
 how consistent are the heights given by users with the average height across the USA?
 First we need to extract the necessary information. R makes subsetting straightforward
 
@@ -198,17 +222,23 @@ height = height * 2.54
 mean(height)
 ```
 From the [CDC](https://www.cdc.gov/nchs/data/series/sr_11/sr11_252.pdf) paper
-we discover the average height distribution in the USA is 162.1. So the $t$-test function in R 
-(since the sample size is large, is equivalent to a $z$-test), we can obtain 
+we discover the average height in the USA is 162.1. We can use the $t$-test function in R 
+(since the sample size is large, this is equivalent to a $z$-test), to obtain 
 a $p$-value
+
+<!-- XXX Don't think this is a fair test, you are taking the mean height of males from OKcupid vs mean of females from paper, I thought 5ft 3 was a bit short on average -->
 
 ```{r}
 t.test(height, mu = 162.1)
 ```
-Since the $p$-value is small, we reject $H_0$ and conclude that 
-males in San Francesco are different to the rest of the USA (or just lie!)
+Since the $p$-value is small, we reject $H_0$ and conclude that the sample gives evidence that 
+males in San Francisco are different to the rest of the USA (or just lie!).
+
+<!-- XXX you should still get a reject result using the proper mean height, it's about 176cm, though the paper does have them in inches as well -->
 
 ## Designing the experiment
+
+<!-- XXX This feels kind of randomly dropped in with going  back to the advert example -->
 
 Designing a suitable experimental isn't as easier you would first think. For example, 
 let's suppose the two adverts were displayed on facebook. An initial idea would be 
@@ -221,7 +251,7 @@ now become important. For example
  
 The easiest way to circumvent these issues is with randomised sampling. Essentially,
 instead of always display each advert, we display the advert with a probability. The
-probability could be equal, or if you were trying a new and untested approach, you have
+probability could be equal, or if you were trying a new and untested approach, you might have
 probability $0.95$ standard advert, $0.05$ new advert.
 
 

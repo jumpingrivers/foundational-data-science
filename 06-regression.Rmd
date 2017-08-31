@@ -8,10 +8,12 @@ editor_options:
 
 In many data science problems, we wish to use information about some variables
 to help predict the outcome of another variable. For example, in banking, we 
-might wish to a persons financial history to predict the likelihood of them defaulting
+might wish to use a persons financial history to predict the likelihood of them defaulting
 on a mortgage. In our final chapter, we will look at standard modelling techniques.  
 We'll start with the simplest measure, correlation, before moving onto more 
 linear regression models.
+
+<!-- XXX do you mean end of this chapter?, also consider rewording final two sentences-->
 
 ## Capturing linear relationships
 
@@ -28,9 +30,11 @@ where
  * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean)
 
 The value of $r$ lies between $-1$ and $1$. A value of $1$ implies that all
-data points lie on a line a $X$ and $Y$ increase. A values of $-1$ implies that 
-all data points lie on a line $Y$ decreases,  $X$ increases. 
+data points lie on a line as $X$ and $Y$ increase. A values of $-1$ implies that 
+all data points lie on a line where $Y$ decreases as $X$ increases. 
 A value of 0 implies that there is no linear correlation between the variables.
+
+<!-- XXX you mention pearson here but not anywhere else -->
 
 (ref:6-1) Several sets of (x, y) points, with the Pearson correlation coefficient of x and y for each set. Credit: [Wikipedia](https://en.wikipedia.org/wiki/Correlation_and_dependence)
 
@@ -45,10 +49,15 @@ source("code/load_data.R")
 ### Example: Starbucks calorie content
 
 The Starbucks data set contains nutritional value of `r nrow(starbucks)` items. 
-For each item on the menu we have the number Calories, and the Carbohydrate, Fat, Fiber and Protein
+For each item on the menu we have the number of Calories, and the Carbohydrate, Fat, Fiber and Protein
 amount. 
 
+<!-- XXX should these be capitalised? -->
+
 We can quickly get an overview in R, 
+
+<!-- XXX where do I as a reader get the data? -->
+
 ```{r}
 head(starbucks)
 ```
@@ -81,7 +90,7 @@ Out of the four component parts, `Fat` is very highly correlated with `Calories`
 ## Linear Regression
 
 The next step is use information about one variable to inform you about another. 
-The simplest model is to assume a linear relationship $Y$, the variable we want to predictor
+The simplest model is to assume a linear relationship between $Y$, the response variable that we want to predict
 and $x$ the predictor (or covariate). This gives the equation
 \[
 Y = \beta_0 + \beta_1 x
@@ -89,10 +98,12 @@ Y = \beta_0 + \beta_1 x
 where
  
  * $\beta_0$ is the $y$-intercept. So if $x = 0$, the value we would predict for $Y$ is $\beta_0$.
- * $\beta_1$ is the gradient, that is the increase in $Y$ for a unit increase in $x$.
+ * $\beta_1$ is the gradient, that is the average increase in $Y$ for a unit increase in $x$.
 
 To fit the model in R, we use the `lm()`^[`lm` is short of linear model; this model is _linear_ in the 
 model coefficients.] function
+
+<!-- XXX have you used formula notation before here? -->
 
 ```{r}
 (m = lm(Calories ~ Fat, data = starbucks))
@@ -109,16 +120,18 @@ allows us to predict the calorie content based on the fat. For example, if the f
 was 10, then the estimated calorie content would be 276. However this simple example also 
 highlights the potential dangers of using the model for prediction. If we wished to predict the
 calorie content of fat-free food, i.e. $\text{Fat} = 0$, then our model would estimate the calorie
-content as $148$. This seems a bit high for a glass of water?
+content as $148$. This seems a bit high for a glass of water.
 
 ### How do we estimate the model coefficients?
 
 We estimate the model parameters by "minimising the sum of squared residuals". A
 residual is the difference between the observed value and the predicted 
-value. In figure \@ref(fig:6-3), the observed values, i.e. the data are the
-black dots and the residuals are the solid lines. The line of best fit is the dash line.
+value. In figure \@ref(fig:6-3), the observed values, i.e. the data, are the
+black dots and the residuals are the solid lines. The line of best fit is the dashed line.
 In figure \@ref(fig:6-3) we have five data points, so we must have residuals. The sum of
 squared residuals _always_ equals $0$. 
+
+<!-- XXX having 5 dsata points does not necessitate residuals. sum of squares does not always equal 0, did you mean something along the lines of we minimise the squared residuals since for a line of best fit the sum of residuals is always 0. -->
 
 The classical _statistics interpretation_ of a linear regression model, is to assume the
 underlying model is actually
@@ -130,6 +143,9 @@ where $\epsilon$ is normally distributed. By assuming that the errors ($\epsilon
 a normal distribution, this is equivalent to minimising the sum of squared residuals. Furthermore,
 by fitting a model with a known error structure, we can assess the model assumptions by 
 plotting the residuals and ensuring they have a random scatter.
+
+<!-- XXX not sure that normal distribution is equivalent to minimising SSR, under the assumption finding the line of best fit is equivalent to minimising ..., 
+also the last sentence is a bit naff -->
 
 ```{r, 6-3,echo=FALSE, fig.cap = "Residuals and linear regression."}
 local(source("code/f6_residual_illustration.R"))
