@@ -8,7 +8,22 @@ editor_options:
 <!-- (30 minutes) -->
 A probability distribution is a mathematical function that can be thought of as providing the probabilities of 
 occurrence of different possible outcomes in an experiment. It is our way of trying
-to capture the real world using mathematics. The most famous distribution
+to capture the real world using mathematics. 
+
+Probability is massive topic, that we cannot possibility hope to cover in a single 
+chapter. Instead, the goal of this chapter is to give an intuituve 
+feel for some of the standard probability distributions. Even if you have never 
+taken a course in statistics, you'll have come the simplest probaility distribution already, 
+the Uniform distribution. This distribution represents the situation where all 
+events are equally likely 
+
+
+
+
+One of the simplest distributions is a Uniform distribution. 
+
+
+The most famous distribution
 is the Normal or Gaussian distribution. Instead of producing this distribution from 
 thin air, we will provide some background to explain how this distribution
 naturally arises with few assumptions. In later chapters, the Normal distribution
@@ -33,9 +48,7 @@ This distribution forms the building block for all other distributions.
 
 ### Motivating example
 
-<!-- XXX failure of what? might be easier with better context, a server? -->
-
-Suppose you are using a data centre where the probability of failure is 0.001 per day.
+Suppose you are using a data centre where the probability of a server failure is 0.001 per day.
 What is the probability of a failure in 1 year?
 
 ### Description
