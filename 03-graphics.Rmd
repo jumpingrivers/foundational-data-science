@@ -90,7 +90,7 @@ the Bond movies have become more violent over time. In ggplot,
 we first specify a _canvas_ and then add subsequent layers using the 
 `+` operator
 ```{r 3-4, fig.cap = "Has Bond got more violent?"}
-ggplot(bond, aes(x = Number, y = Kills)) + #Create a canvas
+ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
   geom_point() # Add a layer of points
 ```
 On the $x$-axis we have the movie number (chronological movie order) and on 
@@ -118,8 +118,8 @@ in the top right hand corner.
 Next we can add a trend line to get a feel for the relationship over time. 
 The `stat_smooth()` layer adds a local trend line. Essentially, the line moves 
 along the $x$-axis and the gradient is only affected by nearby points.
-```{r, 3-6, fig.cap = "Capturing the trend.", message=FALSE}
-g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE, method = "smooth")
+```{r, 3-6, fig.cap = "Capturing the trend.", message=FALSE, warning=FALSE}
+g_smooth = g + stat_smooth(colour = "steelblue", se = FALSE, method = "loess")
 g_smooth
 ```
 This graph now contains some useful insight.
@@ -150,7 +150,7 @@ g_smooth +
   scale_color_ipsum() +
   labs(x = "Movie number", 
        y = "No. of Bond Kills",
-       title="Kills through time",
+       title = "Kills through time",
        subtitle = "Is there a relationship?",
        caption = "Pierce wasn't a nice man!") 
 ```
@@ -225,7 +225,7 @@ An alternative method is to use a _kernel density estimator_. Essentially we dra
 line around the histogram.
 
 
-```{r, 3-10, fig.cap="Kernel density plots of the ages.", message = FALSE}
+```{r, 3-10, fig.cap="Kernel density plots of the ages.", message = FALSE, warning=FALSE}
 ggplot(cupid, aes(x = age)) + 
   geom_density(aes(colour = sex)) +
   xlim(c(18, 80))
@@ -243,7 +243,7 @@ are actually constructed. Behind the scenes, there's some nice mathematical
 theory the underpins this graph. However, we'll avoid the maths and concentrate
 on the intuition. 
 
-Suppose we have three points: -2, -1, 2. These are shown in figure \@ref(fig:3-11) (a) as blue crosses. 
+Suppose we have three points: (-2, -1, 2). These points are shown in figure \@ref(fig:3-11) (a) as blue crosses. 
 Around each point we draw a _kernel_ - figure \@ref(fig:3-11) (b). The kernel can be any non-negative (but typically
 symmetric) function that integrates to one. For example, it could be a
 
@@ -313,7 +313,7 @@ the either by the number of movies, or by the date the actor first appeared.
 Again with a few minor tweaks we can go from a plot that is OK, to a plot that
 is informative and attractive.
 
-```{r, message=FALSE, echo=FALSE, out.width="95%", dev="png"}
+```{r, message=FALSE, echo=FALSE, out.width="100%", dev="png"}
 library("dplyr")
 library(hrbrthemes)
 g1 = count(bond, Actor) %>% 
@@ -343,5 +343,5 @@ g2 = count(bond, Actor) %>%
        caption="jumpingrivers.com") + 
   theme_ipsum(grid="X")
 
-gridExtra::grid.arrange(g1, g2, ncol=2)
+gridExtra::grid.arrange(g1, g2, ncol=1)
 ```

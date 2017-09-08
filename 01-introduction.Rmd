@@ -8,7 +8,6 @@ source("code/load_data.R")
 > It is the mark of a truly intelligent person to be moved by statistics
 > -- George Bernard Shaw
 
-
 ## Book overview
 
 Data science is a vague term. While everyone can agree what a vet or a plumber does, an exact description of a data scientist is 
