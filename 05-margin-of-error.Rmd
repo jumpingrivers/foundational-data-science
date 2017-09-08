@@ -5,13 +5,195 @@ editor_options:
 ---
 # Margin of Error
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results="hide"}
 source("code/load_data.R")
+set.seed(1)
+x = round(rnorm(20, mean=47, 20))
+mean(x); sd(x)
 ```
 
 
 <!-- This chapter is terse (I'm running out of time). Any additional material 
 helpful-->
+
+## Introduction & motativating example
+
+Suppose we're comparing two advert designs. At great expense, it has been decided to 
+change the font to Comic Sans. Does this change work? Being a (data) scientist we decide to (humanely^[Is using Comic Sans humane? Discuss.]) experiment on people by randomly showing them the advert. From 
+past experience, you know that customers spent 45 seconds (on average) on your site. 
+After switching to comic sans, we recorded the amount of time spent on the site
+by 20 customers
+
+```
+34 51 30 79 54 31 57 62 59 41 77 55 35  3 69 46 47 66 63 59
+```
+Should we consider switching to comic sans?
+
+Clearly time will vary visit–by–visit. On some vists, customers might spent more time (up to
+79 seconds), but on others visits, they may only spend a few seconds. To get
+an overall impression, we could work out the average time for the above sample
+\[
+\bar = \frac{34 + 51 + 30 + \ldots + 59}{20} = 50.9
+\]
+The new website does seem to be perform slightly better. But we have a very small sample. If
+we took another twenty visits, we would get a different estimate. We need to account for this
+sampling variability of the mean $\bar x$, and the most common way of doing this is to perform a
+hypothesis test.
+
+
+## One sample test
+
+The one–sample z–test can be useful when we are interested in how the mean of a set of sample
+observations compares to some target value. The mean in our sample, as always, is denoted by
+$\bar x$. The standard notation in statistics for the population mean is the Greek symbol $\mu$
+(pronounced “mu”). Obviously, $\bar x$ is our sample estimate of $\mu$.
+
+In the example above, we'd like to know whether our new font has affected the amount of time 
+people spend on our site. In hypothesis testing, we make this assertion in the null hypothesis, 
+denoted by $H_0$ and often written down as
+\[
+H_0: \mu = 45
+\]
+We usually test against a general alternative hypothesis $H_1$
+\[
+H_1: \mu \ne 45
+\]
+which says "$\mu$ is not equal to 45".
+
+When performing the hypothesis test, we _assume_ $H_0$ to be true. We then ask ourselves the
+question:
+
+> How likely is it that we would observe the data we have, or 
+> indeed anything more extreme than this, if the null hypothesis is true?
+
+We can get a handle on this question thanks to the Central Limit Theorem in Statistics.
+Although we will not go into the details here, this result tells us that the quantity
+\[
+Z = \frac{\bar x - \mu}{s/\sqrt{n}}
+\]
+follows a normal distribution (when $n$ is reasonably large). In this formula
+
+  * $\bar x$ is our sample mean
+  * $\mu$ is the assumed value of the population mean under the null hypothesis $H_0$
+  * $s$ is the sample standard deviation
+  * $n$ is the sample size
+
+
+```{block, type="rmdnote"}
+When $n$ is small, the central limit theorem tells us that $Z$ follows a $t$-distribution.
+A $t$ distribution is similar to the normal, except it has fatter tails (imagine 
+pushing down on the normal distribution and spreading the weight).
+Provided your sample is large ($n > 10$), then the $z$ and $t$ tests are equivilent.
+```
+
+Using our example data set, if the null hypothesis is true, then $\mu = 45$, so we 
+have
+\[
+Z = \frac{50.9 - 45}{18.2/\sqrt{20}} = 1.45
+\]
+The obvious question is, how likely is it to have observed this value?
+
+```{r 5-1,echo=FALSE, fig.cap=""}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(1.45, 0, 1.45, 0.2, col="grey60")
+text(1.45, 0.21, "Z = 1.45", pos=4, col="grey60")
+polygon(c( x[x>=1.45], 1.45 ),  c(y[x>=1.45],0 ), col="grey80")
+```
+
+Since the normal distribution is symmetric, $Z = 1.45$ is just as extreme as $Z = −1.45$, 
+and so the shaded region in the following diagram illustrates the $p$–value - 
+the probability of observing the data we have, 
+or anything more extreme than this, if the null hypothesis is true. In other words,
+the answer to our earlier question!
+
+The closer the area of the shaded region (the $p$–value) is to 0, the less plausible it is that we
+would observe the data we have if the null hypothesis is true, that is, the more evidence we have
+to reject $H_0$. 
+So, we need to work out the area of the shaded region under the curve in the
+diagram above, which can be done using R
+```{r}
+pnorm(1.45, lower.tail = FALSE)
+```
+So the $p$-value is 0.074.
+
+Earlier, we said that the smaller this $p$–value is, the more evidence we have to reject $H_0$. 
+The question now, is:
+
+> What constitutes a p–value small enough to reject H_0?
+
+The convention (but by no means a hard–and–fast cut–off) is to reject $H_0$ if the p–value is
+smaller than 5%. Thus, here we would say:
+
+  * Our p–value is greater than 5% (in fact, it’s somewhere between 5% and 10% – a computer
+can tell us that it’s exactly 9.132%)
+  * Thus, we do not reject $H_0$
+  * There is insufficient evidence to suggest a real deviation from the previous value
+  
+Care should be taken not be too strong in our conclusions. We can only really state that
+the sample does not suggest that the new design is better.
+
+> Absence of evidence is not evidence of absence
+
+
+### Errors
+
+A Type I Error occurs when the null hypothesis is true but is wrongly rejected. This often
+referred to as a "false hit"", or a false positive (e.g. when a diagnostic test indicates the presence
+of a disease, when in fact the patient does not have the disease).
+
+The rate of a Type I Error is known as the size of the test and is usually denoted by the Greek
+symbol $\alpha$, pronounced "alpha"", and usually equals the significance level of the test - that is, the
+p–value beyond which we have decided to reject H 0 (e.g. 5% or 0.05 in our earlier examples).
+
+A Type II Error occurs when the null hypothesis is false, but erroneously fails to be rejected.
+Hence, we fail to assert what is present, and so this is often referred to as a ‘miss’.
+The rate of the Type II Error is usually denoted by the Greek symbol $\beta$, pronounced “beta”,
+and is related to the power of a test (which equals 1 − $\beta$).
+
+![](graphics/type1and2.jpg)
+
+```{r echo=FALSE, results="hide"}
+set.seed(2)
+y = round(rnorm(20, 30, 10))
+y
+mean(y);sd(y)
+```
+
+
+## Two sample t-test
+
+Suppose we want to test another improvement to our website. We think that adding
+a [blink](https://en.wikipedia.org/wiki/Blink_element) tag would be a good way of
+attracting customers. Monitoring the first twenty customers we get
+
+```
+21 32 46 19 29 31 37 28 50 29 34 40 26 20 48  7 39 30 40 34
+```
+
+How do we compare the Comic version to the blinking version? We use a two sampled t-test! 
+As with the one–sample test, we must start by setting up our hypotheses. In a two–sample t
+test, the null hypothesis is always that the population means for the two groups are the same
+\[
+H_0: \mu_1 = \mu_2
+\]
+While the alternative hypothesis is that the two pages differ, i.e.
+\[
+H_1: \mu_1 \ne  \mu_2
+\]
+The corresponding test statistic is
+\[
+Z = \frac{\bar x_1 - \bar x_2}{s \sqrt{1/n_1 + 1/n_2}}
+\]
+
+
 
 
 The idea of a confidence interval is central to statistics. When we get an answer, 
@@ -22,66 +204,11 @@ make when an opinion poll raises by 1% which is likely to be down to random nois
 
 Central to the idea of margin of error, is the [_central limit theorem_](https://en.wikipedia.org/wiki/Central_limit_theorem).
 
-## The Central Limit Therem (CLT)
-
-<!-- XXX That have finite mean and variance -->
-
-One of the reasons the normal distribution is so useful is the central limit theorem. 
-This theorem states that if we average a large number (say 30^[Puts big data into perspective!]) of variables^[The key phrase is independent and
-identically distributed random variables.], then the result is approximately normally distributed.
-
-So if we observe data, $x_1, x_2, \ldots, x_n$,  where the mean and variance of $x_i$ are $\mu$ and $\sigma^2$, then
-\[
-S_n = \frac{x_1 + x_2 + \ldots + x_n}{n}
-\]
-has a normal distribution with mean $\mu$ and variance $\sigma^2/n$. 
-
-The standard error of the mean is defined as the standard deviation of the sample mean, i.e.
-$\sigma/\sqrt{n}$. Remember that $\sigma$ is the population standard deviation, so we _estimate_ the
-standard error using $s/\sqrt{n}$
-
-<!-- XXX think this note reads funny, but struggling to think of what I would put -->
-
-```{block, type="rmdnote"}
-According to the central limit theorem, the standard deviation decreases as $1/\sqrt{n}$.
-```
-
-### Example: Customer waiting times
-
-```{r, 5-1, echo=FALSE, results="hide", fig.cap = "Waiting times from 40 customers. The data is skewed and is not normally distributed."}
-par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,1))
-set.seed(1)
-x = signif(rexp(40, rate = 0.5), 2)
-plot(x, xlab="Customer", ylab="Wait (minutes)", 
-     panel.first = grid(), pch=21, bg="steelblue")
-(m = mean(x))
-(s = sqrt(var(x)/20))
-m - 2*s; m + 2*s
-```
-
-<!-- XXX might be easier to see if you had a histogram next to it? -->
-
-Figure \@ref(fig:5-1) shows the waiting time (in minutes) of
-$40$ customers. The figure shows that the average wait is around 1 to 2 minutes, but some unfortunate 
-customers have a significantly longer wait. The data 
-are clearly not normal, as waiting times must be positive and the distribution isn't symmetric.
- 
-From chapter 2, we can quickly estimate the mean and standard deviation as `r mean(x)` and `r s`, i.e. $S_n = `r mean(x)`$ . The CLT allows us to take this inference one step further. Since we know that $S_n$ is approximately normal, that implies
-that with probability 95%, the true mean lies between $2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).$
-
-```{block, type="rmdwarning"}
-Mathematically the central limit theorem only holds as $n$ tends to infinity. However
-in this simple example, the underlying distribution is clearly not normal, 
-so the confidence interval, given our finite sample, isn't actually 95%, it's more like 91%. Which is still not too bad.
-```
-
 <!-- XXX you haven't mentioned the term confidence interval yet -->
 
 ### Big picture
 
-The central limit theorem is a powerful idea. It allows to get a handle on the uncertainty
-whenever we estimate means. One word of warning though. If the distribution is particularly odd, 
-then we'll need a larger sample size for the normality approximation to be accurate.
+
 
 ### Example: A/B testing
 
@@ -163,8 +290,8 @@ Z = \frac{0.6 - 0.5}{\sqrt(0.6 \times 0.4/10)} = 0.6455 .
 
 <!-- XXX does \pm render properly for you? I have tried 3 browsers and it does not for me but I can't figure out why -->
 
-Since this is between $ \pm 1.96 $ , there isn't enough evidence to suggest a difference (the
-actual $p$-value is 0.26).
+Since this is between $ \pm 1.96 $ , there isn't enough evidence to suggest a difference 
+(the actual $p$-value is 0.26).
 
 We can calculate the $Z$ score for the other possible outcomes
  
@@ -235,6 +362,76 @@ Since the $p$-value is small, we reject $H_0$ and conclude that the sample gives
 males in San Francisco are different to the rest of the USA (or just lie!).
 
 <!-- XXX you should still get a reject result using the proper mean height, it's about 176cm, though the paper does have them in inches as well -->
+
+
+
+
+## The Central Limit Therem (CLT)
+
+<!-- XXX That have finite mean and variance -->
+
+One of the reasons the normal distribution is so useful is the central limit theorem. 
+This theorem states that if we average a large number (say 30^[Puts big data into perspective!]) of variables^[The key phrase is independent and
+identically distributed random variables.], then the result is approximately normally distributed.
+
+So if we observe data, $x_1, x_2, \ldots, x_n$,  where the mean and variance of $x_i$ are $\mu$ and $\sigma^2$, then
+\[
+S_n = \frac{x_1 + x_2 + \ldots + x_n}{n}
+\]
+has a normal distribution with mean $\mu$ and variance $\sigma^2/n$. 
+
+The standard error of the mean is defined as the standard deviation of the sample mean, i.e.
+$\sigma/\sqrt{n}$. Remember that $\sigma$ is the population standard deviation, so we _estimate_ the
+standard error using $s/\sqrt{n}$
+
+<!-- XXX think this note reads funny, but struggling to think of what I would put -->
+
+```{block, type="rmdnote"}
+According to the central limit theorem, the standard deviation decreases as $1/\sqrt{n}$.
+```
+
+### Example: Customer waiting times
+
+```{r, 5-2, echo=FALSE, results="hide", fig.cap = "Waiting times from 40 customers. The data is skewed and is not normally distributed."}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,1))
+set.seed(1)
+x = signif(rexp(40, rate = 0.5), 2)
+plot(x, xlab="Customer", ylab="Wait (minutes)", 
+     panel.first = grid(), pch=21, bg="steelblue")
+(m = mean(x))
+(s = sqrt(var(x)/20))
+m - 2*s; m + 2*s
+```
+
+<!-- XXX might be easier to see if you had a histogram next to it? -->
+
+Figure \@ref(fig:5-2) shows the waiting time (in minutes) of
+$40$ customers. The figure shows that the average wait is around 1 to 2 minutes, but some unfortunate 
+customers have a significantly longer wait. The data 
+are clearly not normal, as waiting times must be positive and the distribution isn't symmetric.
+ 
+From chapter 2, we can quickly estimate the mean and standard deviation as `r mean(x)` and `r s`, i.e. $S_n = `r mean(x)`$ . The CLT allows us to take this inference one step further. Since we know that $S_n$ is approximately normal, that implies
+that with probability 95%, the true mean lies between $2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).$
+
+```{block, type="rmdwarning"}
+Mathematically the central limit theorem only holds as $n$ tends to infinity. However
+in this simple example, the underlying distribution is clearly not normal, 
+so the confidence interval, given our finite sample, isn't actually 95%, it's more like 91%. Which is still not too bad.
+```
+
+
+
+The central limit theorem is a powerful idea. It allows to get a handle on the uncertainty
+whenever we estimate means. One word of warning though. If the distribution is particularly odd, 
+then we'll need a larger sample size for the normality approximation to be accurate.
+
+
+
+
+
+
+
+
 
 ## Designing the experiment
 
