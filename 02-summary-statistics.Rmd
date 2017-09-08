@@ -49,20 +49,27 @@ the first sample above, the second observation is $x_2=5$
 whilst in the second sample it is $x_2=0$. The letters $i$ and $j$ are
 most commonly used as the index numbers for the subscripts.
 
-The total number of observations in a sample is usually referred to by the letter $n$. Hence in our simple example above $n=3$.
+The total number of observations in a sample, that is the _sample size_, is usually referred to by the letter $n$.
+Hence in our simple example above $n = 3$.
 
 The next important piece of notation to introduce is the symbol
-$\sum$. This is the upper case of the Greek letter $sigma$, pronounced ''sigma''.  It is used
+$\sum$. This is the upper case of the Greek letter $\sigma$, pronounced ''sigma''.  It is used
 to represent the phrase 'sum the values'. This symbol is used as
-follows:
+follows
 \[
 \sum_{i=1}^n x_i = x_1 + x_2 + \dots + x_n.
 \]
 This notation is used to represent the sum of all the values in our
-data (from the first $i=1$ to the last $i=n$), and is often
+data (from the first $i = 1$ to the last $i = n$), and is often
 abbreviated to $\sum x$ when we sum over all the data in our sample.
 
 ## Measures of location
+
+These are also referred to as averages. In general
+terms, they tell us the value of a "typical" observation. There are two measures which are
+commonly used: the mean and the median. We will consider these in
+turn. When these are obtained from a sample of data, rather than the entire population, we
+often prefix with the word "sample".
 
 ### Sample mean
 
@@ -111,9 +118,14 @@ mean(Beauty$students)
 
 ### Sample median
 
-The sample median is the middle observation when the data are ranked in
-ascending order. Ranked observations are denoted as $x_{(1)}, x_{(2)}, \ldots,
-x_{(n)}$. The sample median is defined as:
+The median is occasionally used instead of the mean, particularly when the data have an
+asymmetric profile or when there are outliers (as indicated by graph, perhaps). The median is
+the middle value of the observations when they are listed in ascending order. It is
+straightforward to determine the median for small data sets. For larger data sets, the calculation
+is more easily done using a computer package such as R.
+
+
+Ranked observations are denoted as $x_{(1)}, x_{(2)}, \ldots, x_{(n)}$. The sample median is defined as:
 \[
 \text{Sample median} = 
 \begin{cases}
@@ -148,9 +160,15 @@ a few very rich individuals can dominate the statistic.
 
 ## Measures of spread
 <!-- (25 minutes) -->
-  
-As well as knowing the location statistics of a data set, we often also want to know how variable 
-or `spread-out' our data are.
+
+
+A measure of location is insufficient in itself to summarise data as it only describes the value of a
+typical outcome and not how much variation there is in the data. For example, the two datasets
+10, 20, 30 and 19, 20, 21 both have the same mean (20) and the same median (20). However the
+first set of data ranges considerably from this value while the second stays very close. They are
+quite clearly very different data sets. The mean or the median does not fully represent the data.
+There are three basic measures of spread which we will consider: the range, the inter–quartile
+range and the sample variance/standard deviation.
   
 ### Range
   
@@ -163,6 +181,13 @@ smallest.^[When you get a new data set, calculating the range is
 where $x_{(n)}$ is the largest value in our data set and $x_{(1)}$ is the smallest value.
 So for our data set of $\{0,3,2,0\}$, the range is $3-0=3$. It is very useful
 for data checking purposes, but in general it's not very robust. 
+
+There are two problems with the range as a measure of spread. When calculating the range you
+are looking at the two most extreme points in the data, and hence the value of the range can be
+unduly influenced by one particularly large or small value, known as an outlier. The second
+problem is that the range is only really suitable for comparing (roughly) equally sized samples as
+it is more likely that large samples contain the extreme values of a population.
+
 
 #### Example: OKCupid {-}
 
