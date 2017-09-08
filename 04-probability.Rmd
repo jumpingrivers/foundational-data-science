@@ -6,7 +6,14 @@ editor_options:
 # The normal distribution - what’s the point? {#chapter4}
 
 <!-- (30 minutes) -->
-A probability distribution is a mathematical function that can be thought of as providing the probabilities of 
+
+Many events can't be predicted with total certainty. The best we can say is how likely 
+they are to happen. Day to day, probability is often used to 
+describe the world around. The chance of rain, the likelihood of our football team winning,
+or who will win the election. What do these statements actually mean and how are they calculated? 
+
+Hiding behind these statements is the idea of a probability distribution.
+This is a mathematical function that can be thought of as providing the probabilities of 
 occurrence of different possible outcomes in an experiment. It is our way of trying
 to capture the real world using mathematics. 
 
@@ -16,12 +23,6 @@ feel for some of the standard probability distributions. Even if you have never
 taken a course in statistics, you'll have come the simplest probaility distribution already, 
 the Uniform distribution. This distribution represents the situation where all 
 events are equally likely 
-
-
-
-
-One of the simplest distributions is a Uniform distribution. 
-
 
 The most famous distribution
 is the Normal or Gaussian distribution. Instead of producing this distribution from 
@@ -43,13 +44,15 @@ technology is essential.
 ## The Bernoulli distribution
 
 The simplest distribution is the Bernoulli distribution. It models events that
-have only two outcomes and so is a _discrete_ distribution.
+have only two outcomes. For example, your football team will either win or not. 
+Since there are a _countable_  number of events, this is a _discrete_ distribution.
 This distribution forms the building block for all other distributions.
 
 ### Motivating example
 
-Suppose you are using a data centre where the probability of a server failure is 0.001 per day.
-What is the probability of a failure in 1 year?
+Suppose you are using a well know cloud provider. Reading the small print, they
+state that the chance of downtime on any particular day, is 0.001. 
+What is the probability of having no downtime throughout the year?
 
 ### Description
 
