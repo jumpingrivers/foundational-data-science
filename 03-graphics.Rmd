@@ -313,7 +313,7 @@ the either by the number of movies, or by the date the actor first appeared.
 Again with a few minor tweaks we can go from a plot that is OK, to a plot that
 is informative and attractive.
 
-```{r, message=FALSE, echo=FALSE, out.width="100%", dev="png"}
+```{r, message=FALSE, echo=FALSE, out.width="100%", dev="png", res=300}
 library("dplyr")
 library(hrbrthemes)
 g1 = count(bond, Actor) %>% 
@@ -343,5 +343,6 @@ g2 = count(bond, Actor) %>%
        caption="jumpingrivers.com") + 
   theme_ipsum(grid="X")
 
-gridExtra::grid.arrange(g1, g2, ncol=1)
+g1
+g2
 ```
