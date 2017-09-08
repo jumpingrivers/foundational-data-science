@@ -22,7 +22,7 @@ and require skills from multiple disciplines.
 
 The goal of this short book is to provide an introduction into 
 the wonderful world of data science from the statistical point of view. In 
-a tradional statistics course^[Clearly there is some poetic licence here.], we would look at small, data sets to illustrate key concepts.
+a traditional statistics course^[Clearly there is some poetic licence here.], we would look at small, data sets to illustrate key concepts.
 In a computing science course, we would start with a data base and move on from there. This
 book straddles both camps. Data sets that are small enough to be informative, but still 
 have real world interest.
