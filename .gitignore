@@ -25,3 +25,4 @@ vignettes/*.pdf
 .Rproj.user
 _book
 _bookdown_files
+_main.Rmd
