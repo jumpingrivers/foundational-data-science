@@ -22,6 +22,46 @@ that some measures fit naturally into a big data scenario while others do not.
 source("code/load_data.R")
 ```
 
+## Mathematical notation
+
+Before we can talk more about numerical techniques we first need to
+define some basic notation. This will allow us to generalise all
+situations with a simple shorthand.
+
+Very often in statistics we replace actual numbers with letters in
+order to be able to write general formulae. As discussed earlier, we generally use a single upper case letter to represent our random variable and the lower case to represent sample data, with subscripts to distinguish individual observations in the sample.  Amongst the most common letters to use is $x$, although $y$ and $z$ are frequently used as well. For
+example, suppose we ask a random sample of three people how many
+mobile phone calls they made yesterday. We might get the following data: 1, 5, 7. If
+we take another sample we will most likely get different data, say 2,
+0, 3. Using algebra we can represent the general case as $x_1$, $x_2$,
+$x_3$:
+
+| | |
+------------|--|---|---
+1st sample: | 1 | 5 | 7
+2nd sample: | 2 | 0 | 3 
+$\vdots$  | $\vdots$ | $\vdots$ | $\vdots$ 
+typical sample: | $x_1$ | $x_2$ | $x_3$
+
+This can be generalised further by referring to the random variable _as a whole_ as
+$X$ and the $i\text{th}$ observation in the sample as $x_i$. Hence, in
+the first sample above, the second observation is $x_2=5$
+whilst in the second sample it is $x_2=0$. The letters $i$ and $j$ are
+most commonly used as the index numbers for the subscripts.
+
+The total number of observations in a sample is usually referred to by the letter $n$. Hence in our simple example above $n=3$.
+
+The next important piece of notation to introduce is the symbol
+$\sum$. This is the upper case of the Greek letter $sigma$, pronounced ''sigma''.  It is used
+to represent the phrase 'sum the values'. This symbol is used as
+follows:
+\[
+\sum_{i=1}^n x_i = x_1 + x_2 + \dots + x_n.
+\]
+This notation is used to represent the sum of all the values in our
+data (from the first $i=1$ to the last $i=n$), and is often
+abbreviated to $\sum x$ when we sum over all the data in our sample.
+
 ## Measures of location
 
 ### Sample mean

@@ -57,6 +57,24 @@ we should always explore and try to understand the issues before throwing the ma
 This book targets people who work with data, but don't come from a mathematics
 or statistics background. They know names of standard methods, but are a bit hazy on the
 details. We aim to fill in some of the blanks. 
+## Data
+
+The quantities measured in a study are called _random variables_ and a particular outcome is called an _observation_. A collection of observations is the _data_. The collection of all possible outcomes is the _population_. If we were interested in how long a customer spends on our website. The time spent on a website
+is our random variable; a particular customer's time would be an observation and if we recorded the time for
+every person during the day,  those would be our data, which would form a _sample_ from the population of all customers.  As a shorthand we often use a capital letter (say $X$) to represent our random variable, and the lower case, with subscripts (e.g. $x_{1}, x_{2}, \ldots, $), to represent observations _in a general sense_.
+
+In practice it is difficult to observe whole populations, unless we are interested in a very limited population, e.g. just the customers who came to our site today.  In reality we usually observe a subset of the population, and this raises questions about who or what goes into our sample; we will briefly consider various commonly--used sampling techniques soon.  
+
+Once we have our data, it is important to understand what _type_ it is -- so we can figure out exactly what to do with it.  The two main categories are _quantitative_ and _qualitative_ (in other words, numeric and non--numeric, respectively).  Quantitative data can be further subdivided into categories referred to as _discrete_ and _continuous_.  Discrete data moves in 'steps' -- for example, whole numbers, shoe sizes etc.  Continuous data can usually take _any_ value, although there may be restrictions to the set of positive numbers (for example height, weight) and there may be issues of accuracy depending on the equipment being used to record the data (and so sometimes continuous data might 'look' discrete!).  There are other words that are often used within these categories, such as 'ordinal', and 'categorical'.   
+
+### Sample size
+
+When considering data collection, it is important to ensure that the sample contains a sufficient
+number of members of the population for adequate analysis to take place. Larger samples will
+generally give more precise information about the population. Unfortunately, in reality, issues of
+expense and time tend to limit the size of the sample it is possible to take. For example,
+national opinion polls often rely on samples in the region of just $1,000$.
+
 
 ## Data sets
 
