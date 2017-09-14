@@ -96,24 +96,24 @@ respectively.
 Statistics uses the sample to inform us about the population.
 ```
 
-### Example: The Beauty data set {-}
+### Example: The beauty data set {-}
 
-The `Beauty` data set contains results for `r nrow(Beauty)` classes. After loading 
+The `beauty` data set contains results for `r nrow(beauty)` classes. After loading 
 the data set into R, we can extract a particular column using the dollar 
 operator
 ```{r, results="hide"}
 ## Attractiveness score
-Beauty$beauty
+beauty$beauty
 ## Number of students per class
-Beauty$students
+beauty$students
 ```
 We can use the built-in function `mean()` to calculate the
 average attractiveness score and class size
 ```{r}
 ## Attractiveness score (normalised)
-mean(Beauty$beauty)
+mean(beauty$beauty)
 ## Number of students per class
-mean(Beauty$students)
+mean(beauty$students)
 ```
 
 ### Sample median
@@ -140,13 +140,13 @@ For our simple data set $\{0,3,2,0\}$, to calculate the median we
 re-order it to: $\{0,0,2,3\}$; then take the average of the middle two
 observations, to get 1.
 
-#### Example: The Beauty data set {-}
+#### Example: The beauty data set {-}
 
 R has a built-in function called `median()` that we can use to calculate sample median.
 We'll use the same variables as previous
 ```{r}
-median(Beauty$beauty)
-median(Beauty$students)
+median(beauty$beauty)
+median(beauty$students)
 ```
 Notice that the mean and median beauty scores are approximately the same; this implies that the data
 are roughly symmetric. However the class size values differ: $\bar x = 55$ and the median is $29$. This
@@ -258,8 +258,8 @@ However, we don't and to correct for that we use $n - 1$.
 
 R has built-in functions to calculate the standard deviation and variance respectively
 ```{r}
-sd(Beauty$evaluation)
-var(Beauty$evaluation)
+sd(beauty$evaluation)
+var(beauty$evaluation)
 ```
 
 ### Quartiles and the interquartile range

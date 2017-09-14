@@ -26,3 +26,4 @@ vignettes/*.pdf
 _book
 _bookdown_files
 _main.Rmd
+_main.dvi

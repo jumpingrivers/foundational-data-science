@@ -78,8 +78,9 @@ national opinion polls often rely on samples in the region of just $1,000$.
 
 ## Data sets
 
-<!-- XXX Course or book? -->
 During this course, we'll use a few different data sets to illustrate the key points. 
+The datasets can be found in the [GitHub](https://github.com/jumpingrivers/foundational-data-science/tree/master/data) 
+repository for this book.
 
 ### The relationship between beauty and teaching
 
@@ -101,7 +102,7 @@ professor in the picture, to make their ratings independent of age, and to keep 
 The scores were then normalised.
 
 
-This data set has `r nrow(Beauty)` rows and `r ncol(Beauty)` columns.
+This data set has `r nrow(beauty)` rows and `r ncol(beauty)` columns.
 
 ### Bond, James Bond
 

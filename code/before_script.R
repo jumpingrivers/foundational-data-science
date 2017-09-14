@@ -15,7 +15,4 @@ knitr::opts_chunk$set(
 set.seed(2016)
 options(digits = 3)
 options(dplyr.print_min = 4, dplyr.print_max = 4)
-
-load("data/Beauty.RData")
-cupid = readRDS("data/okcupid.rds")
-load("data/bond.RData")
+source("code/load_data.R")
