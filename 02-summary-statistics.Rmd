@@ -136,8 +136,8 @@ Ranked observations are denoted as $x_{(1)}, x_{(2)}, \ldots, x_{(n)}$. The samp
 
 The median is less sensitive to outliers than the sample mean, but has less useful mathematical properties. 
 
-For our simple data set $\{0,3,2,0\}$, to calculate the median we
-re-order it to: $\{0,0,2,3\}$; then take the average of the middle two
+For our simple data set $\{0, 3, 2, 0\}$, to calculate the median we
+re-order it to: $\{0, 0, 2, 3\}$; then take the average of the middle two
 observations, to get 1.
 
 #### Example: The beauty data set {-}
