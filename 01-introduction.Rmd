@@ -128,3 +128,15 @@ So we've dropped 11 variables relating to "users essays". This results in an unc
 
 __Credit__: Data and code for OkCupid Profile Data for Introductory Statistics and Data Science Courses (Journal of Statistics Education July 2015, Volume 23, Number 2); [GitHub](https://github.com/rudeboybert/JSE_OkCupid) page.
 
+### Starbucks
+
+The Starbucks data set contains nutrional information on 113 products from Starbucks. 
+The data set has six columns:
+
+ * `Product`
+ * `Calories`
+ * `Fat`
+ * `Carb` (Carbohydrates)
+ * `Fiber`
+ * `Protein`
+
