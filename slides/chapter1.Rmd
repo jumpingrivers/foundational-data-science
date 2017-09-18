@@ -24,8 +24,183 @@ layout: true
 `r add_border(inverse=FALSE)`
 ---
 
-# Jumping Rivers 
+# Introduction
 
-  * Standard header and footer
-  * Colour from website
+```{r echo=FALSE}
+#source("code/load_data.R")
+```
+<!-- (20 minutes) -->
 
+> It is the mark of a truly intelligent person to be moved by statistics
+> -- George Bernard Shaw
+
+---
+
+# Book/Course/Lecture overview
+
+  * Data science is a vague term. 
+  
+  * Everyone can agree what a vet or a plumber does, 
+  
+  * But what does a data scientist do
+  
+    - No Venn diagrams are allowed!
+    
+---
+
+# Data Science
+
+  *  My background is in statistics and I see data science as
+the logical extension of applying statistical methods to large scale data sets.
+
+  * A computer science person, would switch that idea on it's head
+    - large data sets first, analytics second. 
+
+  * Both of us are correct _and_ also wrong
+  
+---
+
+# Course aim
+
+  * Introduction to data science from a statistical point of view
+  
+  * Small, interesting data sets
+  
+  * Small enough to be informative, but still have real world interest.
+
+---
+
+# The trouble with ~~tibbles~~ data
+
+> The trouble with interesting data, is that there are so many potential problems. 
+
+---
+
+# Missing data
+
+ * Most real world data sets have missing data
+ 
+ * There are different types of missing data!
+ 
+---
+
+# Missing completely at random (MCAR)
+
+  * This is the easiest to deal with. 
+  
+  * The data are missing independently of both observed and unobserved data. 
+
+--
+
+  * If I ask you  your age, and you flip a coin. 
+    - If heads, you tell me the answer
+    - If tails, you refuse.
+
+---
+
+# Missing at random (MAR)
+
+  * Given the observed data, data are missing independently of unobserved data.
+--
+
+  * Scottish participants are more likely to refuse a survey on soccer excellence
+    - but it does not depend on the level of their soccer skills.
+
+---
+
+# Missing not at random (MNAR)
+
+  * Missing observations related to values of unobserved data.
+
+--
+
+  * As a concrete example, a good predictor of whether someone survived the titanic disaster was whether or not they
+  had their age recorded.
+
+---
+
+# Key Skills
+
+  * Spot where potential issues lie using a combination of basic and advanced techniques
+  
+---
+
+# Talking about data
+
+ * Quantities measured in a study are called _random variables_ 
+ 
+ * A particular outcome is called an _observation_
+ 
+ * A collection of observations is the _data_ (or _sample_)
+ 
+ * The collection of all possible outcomes is the _population_
+
+---
+
+# Example
+ 
+  * A customer spends on our website
+  
+--
+
+  * The time spent on a website is our random variable. 
+  * A particular customer's time would be an observation 
+  * If we recorded the time for every person during the day, those times would be our data, which would form a _sample_ from the population of all customers.  
+  
+--
+
+  * We often use a capital letter (say $X$) to represent our random variable, 
+  * and the lower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
+
+---
+
+# Population 
+
+> In general we never observe the whole population
+
+---
+
+# Population
+
+  * In practice it is difficult to observe whole populations, unless we are interested in a very limited population, e.g. just the customers who came to our website today.  In reality we usually observe a subset of the population, and this raises questions about who or what goes into our sample; we will briefly consider various commonly--used sampling techniques soon.  
+
+Once we have our data, it is important to understand what _type_ it is -- so we can figure out exactly what to do with it.  The two main categories are _quantitative_ and _qualitative_ (in other words, numeric and non--numeric, respectively).  Quantitative data can be further subdivided into categories referred to as _discrete_ and _continuous_.  Discrete data moves in 'steps' -- for example, whole numbers, shoe sizes etc.  Continuous data can usually take _any_ value, although there may be restrictions to the set of positive numbers (for example height, weight) and there may be issues of accuracy depending on the equipment being used to record the data (and so sometimes continuous data might 'look' discrete!).  There are other words that are often used within these categories, such as 'ordinal', and 'categorical'.   
+
+---
+# Sample size
+
+When considering data collection, it is important to ensure that the sample contains a sufficient
+number of members of the population for adequate analysis to take place. Larger samples will
+generally give more precise information about the population. Unfortunately, in reality, issues of
+expense and time tend to limit the size of the sample it is possible to take. For example,
+national opinion polls often rely on samples in the region of just $1,000$.
+
+---
+
+# Designing the experiment
+
+Designing a suitable experimental isn't as easier you would first think. For example, 
+let's suppose the two adverts were displayed on facebook. An initial idea would be 
+to display advert 1 followed by advert 2. However, a number of _confounding_ factors
+now become important. For example
+
+ * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
+ * Is the week before Christmas the same as the week after Christmas?
+ * Was your advert on the same page as a more popular advert?
+ 
+The easiest way to circumvent these issues is with randomised sampling. Essentially,
+instead of always display each advert, we display the advert with a probability. The
+probability could be equal, or if you were trying a new and untested approach, you might have
+probability $0.95$ standard advert, $0.05$ new advert.
+
+---
+
+# Data sets
+
+ * Beauty & Teaching
+ 
+ * James Bond
+ 
+ * OKCupid
+ 
+ * Starbucks
