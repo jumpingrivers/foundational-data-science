@@ -60,7 +60,7 @@ details. We aim to fill in some of the blanks.
  
 ## Talking about data
 
-The quantities measured in a study are called _random variables_ and a particular outcome is called an _observation_. A collection of observations is the _data_. The collection of all possible outcomes is the _population_. If we were interested in how long a customer spends on our website, the time spent on a website
+The quantities measured in a study are called _random variables_ and a particular outcome is called an _observation_. A collection of observations is the _data_ (or _sample_). The collection of all possible outcomes is the _population_. If we were interested in how long a customer spends on our website, the time spent on a website
 is our random variable. A particular customer's time would be an observation and if we recorded the time for
 every person during the day, those times would be our data, which would form a _sample_ from the population of all customers.  As a shorthand we often use a capital letter (say $X$) to represent our random variable, and the lower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
 
