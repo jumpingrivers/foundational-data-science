@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A title page</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Colin Gillespie (@csgillespie)" />
+    <link href="libs/remark-css/example.css" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# A title page
+## A subtitle
+### Colin Gillespie (<a href="https://twitter.com/csgillespie">@csgillespie</a>)
+
+---
+
+
+
+
+layout: true
+
+      &lt;div class="jr-header"&gt;
+        &lt;img class="logo" src="assets/white_logo_full.png"/&gt;
+        &lt;span class="social"&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;img src="assets/twitter.gif"/&gt;&lt;/td&gt;&lt;td&gt; @jumping_uk&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      
+&lt;div class="jr-footer"&gt;&lt;span&gt;&amp;copy; 2017 Jumping Rivers (jumpingrivers.com)&lt;/span&gt;&lt;/div&gt;
+
+---
+
+# Jumping Rivers 
+
+  * Standard header and footer
+  * Colour from website
+
+---
+
+layout: true
+
+      &lt;div class="jr-header-inverse"&gt;
+        &lt;img class="logo" src="assets/white_logo_full.png"/&gt;
+        &lt;span class="social"&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;img src="assets/twitter.gif"/&gt;&lt;/td&gt;&lt;td&gt; @jumping_uk&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      
+&lt;div class="jr-footer-inverse"&gt;&lt;span&gt;&amp;copy; 2017 Jumping Rivers (jumpingrivers.com)&lt;/span&gt;&lt;/div&gt;
+background-image: url(assets/white_logo.png)
+
+---
+class: inverse
+
+# Jumping Rivers
+
+  * Inverse theme 
+
+---
+
+class: center, middle, inverse
+
+# Center and middle
+
+---
+
+layout: true
+
+      &lt;div class="jr-header"&gt;
+        &lt;img class="logo" src="assets/white_logo_full.png"/&gt;
+        &lt;span class="social"&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;img src="assets/twitter.gif"/&gt;&lt;/td&gt;&lt;td&gt; @jumping_uk&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      
+&lt;div class="jr-footer"&gt;&lt;span&gt;&amp;copy; 2017 Jumping Rivers (jumpingrivers.com)&lt;/span&gt;&lt;/div&gt;
+
+---
+
+# Our clients
+
+&lt;div id="clients"&gt;
+&lt;img src="assets/shell.png"&gt;&lt;/img&gt;&lt;img src="assets/sustrans.png"&gt;&lt;/img&gt;
+&lt;img src="assets/yorkshire.png"&gt;&lt;/img&gt;&lt;img src="assets/hastings.png"&gt;&lt;/img&gt;
+&lt;img src="assets/Pragmatic.png"&gt;&lt;/img&gt;&lt;img src="assets/nhs.png"&gt;&lt;/img&gt;
+&lt;img src="assets/royal_statistical_society.jpg"&gt;&lt;/img&gt;&lt;img src="assets/Francis_Crick_Institute.png"&gt;&lt;/img&gt;
+&lt;img src="assets/Ministry_of_Defence.png"&gt;&lt;/img&gt;&lt;img src="assets/University_of_Manchester.png"&gt;&lt;/img&gt;
+&lt;/div&gt;
+
+---
+background-image: url(assets/Rlogo_fade.png)
+
+&lt;!-- A background image --&gt;
+
+# A brief history of R
+
+  - 1993: Research project in Auckland, NZ  
+  
+  - 1995: R released as open-source software
+  
+  - 1997:
+    - R core group formed
+    - April 1st Mailing list started 
+    - April 23rd: CRAN is started (3 mirrors); now `\(\sim\)` 140 mirrors
+
+  - 2000: R 1.0.0 released
+
+  - 2003: R Foundation founded
+
+  - 2004: Version 2.0.0
+
+  - 2013: Version 3.0.0
+
+---
+
+# Mathematics
+
+  * Not great for Mathematics; only basic support. 
+  
+  * Only __single__ line equations
+`$$y = \beta_0 + \beta_1 x + \epsilon$$`
+
+--
+  
+  * Use double dashes for pausing
+
+
+---
+layout:false 
+background-image: url(assets/gandalf.jpg)
+class: center, inverse
+# Use `layout:false` to remove the header/footer
+
+---
+
+# Two columns is 
+
+
+.pull-left[
+1. Left column
+
+1. Another point
+
+]
+
+.pull-right[
+1. Now to the right
+
+1. Yep*
+]
+
+.footnote[[*] I'm a footnote.]
+
+---
+
+layout: true
+
+      &lt;div class="jr-header"&gt;
+        &lt;img class="logo" src="assets/white_logo_full.png"/&gt;
+        &lt;span class="social"&gt;&lt;table&gt;&lt;tr&gt;&lt;td&gt;&lt;img src="assets/twitter.gif"/&gt;&lt;/td&gt;&lt;td&gt; @jumping_uk&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/span&gt;
+      &lt;/div&gt;
+      
+&lt;div class="jr-footer"&gt;&lt;span&gt;&amp;copy; 2017 Jumping Rivers (jumpingrivers.com)&lt;/span&gt;&lt;/div&gt;
+
+---
+
+# Highlight code lines
+
+
+```r
+# Figure scale set in knitr_options.R
+# Can't highlight multiple lines
+library(ggplot2)
+ggplot(cars) + 
+*  geom_point(aes(speed, dist))
+```
+
+&lt;img src="index_files/figure-html/unnamed-chunk-1-1.svg" width="70%" style="display: block; margin: auto;" /&gt;
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});
+(function() {var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler"); if (!r) return; s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }"; d.head.appendChild(s);})();</script>
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre']
+  }
+});
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

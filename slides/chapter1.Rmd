@@ -1,0 +1,31 @@
+---
+title: "A title page"
+subtitle: "A subtitle"
+author: '`r jrPresentation::get_author()`'
+output:
+  xaringan::moon_reader:
+    css: ["default", "style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+library("jrPresentation")
+set_presentation_options()
+```
+
+layout: true
+`r add_border(inverse=FALSE)`
+---
+
+# Jumping Rivers 
+
+  * Standard header and footer
+  * Colour from website
+

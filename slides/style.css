@@ -1,0 +1,203 @@
+@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+@import url(https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+
+.title-slide {
+  background-image: url(assets/white_logo.png);
+  background-size: cover;
+}
+
+body { font-family: 'Droid Serif', 'Palatino Linotype', 'Book Antiqua', Palatino, 'Microsoft YaHei', 'Songti SC', serif; }
+h1, h2, h3 {
+  font-family: 'Yanone Kaffeesatz';
+  font-weight: normal;
+}
+a, a > code {
+  color: rgb(249, 38, 114);
+  text-decoration: none;
+}
+.footnote {
+  position: absolute;
+  bottom: 3em;
+  padding-right: 4em;
+  font-size: 90%;
+}
+.remark-code, .remark-inline-code { font-family: 'Source Code Pro', 'Lucida Console', Monaco, monospace; }
+.remark-code-line-highlighted     { background-color: #ffff88; }
+
+.inverse {
+  background-color: #272822;
+  color: #d6d6d6;
+  text-shadow: 0 0 20px #333;
+}
+.inverse h1, .inverse h2, .inverse h3 {
+  color: #f3f3f3;
+  line-height: 1.0em;
+}
+/* Two-column layout */
+.left-column {
+  color: #777;
+  width: 20%;
+  height: 92%;
+  float: left;
+}
+.left-column h2:last-of-type, .left-column h3:last-child {
+  color: #000;
+}
+.right-column {
+  width: 75%;
+  float: right;
+  padding-top: 1em;
+}
+.pull-left {
+  float: left;
+  width: 47%;
+}
+.pull-right {
+  float: right;
+  width: 47%;
+}
+.pull-right ~ * {
+  clear: both;
+}
+img {
+  max-width: 100%;
+}
+blockquote {
+  border-left: solid 5px lightgray;
+  padding-left: 1em;
+}
+
+/* Formatting for tables
+  * https://github.com/yihui/hugo-xmin/blob/4888812fd8e4589f14f629f40136bae507471089/static/css/style.css#L43-L50
+  */
+
+table {
+  margin: auto;
+  border-top: 2px solid #666;
+  border-bottom: 2px solid #666;
+}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+tr:nth-child(even) { background: #eee }
+
+/* Client images */
+
+#rlogo img {
+   width: 500px;
+   margin-left: 150px;
+}
+
+#clients img {
+        width: 150px;
+        border: none;
+        margin: 0;
+}
+
+img {
+  box-shadow: none!important;
+  border: none!important;
+}
+
+/* headers and footers */
+.logo {
+  float: left;
+  padding: 5px 20px 5px 20px;
+  height: 30px;
+}
+
+.social {
+  font-size: 15px;
+  float: right;
+  color: #ebab4f;
+  padding: 0px 20px 5px 20px;
+}
+
+.social img {
+  height: 20px;
+}
+
+.social table {
+  border-bottom: none;
+}
+
+/* Header/Footer stuff standard */
+div.jr-header {
+  background-color: #546e7a;
+  color: #fff;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 40px;
+  width: 100%;
+  text-align: left;
+}
+
+/* Remove border from twitter icon */
+div.jr-header table {
+  border-top: 0 solid;
+  border-bottom: 0 solid;
+}
+
+div.jr-footer {
+  background-color: #546e7a;
+  color: white;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 45px;
+  width: 100%;
+}
+
+div.jr-footer span {
+  font-size: 10pt;
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+}
+
+/* Header/Footer stuff inverse */
+div.jr-header-inverse{
+  background-color: #272822;
+  color: #fff;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  height: 40px;
+  width: 100%;
+  text-align: left;
+}
+
+div.jr-footer-inverse {
+  background-color: #272822;
+  color: #d6d6d6;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  height: 45px;
+  width: 100%;
+}
+
+div.jr-footer-inverse span {
+  font-size: 10pt;
+  position: absolute;
+  left: 15px;
+  bottom: 15px;
+}
+
+div.jr-header-inverse  table {
+  border-top: 0 solid;
+  border-bottom: 0 solid;
+}
+
+/*Slide color */
+.remark-slide-number {
+  color: #FFF;
+}
+
+/* Change colour of strong */
+strong {
+  color: #af505a;
+}
+
+

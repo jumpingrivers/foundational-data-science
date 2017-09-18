@@ -1,0 +1,146 @@
+---
+title: "A title page"
+subtitle: "A subtitle"
+author: '`r jrPresentation::get_author()`'
+output:
+  xaringan::moon_reader:
+    css: ["default", "style.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE, message=FALSE}
+options(htmltools.dir.version = FALSE)
+library("jrPresentation")
+set_presentation_options()
+```
+
+layout: true
+`r add_border(inverse=FALSE)`
+---
+
+# Jumping Rivers 
+
+  * Standard header and footer
+  * Colour from website
+
+---
+
+layout: true
+`r add_border(inverse=TRUE)`
+ 
+---
+class: inverse
+
+# Jumping Rivers
+
+  * Inverse theme 
+
+---
+
+class: center, middle, inverse
+
+# Center and middle
+
+---
+
+layout: true
+`r add_border(inverse=FALSE)`
+
+---
+
+# Our clients
+
+<div id="clients">
+<img src="assets/shell.png"></img><img src="assets/sustrans.png"></img>
+<img src="assets/yorkshire.png"></img><img src="assets/hastings.png"></img>
+<img src="assets/Pragmatic.png"></img><img src="assets/nhs.png"></img>
+<img src="assets/royal_statistical_society.jpg"></img><img src="assets/Francis_Crick_Institute.png"></img>
+<img src="assets/Ministry_of_Defence.png"></img><img src="assets/University_of_Manchester.png"></img>
+</div>
+
+---
+background-image: url(assets/Rlogo_fade.png)
+
+<!-- A background image -->
+
+# A brief history of R
+
+  - 1993: Research project in Auckland, NZ  
+  
+  - 1995: R released as open-source software
+  
+  - 1997:
+    - R core group formed
+    - April 1st Mailing list started 
+    - April 23rd: CRAN is started (3 mirrors); now $\sim$ 140 mirrors
+
+  - 2000: R 1.0.0 released
+
+  - 2003: R Foundation founded
+
+  - 2004: Version 2.0.0
+
+  - 2013: Version 3.0.0
+
+---
+
+# Mathematics
+
+  * Not great for Mathematics; only basic support. 
+  
+  * Only __single__ line equations
+$$y = \beta_0 + \beta_1 x + \epsilon$$
+
+--
+  
+  * Use double dashes for pausing
+
+
+---
+layout:false 
+background-image: url(assets/gandalf.jpg)
+class: center, inverse
+# Use `layout:false` to remove the header/footer
+
+---
+
+# Two columns is 
+
+
+.pull-left[
+1. Left column
+
+1. Another point
+
+]
+
+.pull-right[
+1. Now to the right
+
+1. Yep*
+]
+
+.footnote[[*] I'm a footnote.]
+
+---
+
+layout: true
+`r add_border(inverse=FALSE)`
+
+---
+
+# Highlight code lines
+
+```{r}
+# Figure scale set in knitr_options.R
+# Can't highlight multiple lines
+library(ggplot2)
+ggplot(cars) + 
+{{  geom_point(aes(speed, dist))}}
+```
