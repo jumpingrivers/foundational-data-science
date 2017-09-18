@@ -132,7 +132,7 @@ The question now, is:
 The convention (but by no means a hard–and–fast cut–off) is to reject $H_0$ if the p–value is
 smaller than 5%. Thus, here we would say:
 
-  * Our p–value is greater than 5% (in fact, it’s larger tha 10% – a computer
+  * Our p–value is greater than 5% (in fact, it’s larger than 10% – a computer
 can tell us that it’s exactly 14.7%)
   * Thus, we do not reject $H_0$
   * There is insufficient evidence to suggest a real deviation from the previous value
@@ -149,7 +149,7 @@ t.test(comic, mu = 45)
 ```
 Technically this
 is performing a t-test which is why the associated $p$-value is slightly larger than
-our calculation. However, when the sample size is large, the `t.test()` function is equilivent to a z-test.
+our calculation. However, when the sample size is large, the `t.test()` function is equivalent to a z-test.
 
 ### Example: OKCupid
 
@@ -245,7 +245,66 @@ range. In fact whenever you see opinion polls in newspapers, they typically come
 with a margin of error of $\pm 3$%. It's always amusing to see the fuss that people 
 make when an opinion poll raises by 1% which is likely to be down to random noise.
 
+Confidence intervals provide an alternative to hypothesis tests for assessing questions about the
+population mean (or population means in two sample problems), although often they are used
+alongside hypothesis tests. Due to lack of time, we will not cover the general theory supporting
+the construction of confidence intervals, although this theory is the same as that discussed in
+Section 4 for hypothesis tests and revolves around the Central Limit Theorem. The aim is to use
+the information in our sample to obtain an interval within which we might expect the true
+population mean to lie, with a specified level of confidence.
+
+Recall that the sample mean $\bar x$ is an estimate of the population mean $\mu$. The
+population mean does exist; we’d like to know what it is, but usually this isn't possible (unless
+we are able to take a census). The next best thing is to take a sample from the population and
+find $\bar x$ - if our sample is representative of the population as a whole, we might feel confident that
+$\bar x$ is a good estimator for $\mu$, and might be close to the true value.
+
+The problem is, if we were to take many samples from the population, and so calculate many $\bar x$'s, they are all likely to be different to each other.  Which one would we trust the most?  In reality, we don't have the resources to take many samples, and so we'd like a way of capturing the variability of $\bar x $ based on the information in our single sample.  This is where statistical theory can help us out!
+
 Central to the idea of margin of error, is the [_central limit theorem_](https://en.wikipedia.org/wiki/Central_limit_theorem).
+
+
+### Construction
+
+Most confidence intervals are symmetric and two--sided.  Thus, to obtain a confidence interval for the population mean we:
+
+1. Find the mean in our sample, $\bar x$
+1. Subtract some amount from $\bar x$ to obtain the _lower bound_ of our confidence interval
+1. Add the same amount in (2) to our sample mean $\bar x$ to obtain the _upper bound_ of our confidence interval
+
+The amount we add and subtract from $\bar x$ is a function of the sample standard deviation $s$ and the sample size $n$; it also depends on just how "confident"" we want to be of capturing the population mean $\mu$ within our interval!  To be 100\% confident, the lower and upper bounds would need to extend to the smallest and largest values possible for our random variable, and so it makes no sense to find such an interval; the standard is to find a _95% confidence interval_.
+
+The formula for a symmetric, two--sided 95% confidence interval for the population mean $\mu$ is
+\[
+\left(\bar{x}-z \times \frac{s}{\sqrt{n}}, \hspace{0.5cm} \bar{x}+z\times \frac{s}{\sqrt{n}}\right),
+\]
+often condensed to just
+\[
+\bar{x} \pm z \times \frac{s}{\sqrt{n}};
+\]
+where $z$ is a critical value from the standard normal distribution. For the standard interval 95% 
+confidence interval, the $z$ value is 1.96, often rounded to 2. So the interval becomes
+\[
+\bar{x} \pm \frac{2 s}{\sqrt{n}}.
+\]
+If we wanted a 90% interval, we would use $z = 1.645$. For a 99% interval, we would use
+$z = 2.576$
+
+### Example: Comic Sans
+
+Let's return to our Comics Sans example. The average time spent on the site was $\bar x = 50.9$ with
+a standard deviation of $s = 18.2$. This gives a 95% confidence interval of
+\[
+50.9 \pm 1.96 \frac{18.2}{\sqrt{20}} = (42.92, 58.88).
+\]
+Alternatively, we could use R and extract the confidence interval from
+```{r}
+t.test(comic)
+```
+to get the interval $(42.38,59.42)$. Notice this interval is slightly wider, since it's using the
+exact $t$-distribution.
+
+
 
 
 
@@ -308,27 +367,5 @@ then we'll need a larger sample size for the normality approximation to be accur
 
 
 
-
-
-
-
-
-## Designing the experiment
-
-<!-- XXX This feels kind of randomly dropped in with going  back to the advert example -->
-
-Designing a suitable experimental isn't as easier you would first think. For example, 
-let's suppose the two adverts were displayed on facebook. An initial idea would be 
-to display advert 1 followed by advert 2. However, a number of _confounding_ factors
-now become important. For example
-
- * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
- * Is the week before Christmas the same as the week after Christmas?
- * Was your advert on the same page as a more popular advert?
- 
-The easiest way to circumvent these issues is with randomised sampling. Essentially,
-instead of always display each advert, we display the advert with a probability. The
-probability could be equal, or if you were trying a new and untested approach, you might have
-probability $0.95$ standard advert, $0.05$ new advert.
 
 

@@ -18,9 +18,9 @@ occurrence of different possible outcomes in an experiment. It is our way of try
 to capture the real world using mathematics. 
 
 Probability is massive topic, that we cannot possibility hope to cover in a single 
-chapter. Instead, the goal of this chapter is to give an intuituve 
+chapter. Instead, the goal of this chapter is to give an intuitive 
 feel for some of the standard probability distributions. Even if you have never 
-taken a course in statistics, you'll have come the simplest probaility distribution already, 
+taken a course in statistics, you'll have come the simplest probability distribution already, 
 the Uniform distribution. This distribution represents the situation where all 
 events are equally likely 
 

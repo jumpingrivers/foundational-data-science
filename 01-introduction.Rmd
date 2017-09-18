@@ -76,6 +76,22 @@ generally give more precise information about the population. Unfortunately, in 
 expense and time tend to limit the size of the sample it is possible to take. For example,
 national opinion polls often rely on samples in the region of just $1,000$.
 
+## Designing the experiment
+
+Designing a suitable experimental isn't as easier you would first think. For example, 
+let's suppose the two adverts were displayed on facebook. An initial idea would be 
+to display advert 1 followed by advert 2. However, a number of _confounding_ factors
+now become important. For example
+
+ * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
+ * Is the week before Christmas the same as the week after Christmas?
+ * Was your advert on the same page as a more popular advert?
+ 
+The easiest way to circumvent these issues is with randomised sampling. Essentially,
+instead of always display each advert, we display the advert with a probability. The
+probability could be equal, or if you were trying a new and untested approach, you might have
+probability $0.95$ standard advert, $0.05$ new advert.
+
 ## Data sets
 
 During this course, we'll use a few different data sets to illustrate the key points. 
@@ -130,7 +146,7 @@ __Credit__: Data and code for OkCupid Profile Data for Introductory Statistics a
 
 ### Starbucks
 
-The Starbucks data set contains nutrional information on 113 products from Starbucks. 
+The Starbucks data set contains nutritional information on 113 products from Starbucks. 
 The data set has six columns:
 
  * `Product`

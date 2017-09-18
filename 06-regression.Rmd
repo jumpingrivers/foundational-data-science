@@ -9,11 +9,16 @@ editor_options:
 In many data science problems, we wish to use information about some variables
 to help predict the outcome of another variable. For example, in banking, we 
 might wish to use a persons financial history to predict the likelihood of them defaulting
-on a mortgage. In our final chapter, we will look at standard modelling techniques.  
-We'll start with the simplest measure, correlation, before moving onto more 
-linear regression models.
+on a mortgage. The idea of using past data to predict future events is central 
+to data science and statistics. 
 
-<!-- XXX do you mean end of this chapter?, also consider rewording final two sentences-->
+
+The simplest relationship between two variables is linear. The 
+correlation coefficient will provide a single number summary of this relationship.
+To use the linear interaction for prediction, we need to use linear regression techniques.
+In our final chapter, we will look at standard modelling techniques.  
+We'll start with the simplest measure, correlation, before moving onto linear regression models.
+
 
 ## Capturing linear relationships
 
@@ -25,18 +30,16 @@ r=\frac {\sum _{i=1}^{n}(x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{\sqrt {\sum _{i=1
 \]
 where
 
- * n is the sample size;
- * $x_{i},y_{i}$ are the single samples indexed with i
- * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean)
+ * $n$ is the sample size;.
+ * $x_{i},y_{i}$ are the single samples indexed with $i$.
+ * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean).
 
 The value of $r$ lies between $-1$ and $1$. A value of $1$ implies that all
 data points lie on a line as $X$ and $Y$ increase. A values of $-1$ implies that 
 all data points lie on a line where $Y$ decreases as $X$ increases. 
 A value of 0 implies that there is no linear correlation between the variables.
 
-<!-- XXX you mention pearson here but not anywhere else -->
-
-(ref:6-1) Several sets of (x, y) points, with the Pearson correlation coefficient of x and y for each set. Credit: [Wikipedia](https://en.wikipedia.org/wiki/Correlation_and_dependence)
+(ref:6-1) Several sets of (x, y) points, with the correlation coefficient of x and y for each set. Credit: [Wikipedia](https://en.wikipedia.org/wiki/Correlation_and_dependence)
 
 ```{r 6-1,echo=FALSE, fig.cap="(ref:6-1)"}
 local(source("code/f6_correlation.R"))
@@ -46,17 +49,32 @@ local(source("code/f6_correlation.R"))
 source("code/load_data.R")
 ```
 
+Figure \@ref(fig:6-1) (shamelessly stolen from wikipedia) gives a very useful overview 
+of the correlation coefficient. The top row of plot shows how data changes as we
+move from a coefficient of $+1$ to $-1$. When $r = 0$, we just have random scatter.
+
+Something that is often forgotten, is that correlation _does not_ measure the strength 
+of the linear association. This is clear from the second row of figure \@ref(fig:6-1)
+where it is clear that the correlation does not depend on the gradient.
+
+The final row of figure \@ref(fig:6-1) shows figures where the correlation cofficient
+is 0. However, in each example there is clearly a relationship; it's just not linear.
+
+```{block type="rmdnote"}
+Calculating the correlation is a useful first step when you first come across a data set. 
+My typical first step is to run `image(cor(data_set))`. This produces a very ugly, but
+informative heatmap of the correlation cofficients. 
+```
+
+
 ### Example: Starbucks calorie content
 
 The Starbucks data set contains nutritional value of `r nrow(starbucks)` items. 
-For each item on the menu we have the number of Calories, and the Carbohydrate, Fat, Fiber and Protein
+For each item on the menu we have the number of calories, and the carbohydrate, fat, fiber and protein
 amount. 
 
-<!-- XXX should these be capitalised? -->
 
 We can quickly get an overview in R, 
-
-<!-- XXX where do I as a reader get the data? -->
 
 ```{r}
 head(starbucks)
@@ -77,7 +95,7 @@ The scatter plots show a clear linear trend. To work out the sample pairwise
 correlations we use the `cor()` function
 ```{r}
 ## Drop the first column since it's the food names
-cor(starbucks[,2:6])
+cor(starbucks[, -1])
 ```
 The R output returns all pairwise correlations between the 5 variables:
 
@@ -90,25 +108,30 @@ Out of the four component parts, `Fat` is very highly correlated with `Calories`
 ## Linear Regression
 
 The next step is use information about one variable to inform you about another. 
-The simplest model is to assume a linear relationship between $Y$, the response variable that we want to predict
-and $x$ the predictor (or covariate). This gives the equation
+If you recall back to your school days, you'll hopefully remember that the
+equation of a straight line is
 \[
 Y = \beta_0 + \beta_1 x
 \]
-where
- 
- * $\beta_0$ is the $y$-intercept. So if $x = 0$, the value we would predict for $Y$ is $\beta_0$.
- * $\beta_1$ is the gradient, that is the average increase in $Y$ for a unit increase in $x$.
+where 
+
+  * $\beta_0$ is the $y$-intercept (in the UK, we used $c$ instead of $\beta_0$);
+  * $\beta_1$ is the gradient (in the UK, we used $m$ instead of $\beta_1$).
+  
+In statistics, we usually $Y$ the response variable (the thing we want to predict) 
+and $x$ the predictor (or covariate). The aim of the model is to estimate the
+values of $\beta_0$ and $\beta_1$. However, since we only have a sample, there is uncertainity
+surrounding our estimate.
 
 To fit the model in R, we use the `lm()`^[`lm` is short of linear model; this model is _linear_ in the 
 model coefficients.] function
 
-<!-- XXX have you used formula notation before here? -->
-
 ```{r}
+# This is an R formula
+# Read as: Calories is modeled by Fat
 (m = lm(Calories ~ Fat, data = starbucks))
 ```
-The output from R gives estimates of $\beta_0$ (148.0) and $\beta_1$ (12.8).
+The output from R gives estimates of $\beta_0 = 148.0$ and $\beta_1 = 12.8$.
 
 ### Prediction and Interpretation 
 
@@ -120,7 +143,9 @@ allows us to predict the calorie content based on the fat. For example, if the f
 was 10, then the estimated calorie content would be 276. However this simple example also 
 highlights the potential dangers of using the model for prediction. If we wished to predict the
 calorie content of fat-free food, i.e. $\text{Fat} = 0$, then our model would estimate the calorie
-content as $148$. This seems a bit high for a glass of water.
+content as $148$. This seems a bit high for a glass of water! The obvious reason for this 
+poor fit is that our model isn't capturing our aspects of the relationship or is missing 
+other significant covariates.
 
 ### How do we estimate the model coefficients?
 
@@ -128,24 +153,16 @@ We estimate the model parameters by "minimising the sum of squared residuals". A
 residual is the difference between the observed value and the predicted 
 value. In figure \@ref(fig:6-3), the observed values, i.e. the data, are the
 black dots and the residuals are the solid lines. The line of best fit is the dashed line.
-In figure \@ref(fig:6-3) we have five data points, so we must have residuals. The sum of
-squared residuals _always_ equals $0$. 
+In figure \@ref(fig:6-3) we have five data points, so we must have five residuals. 
 
-<!-- XXX having 5 dsata points does not necessitate residuals. sum of squares does not always equal 0, did you mean something along the lines of we minimise the squared residuals since for a line of best fit the sum of residuals is always 0. -->
-
-The classical _statistics interpretation_ of a linear regression model, is to assume the
+The classical _statistics interpretation_ of a linear regression model is to assume the
 underlying model is actually
-
 \[
 Y = \beta_0 + \beta_1 x + \epsilon
 \]
-where $\epsilon$ is normally distributed. By assuming that the errors ($\epsilon$) follow
-a normal distribution, this is equivalent to minimising the sum of squared residuals. Furthermore,
-by fitting a model with a known error structure, we can assess the model assumptions by 
-plotting the residuals and ensuring they have a random scatter.
-
-<!-- XXX not sure that normal distribution is equivalent to minimising SSR, under the assumption finding the line of best fit is equivalent to minimising ..., 
-also the last sentence is a bit naff -->
+where $\epsilon$ is normally distributed. If assume that the errors ($\epsilon$) follow
+a normal distribution, then to estimate the parameter values we minimise the sum of squared 
+residuals. 
 
 ```{r, 6-3,echo=FALSE, fig.cap = "Residuals and linear regression."}
 local(source("code/f6_residual_illustration.R"))
