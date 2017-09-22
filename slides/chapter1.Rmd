@@ -1,6 +1,6 @@
 ---
-title: "A title page"
-subtitle: "A subtitle"
+title: "Foundational data science"
+subtitle: "Chapter 1"
 author: '`r jrPresentation::get_author()`'
 output:
   xaringan::moon_reader:
@@ -21,18 +21,33 @@ set_presentation_options()
 ```
 
 layout: true
-`r add_border(inverse=FALSE)`
+`r add_border(inverse=TRUE)`
 ---
-
-# Introduction
-
-```{r echo=FALSE}
-#source("code/load_data.R")
-```
-<!-- (20 minutes) -->
+class: inverse, center, middle
 
 > It is the mark of a truly intelligent person to be moved by statistics
 > -- George Bernard Shaw
+
+---
+layout:true
+
+---
+
+background-image: url(graphics/scream.jpg)
+background-size: cover
+
+# Shock news 
+
+  * Statistics lectures can get boring 
+  
+  * Oddly, combining it with programming doesn't help (much)
+  
+    - Lots of small tasks, breaks
+
+
+---
+layout: true
+`r add_border(inverse=FALSE)`
 
 ---
 
@@ -40,12 +55,19 @@ layout: true
 
   * Data science is a vague term. 
   
-  * Everyone can agree what a vet or a plumber does, 
+  * Everyone can agree what a vet or a plumber does
   
   * But what does a data scientist do
   
     - No Venn diagrams are allowed!
-    
+
+--
+
+# 4 minute exercise
+
+  - In the slack channel, what skills does a data scientist need
+  - No fights!
+
 ---
 
 # Data Science
@@ -69,10 +91,20 @@ the logical extension of applying statistical methods to large scale data sets.
   * Small enough to be informative, but still have real world interest.
 
 ---
+layout:true
+---
+
+background-image: url(graphics/tibbles.jpg)
+background-size: cover
+
 
 # The trouble with ~~tibbles~~ data
 
 > The trouble with interesting data, is that there are so many potential problems. 
+
+---
+layout: true
+`r add_border(inverse=FALSE)`
 
 ---
 
@@ -100,10 +132,12 @@ the logical extension of applying statistical methods to large scale data sets.
 
 # Missing at random (MAR)
 
-  * Given the observed data, data are missing independently of unobserved data.
+  * Given the observed data, data are missing independently of unobserved data
+  
 --
 
   * Scottish participants are more likely to refuse a survey on soccer excellence
+  
     - but it does not depend on the level of their soccer skills.
 
 ---
@@ -143,8 +177,10 @@ the logical extension of applying statistical methods to large scale data sets.
   
 --
 
-  * The time spent on a website is our random variable. 
+  * The time spent on a website is our random variable
+  
   * A particular customer's time would be an observation 
+  
   * If we recorded the time for every person during the day, those times would be our data, which would form a _sample_ from the population of all customers.  
   
 --
@@ -162,45 +198,79 @@ the logical extension of applying statistical methods to large scale data sets.
 
 # Population
 
-  * In practice it is difficult to observe whole populations, unless we are interested in a very limited population, e.g. just the customers who came to our website today.  In reality we usually observe a subset of the population, and this raises questions about who or what goes into our sample; we will briefly consider various commonly--used sampling techniques soon.  
+  * In practice it is difficult to observe whole populations
+    - Unless we are interested in a very limited population
+    
+  * We reality we usually observe a subset of the population
+    - A _sample_
+    
+---
 
-Once we have our data, it is important to understand what _type_ it is -- so we can figure out exactly what to do with it.  The two main categories are _quantitative_ and _qualitative_ (in other words, numeric and non--numeric, respectively).  Quantitative data can be further subdivided into categories referred to as _discrete_ and _continuous_.  Discrete data moves in 'steps' -- for example, whole numbers, shoe sizes etc.  Continuous data can usually take _any_ value, although there may be restrictions to the set of positive numbers (for example height, weight) and there may be issues of accuracy depending on the equipment being used to record the data (and so sometimes continuous data might 'look' discrete!).  There are other words that are often used within these categories, such as 'ordinal', and 'categorical'.   
+# Data types
+
+  * _quantitative_ (numeric)
+    - discrete: data moves in steps, e.g. shoe sizes
+    - Continuous: take _any_ value, but accuracy may make it look discrete
+  
+  * _qualitative_ (non-numeric), aka ordinal or categorical
+    - e.g. colours, survival
+    
+---
+
+# Exercise
+
+Identify the type of data described in each of the following examples.
+
+  * An opinion poll was taken asking people which party they would vote for in a general election.
+
+  * In a steel production process the temperature of the molten steel is measured and recorded every 60 seconds.
+
+  * A market researcher stops you on the street and asks you to rate between 1 (disagree strongly) and 5 (agree strongly) 
+  your response to opinions presented to you.
+  
+  * The hourly number of units produced by a beer bottling plant is recorded.
+
+Also consider potential sources of error in the four scenarios
+
 
 ---
+
 # Sample size
 
-When considering data collection, it is important to ensure that the sample contains a sufficient
-number of members of the population for adequate analysis to take place. Larger samples will
-generally give more precise information about the population. Unfortunately, in reality, issues of
-expense and time tend to limit the size of the sample it is possible to take. For example,
-national opinion polls often rely on samples in the region of just $1,000$.
+  * Larger samples will generally give more precise information about the population
+    - but, quality matters!
+    - Facebook users aren't representation of the population
+    
+  * National opinion polls often rely on samples in the region of just $1,000$
+    - Carefully choosen sample
+    - Need to account for the [shy tory](https://en.wikipedia.org/wiki/Shy_Tory_Factor) or
+    the [Bradley effect](https://en.wikipedia.org/wiki/Bradley_effect)
+    
 
 ---
 
 # Designing the experiment
 
-Designing a suitable experimental isn't as easier you would first think. For example, 
-let's suppose the two adverts were displayed on facebook. An initial idea would be 
-to display advert 1 followed by advert 2. However, a number of _confounding_ factors
-now become important. For example
+  * Designing an experiment is hard!
+
+--
+  
+  * Let's suppose the two adverts were displayed on facebook. 
+    - Display advert 1 followed by advert 2
+    - Leads to [_confounding_](https://en.wikipedia.org/wiki/Confounding)
+
+--
 
  * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
  * Is the week before Christmas the same as the week after Christmas?
  * Was your advert on the same page as a more popular advert?
  
-The easiest way to circumvent these issues is with randomised sampling. Essentially,
-instead of always display each advert, we display the advert with a probability. The
-probability could be equal, or if you were trying a new and untested approach, you might have
-probability $0.95$ standard advert, $0.05$ new advert.
-
 ---
 
-# Data sets
+# Randomisation
 
- * Beauty & Teaching
- 
- * James Bond
- 
- * OKCupid
- 
- * Starbucks
+  * Display the advert with a probability. 
+  * The probability could be equal,
+    - Or if you were trying a new and untested approach, 
+    you might have probability $0.95$ standard advert, $0.05$ new advert.
+

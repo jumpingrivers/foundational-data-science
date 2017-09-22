@@ -1,6 +1,6 @@
 ---
-title: "A title page"
-subtitle: "A subtitle"
+title: "Margin of Error"
+subtitle: "Chapter 5"
 author: '`r jrPresentation::get_author()`'
 output:
   xaringan::moon_reader:
@@ -21,11 +21,343 @@ set_presentation_options()
 ```
 
 layout: true
+`r add_border(inverse=TRUE)`
+---
+class: inverse, center, middle
+
+> Testing leads to failure, and failure leads to understanding
+> _Burt Rutan_
+
+---
+layout: true
 `r add_border(inverse=FALSE)`
 ---
 
-# Jumping Rivers 
+```{r, echo=FALSE, results="hide"}
+source("code/load_data.R")
+set.seed(1)
+x = round(rnorm(20, mean=47, 20))
+mean(x); sd(x)
+```
 
-  * Standard header and footer
-  * Colour from website
+# Introduction & motativating example
+
+  * Comparing two advert designs. 
+    - At great expense, it has been decided to change the font to Comic Sans. 
+    - Does this change work? 
+    
+  * Being a (data) scientist we decide to (humanely) experiment on people by randomly showing them the advert. 
+  
+  * Past experience, you know that customers spent 45 seconds (on average) on your site. 
+
+  * After switching to comic sans, we recorded the amount of time spent on the site by 20 customers
+
+```
+34 51 30 79 54 31 57 62 59 41 77 55 35  3 69 46 47 66 63 59
+```
+Should we consider switching to comic sans?
+
+---
+
+# Introduction & motativating example
+
+  * Clearly time will vary visit–by–visit. 
+  * The average time
+
+$$\bar x = \frac{34 + 51 + 30 + \ldots + 59}{20} = 50.9$$
+
+--
+
+  * The new website does seem to be perform slightly better
+  * But we have a very small sample.
+  * How to account for variability?
+    - hypothesis test
+
+---
+
+# One sample test
+
+
+  * one–sample z–test 
+    * Compare the mean of a set of sample observations compares to some target value. 
+  * The mean in our sample is denoted by $\bar x$. 
+  
+  * The population mean is denoted as $\mu$ (pronounced "mu"")
+  
+  * Obviously, $\bar x$ is our sample estimate of $\mu$.
+
+---
+
+# Hypothesis testing
+
+$$H_0: \mu = 45$$
+
+--
+
+We usually test against a general alternative hypothesis $H_1$
+$$H_1: \mu \ne 45$$
+
+which says "$\mu$ is not equal to 45".
+---
+
+# Hypothesis testing
+
+When performing the hypothesis test, we _assume_ $H_0$ to be true. We then ask ourselves the
+question:
+
+> How likely is it that we would observe the data we have, or 
+> indeed anything more extreme than this, if the null hypothesis is true?
+
+---
+
+# Hypothesis testing
+
+We can get a handle on this question thanks to the Central Limit Theorem in Statistics.
+Although we will not go into the details here, this result tells us that the quantity
+
+$$Z = \frac{\bar x - \mu}{s/\sqrt{n}}$$
+
+follows a normal distribution (when $n$ is reasonably large). In this formula
+
+  * $\bar x$ is our sample mean;
+  * $\mu$ is the assumed value of the population mean under the null hypothesis $H_0$;
+  * $s$ is the sample standard deviation;
+  * $n$ is the sample size.
+
+---
+
+# Hypothesis testing
+
+Using our example data set, if the null hypothesis is true, then $\mu = 45$, so we 
+have
+\[
+Z = \frac{\bar x - \mu}{s/\sqrt{n}} = \frac{50.9 - 45}{18.2/\sqrt{20}} = 1.45
+\]
+The obvious question is, how likely is it to have observed this value?
+
+---
+
+# How likely is this value?
+
+```{r echo=FALSE}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(1.45, 0, 1.45, 0.2, col="grey60")
+text(1.45, 0.21, "Z = 1.45", pos=4, col="grey60")
+polygon(c( x[x>=1.45], 1.45 ),  c(y[x>=1.45],0 ), col="grey80")
+```
+---
+
+# How likely is this value?
+
+  * Since the normal distribution is symmetric, $Z = 1.45$ is just as extreme as $Z = −1.45$, 
+    *  so the shaded region in the following diagram illustrates the $p$–value 
+    * the probability of observing the data we have, 
+
+  * The closer the area of the shaded region (the $p$–value) is to 0, the less plausible it is that we
+would observe the data we have if the null hypothesis is true, that is, the more evidence we have
+to reject $H_0$. 
+
+---
+
+# How likely is this value?
+
+So, we need to work out the area of the shaded region under the curve in the
+diagram above, which can be done using R
+```{r}
+pnorm(1.45, lower.tail = FALSE) * 2
+```
+So the $p$-value is 0.15.
+
+---
+
+# How likely is this value?
+
+Earlier, we said that the smaller this $p$–value is, the more evidence we have to reject $H_0$. 
+The question now, is:
+
+> What constitutes a p–value small enough to reject H_0?
+
+The convention (but by no means a hard–and–fast cut–off) is to reject $H_0$ if the p–value is
+smaller than 5%. Thus, here we would say:
+
+  * Our p–value is greater than 5% (in fact, it’s larger than 10% – a computer
+can tell us that it’s exactly 14.7%)
+  * Thus, we do not reject $H_0$
+  * There is insufficient evidence to suggest a real deviation from the previous value
+  
+
+---
+
+# How likely is this value?
+
+> Absence of evidence is not evidence of absence
+
+---
+
+# Example R
+
+```{r}
+comic = c(34, 51, 30, 79, 54, 31, 57, 62, 59, 41, 77, 55, 35, 3, 69, 46, 47, 66, 63, 59)
+t.test(comic, mu = 45)
+```
+
+---
+
+# Example: OKCupid
+
+  * The OKCupid dataset provides heights of their users
+  * How consistent are the heights given by users with the average height across the USA?
+  * From the [CDC](https://www.cdc.gov/nchs/data/series/sr_11/sr11_252.pdf) paper we discover the average height in the USA is 69.3 inches.  
+  
+---
+
+# Example: OKCupid
+
+```{r}
+## Select Males
+height = cupid$height[cupid$sex == "m"]
+## Remove missing values
+height = height[!is.na(height)]
+## Convert to cm
+height = height * 2.54
+mean(height)
+```
+
+---
+
+# Example: OKCupid
+
+```{r}
+t.test(height, mu = 69.3)
+```
+
+---
+
+# Errors
+
+![](graphics/type1and2.jpg)
+
+```{r echo=FALSE, results="hide"}
+set.seed(2)
+y = round(rnorm(20, 30, 10))
+y
+mean(y);sd(y)
+```
+
+---
+
+## Two sample z-test
+
+  * Suppose we want to test another improvement to our website
+  *  We think that adding a [blink](https://en.wikipedia.org/wiki/Blink_element) tag would be a good way of
+attracting customers. 
+
+  * Monitoring the first twenty customers we get
+
+```
+21 32 46 19 29 31 37 28 50 29 34 40 26 20 48  7 39 30 40 34
+```
+
+How do we compare the website that uses the Comic Sans font to the blinking site? We use a two sampled z-test! 
+
+---
+
+# Two sample z-test
+
+$$H_0: \mu_1 = \mu_2$$
+
+While the alternative hypothesis is that the two pages differ, i.e.
+
+$$H_1: \mu_1 \ne  \mu_2.$$
+--
+
+The corresponding test statistic is
+
+$$Z = \frac{\bar x_1 - \bar x_2}{s \sqrt{1/n_1 + 1/n_2}}.$$
+
+---
+
+# Two sample z-test
+
+
+```{r}
+blink = c(21, 32, 46, 19, 29, 31, 37, 28, 50, 29, 34, 40, 26, 20, 48, 7, 39, 30, 40, 34)
+t.test(comic, blink, var.equal = TRUE)
+```
+In this example, since the p-value is relatively, we can conclude that the two
+web-designs do appear to be different. 
+
+---
+
+# Confidence intervals
+
+  *  When we get an answer, we don't just want a point estimate, i.e. a single number
+    - we want a plausible range
+    
+  * Confidence intervals provide an alternative to hypothesis tests for assessing questions about the
+population mean (or population means in two sample problems)
+
+  * Recall that the sample mean $\bar x$ is an estimate of the population mean $\mu$
+  
+  *  The problem is, if we were to take many samples from the population, and so calculate many $\bar x$'s, they are all likely to be different to each other.  Which one would we trust the most?  
+  
+--
+
+Central to the idea of margin of error, is the [_central limit theorem_](https://en.wikipedia.org/wiki/Central_limit_theorem).
+
+---
+
+# Construction
+
+
+1. Find the mean in our sample, $\bar x$
+1. Subtract some amount from $\bar x$ to obtain the _lower bound_ of our confidence interval
+1. Add the same amount in (2) to our sample mean $\bar x$ to obtain the _upper bound_ of our confidence interval
+
+---
+
+# Formula
+
+$$\left(\bar{x}-z \times \frac{s}{\sqrt{n}}, \hspace{0.5cm} \bar{x}+z\times \frac{s}{\sqrt{n}}\right),$$
+
+often condensed to just
+
+$$\bar{x} \pm z \times \frac{s}{\sqrt{n}}$$
+
+where $z$ is a critical value from the standard normal distribution. 
+
+For the standard interval 95%  confidence interval, the $z$ value is 1.96, often rounded to 2. So the interval becomes
+
+$$\bar{x} \pm \frac{2 s}{\sqrt{n}}$$
+
+If we wanted a 90% interval, we would use $z = 1.645$. For a 99% interval, we would use
+$z = 2.576$
+
+---
+
+# Example: Comic Sans
+
+Let's return to our Comics Sans example. The average time spent on the site was $\bar x = 50.9$ with
+a standard deviation of $s = 18.2$. This gives a 95% confidence interval of
+
+$$50.9 \pm 1.96 \frac{18.2}{\sqrt{20}} = (42.92, 58.88)$$
+
+-- 
+
+Alternatively, we could use R and extract the confidence interval from
+```{r}
+t.test(comic)
+```
+to get the interval $(42.38,59.42)$. Notice this interval is slightly wider, since it's using the
+exact $t$-distribution.
+
+
 

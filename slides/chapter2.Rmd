@@ -1,6 +1,6 @@
 ---
-title: "A title page"
-subtitle: "A subtitle"
+title: "Condensing data with numerical summaries"
+subtitle: "Chapter 2"
 author: '`r jrPresentation::get_author()`'
 output:
   xaringan::moon_reader:
@@ -20,12 +20,455 @@ library("jrPresentation")
 set_presentation_options()
 ```
 
+
+layout: true
+`r add_border(inverse=TRUE)`
+---
+class: inverse, center, middle
+
+> James Bond: [to Vesper] Why is it that people who can't take advice always insist on giving it? 
+
+---
+layout: true
+`r add_border(inverse=FALSE)`
+
+---
+```{r echo=FALSE, cache=FALSE}
+source("code/load_data.R")
+```
+
+# Overview
+
+  * Data scientists need to condense large amounts of information into a few key summaries
+  
+  * There are many possible choices when simplifying data
+  
+    - not "one size fits all".
+
+  * Look at standard measures of location and spread
+  
+    - building blocks for many statistical and machine learning algorithms
+    
+  *  We discover that some measures fit naturally into a big data scenario while others do not
+
+---
+
+# A wee bit of maths
+
+  * Basic notation
+    
+    - This will allow us to generalise all situations with a simple shorthand.
+    
+  * Very often in statistics we replace actual numbers with letters in order to be able to write general formulae. 
+  
+    - Upper case letter to represent our random variable 
+    - Lower case to represent sample data, with subscripts to distinguish individual observations in the sample.
+    
+---
+
+# Example
+
+
+  * Suppose we ask three people how many mobile phone calls they made yesterday.
+  
+    - We might get the following data: 1, 5, 7.
+    - Another sample we will most likely get different data, say 2, 0, 3. 
+    - Algebra represents the general case as $x_1$, $x_2$, $x_3$:
+
+--
+| | |
+------------|--|---|---
+1st sample: | 1 | 5 | 7
+2nd sample: | 2 | 0 | 3 
+$\vdots$  | $\vdots$ | $\vdots$ | $\vdots$ 
+typical sample: | $x_1$ | $x_2$ | $x_3$
+
+---
+
+# Further generalisation
+
+  * Random variable _as a whole_ as $X$ and the $i\text{th}$ observation in the sample as $x_i$.
+  
+  * Previously, we had 1, 5, 7 so
+  * $x_1 = 1$, $x_2 = 5$ and $x_3 = 7$
+The total number of observations in a sample, that is the _sample size_, is usually referred to by the letter $n$.
+Hence in our simple example above $n = 3$.
+
+---
+
+# Sums
+
+  * The next important piece of notation to introduce is the symbol $\sum$
+    - Upper case of the Greek letter $\sigma$, pronounced ''sigma''.  
+    
+--
+
+  * It is used to represent the phrase 'sum the values'. 
+
+$$
+\sum_{i=1}^n x_i = x_1 + x_2 + \dots + x_n.
+$$
+
+  - Sum of all the values in our data (from the first $i = 1$ to the last $i = n$)
+  
+  - Often shorten to $\sum x$
+
+---
+
+# Measures of location (averages)
+
+  - Whats a typical observation
+    - mean and the median.
+
+---
+
+# Sample mean
+
+
+$$\bar x = \frac{x_1 + x_2 + \ldots + x_n}{n} = \frac{1}{n} \sum_{i=1}^n x_i$$
+
+
+where $x_i$ are our data points and $n$ is the sample size, i.e. the number of 
+data points in our sample
+
+---
+
+# Example
+
+So if our data set was $\{0,3,2,0\}$, then $n=4$. Hence,
+$$\bar x = \frac{1}{n} \sum_{i=1}^n x_i = \frac{0 + 3 + 2 + 0}{4} = 1.25 $$
+
+In statistics, it is common to use a potential bar over a variable to denote the 
+mean.
+
+---
+
+# Example: The beauty data set
+
+  * This is __not__ made up
+  
+  * The `beauty` data set contains results for `r nrow(beauty)` classes
+  
+  * Does attractiveness affect teaching ability
+  
+---
+
+# Example: The beauty data set
+
+After loading the data set into R we can extract a particular column using the dollar 
+operator
+```{r, results="hide"}
+## Attractiveness score
+beauty$beauty
+## Number of students per class
+beauty$students
+```
+
+---
+
+# Example: The beauty data set
+
+We can use the built-in function `mean()` 
+```{r}
+## Attractiveness score (normalised)
+mean(beauty$beauty)
+## Number of students per class
+mean(beauty$students)
+```
+
+---
+
+# Sample median
+
+  * Occasionally used instead of the mean, 
+    - Particularly when the data have an asymmetric profile or when there are outliers (as indicated by graph, perhaps). 
+    - Wages!
+  * Work with _ranked_ observations
+    - $x_{(1)}, x_{(2)}, \ldots, x_{(n)}$
+    - $x_{(1)}$ minimum
+    - $x_{(n)}$ maximum
+
+---
+
+# Sample median
+
+* Odd sample size
+$$\text{Sample median} =x_{(n+1)/2}$$
+ * Even sample size
+
+$$\text{Sample median} =\frac{1}{2}x_{(n/2)} + \frac{1}{2} x_{(n/2+1)}$$
+
+---
+
+# Example example
+
+
+For our simple data set $\{0, 3, 2, 0\}$, to calculate the median we
+
+  - re-order it to: $\{0, 0, 2, 3\}$
+  - take the average of the middle two observations, to get 1.
+
+---
+
+# Example: The beauty data set 
+
+R has a built-in function called `median()` that we can use to calculate sample median.
+We'll use the same variables as previous
+```{r}
+median(beauty$beauty)
+median(beauty$students)
+```
+
+
+---
+layout: true
+`r add_border(inverse=TRUE)`
+---
+class: inverse, middle, center
+
+# Measures of spread
+
+---
 layout: true
 `r add_border(inverse=FALSE)`
 ---
 
-# Jumping Rivers 
+# Measures of spread
 
-  * Standard header and footer
-  * Colour from website
+A measure of location is insufficient in itself to summarise data as it only describes the value of a
+typical outcome and not how much variation there is in the data. 
+  
+  * Compare:
+    * 10, 20, 30 and 19, 20, 21 
+    * both have the same mean (20) and the same median (20)
+    * both are clearly different
 
+---
+
+# Range
+  
+The range is easy to calculate: largest minus the smallest
+
+$$\text{Range }= x_{(n)} - x_{(1)}$$
+
+where $x_{(n)}$ is the largest value in our data set and $x_{(1)}$ is the smallest value.
+
+--
+
+So for our data set of $\{0,3,2,0\}$, the range is $3-0=3$. It is very useful
+for data checking purposes, but in general it's not very robust. 
+
+---
+
+# Range: issues
+
+1. Unduly influenced by one particularly large or small value, known as an outlier. 
+1. Only really suitable for comparing (roughly) equally sized samples as
+it is more likely that large samples contain the extreme values of a population
+--
+
+> Useful for data checking
+
+---
+
+# Example: OKCupid ranges
+
+
+```{r}
+range(cupid$age)
+```
+
+Perhaps a little on the high side?
+
+---
+
+# Sample variance and standard deviation
+  
+  * The mean and variance are the most popular
+  * Nice mathematical properties, unlike the median. 
+  
+The sample variance, $s^2$:
+
+$$s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar x)^2$$
+
+--
+
+The formula can be rewritten as
+
+$$s^2= \frac{1}{(n-1)} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right\}$$
+
+
+---
+
+# Sample variance and standard deviation
+  
+
+  * However $\sum x^2$ becomes very large as $n$ increases.
+  
+    - Loss of precision
+    
+  * In practice we would use
+$$s^2= \sum_{i=1}^n \frac{x_i^2}{n-1}  - \left(\frac{n}{n-1}\right) \bar x^2$$
+
+
+---
+
+# Example
+
+For our toy data set, $\{0,3,2,0\}$, we have
+
+$$\sum_{i=1}^4 x_i^2 = 0^2 + 3^2 + 2^2 + 0^2 = 13$$
+
+So
+$$s^2 = \frac{1}{n-1} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right\} = \frac{1}{3} \left( 13 - 4 \times 1.25^2\right) = 2.25$$
+
+ * The sample standard deviation, $s$, is the square root of the sample variance, 
+  - $s = \sqrt{2.25} = 1.5$. 
+
+  * Standard deviation is in the same units as the
+original data. 
+
+---
+
+# Rule of thumb
+
+Approximately 95% of data is contained in the interval
+
+$$\bar x \pm 2 \times s$$
+
+---
+
+# Example: Beauty
+
+
+```{r}
+sd(beauty$evaluation)
+var(beauty$evaluation)
+```
+
+---
+
+# Quartiles and the interquartile range
+  
+  * $Q_1$: Lower quartile = ($n$+1)/4$^{\text{th}}$ smallest observation.
+  * $Q_3$: Upper quartile = 3 ($n$+1)/4$^{\text{th}}$ smallest observation.
+
+$$IQR = Q_3 - Q_1$$
+
+---
+
+# R example
+
+The quartiles are special cases of percentiles: 
+
+ * The minimum is the 0$^{th}$ percentile
+ * $Q_1$ is the 25$^{th}$ percentile
+ * The median, $Q_2$ is the 50$^{th}$ percentile
+ * $Q_3$ is the 75$^{th}$ percentile
+ * The maximum is the 100$^{th}$ percentile
+
+```{r}
+quantile(cupid$age)
+```
+
+---
+
+# R example
+
+```{r}
+## The middle 90% 
+quantile(cupid$age, probs = c(0.025, 0.975))
+```
+
+--
+
+```{r}
+# Rule of thumb
+mean(cupid$age) - 2*sd(cupid$age)
+mean(cupid$age) + 2*sd(cupid$age)
+```
+
+---
+class: inverse
+
+# Streaming data
+
+> Streaming data is data that is generated continuously by multiple sources. 
+
+---
+
+# The mean and variance
+
+ * Suppose we have observed $k-1$ values and our current estimate of the mean is $m_{k-1}$.
+
+--
+
+  * A new observation, $x_k$ arrives. How would we update our estimate? 
+--
+
+An obvious method is
+$$m_k = \frac{(k-1) \times m_{k - 1} + x_k}{k}$$
+
+--
+
+ * However this method isn't _numerically stable_. 
+
+Basically $(k-1) \times m_{k - 1}$ can 
+get large and we'll lose precision. 
+
+---
+
+# Streaming data: mean & variance
+
+Instead we should use
+
+$$m_k = m_{k-1} + \frac{x_k - m_{k-1}}{k}$$
+
+We have a similar algorithm for the variance
+
+$$v_k = v_{k-1} + (x_k - m_{k-1})(x_k - m_k)$$
+
+Again this algorithm is [numerically stable](https://en.wikipedia.org/wiki/Numerical_stability).
+
+---
+
+# Example: OKCupid
+
+The OKCupid data set contains almost 60,000 individuals. 
+
+```{r, echo=FALSE}
+local(source("code/f2_average_age.R"))
+```
+
+---
+
+# The median and quantiles
+
+  * Keeping a [running median](https://stackoverflow.com/q/10657503/203420) is a non-trivial task
+  
+  * Essentially we need to maintain a sorted data structure containing the data
+  
+  * The key issues are storage cost of the data and retrieval time. 
+
+---
+
+# Relevant R functions 
+
+```{r echo=FALSE, results='asis'}
+library(tibble)
+r_functions = tribble(
+  ~Command, ~Comment, ~Example, 
+"mean", "Calculates the mean of a vector", "mean(x)",
+"sd", "Calculates the standard deviation of a vector", "sd(x)",
+"var", "Calculates the variance of a vector", "var(x)",
+"quantile", "The vector quartiles." , "quantile(x, type = 6)",
+"range", "Calculates the vector range", "range(x)"
+)  
+
+knitr::kable(
+  r_functions, longtable = TRUE, booktabs = TRUE,
+  caption = 'Summary of R commands in this chapter.', format = "html"
+)
+```
+
+    

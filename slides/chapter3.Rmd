@@ -1,6 +1,6 @@
 ---
-title: "A title page"
-subtitle: "A subtitle"
+title: "What, why and how of visualisation"
+subtitle: "Chapter 3"
 author: '`r jrPresentation::get_author()`'
 output:
   xaringan::moon_reader:
@@ -21,11 +21,328 @@ set_presentation_options()
 ```
 
 layout: true
+`r add_border(inverse=T)`
+
+---
+
+```{r echo=FALSE, cache=TRUE}
+load("data/bond.RData")
+cupid = readRDS("data/okcupid.rds")
+```
+
+class: center, inverse, middle
+
+> A picture paints a thousand words - _Frederick R. Barnard_
+
+---
+layout:true
 `r add_border(inverse=FALSE)`
 ---
 
-# Jumping Rivers 
+# Visualisation
 
-  * Standard header and footer
-  * Colour from website
+  * Data visualisation is an old topic; but in the last few years, it's become particularly trendy.
+  * With the correct visualisation, we can highlight key features that don't require any fancy statistics.
 
+---
+
+# Prerequisites (R)
+
+```{r, eval=FALSE}
+install.packages(c("ggplot2", "hrbrthemes"))
+````
+
+---
+
+# Historical visualisations 
+
+---
+
+# John Snow
+
+  * John Snow (who did know something) created a simple dot map to illustrate the cluster of cholera cases around a water pump 
+
+```{r, 3-1, echo=FALSE, out.width = "40%"}
+knitr::include_graphics("graphics/Snow-cholera-map-1.jpg")
+```
+
+---
+
+# Hereford Mappa Mundi (1300)
+
+  * It is the largest medieval [map](https://en.wikipedia.org/wiki/Hereford_Mappa_Mundi) known still to exist
+    * At the centre of the map is Jerusalem
+    * In the bottom left is the UK
+    * At the top is the garden of Eden (some of the data points are approximate!)
+
+```{r, 3-2, echo=FALSE, out.width = "40%"}
+knitr::include_graphics("graphics/hereford.jpg")
+```
+
+---
+
+# Florence Nightingale
+
+  * [Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale): a true pioneer in the graphical representation of statistics
+
+
+```{r, 3-3, echo=FALSE, out.width = "60%"}
+knitr::include_graphics("graphics/Nightingale-mortality.jpg")
+```
+
+---
+
+# DatasauRus
+
+```{r echo=FALSE, out.width="80%"}
+knitr::include_graphics("graphics/DinoSequential.gif")
+```
+
+---
+
+# Scatter plots
+
+  * A scatter plot has horizontal and vertical axes to plot data points.
+  * Typically they are used to show how one variables is affected by another. 
+
+---
+
+# Example: Bond
+
+> Has Bond become more violent over time?
+
+--
+
+```{r 3-4}
+ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
+  geom_point() # Add a layer of points
+```
+
+---
+
+# Example: Bond (in colour)
+
+
+```{r, 3-5}
+g = ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
+  geom_point(aes(colour = Actor)) + # Add a layer of points
+  ylim(c(0, 50))
+g
+```
+
+---
+
+# Trend line
+
+```{r,message=FALSE, warning=FALSE}
+(g_smooth = g + 
+   stat_smooth(colour = "steelblue", se = FALSE, method = "loess"))
+```
+
+---
+
+# Insights
+
+1. The number of kills appears to be increasing with each bond movie.
+2. Pierce Brosnan (the green points) liked killing people.
+3. Daniel Craig's movies didn't contain (that) many deaths.
+
+---
+
+# Styling your plot
+
+  * **ggplot2** has the concept of themes that can style the plot.
+    * [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) package
+
+> typography-centric themes and theme components for ggplot2
+
+Basically, it's opinionated. 
+
+---
+
+# Pretty picture
+
+```{r, message=FALSE, dev='svg', out.width="75%", dpi=300, fig.keep="none", warning=FALSE}
+library(hrbrthemes)
+g_smooth + 
+  theme_ipsum() + 
+  scale_color_ipsum() +
+  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title = "Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") 
+```
+
+---
+
+# Pretty picture
+
+```{r, message=FALSE, dev='svg', out.width="100%", dpi=300, echo=FALSE, warning=FALSE}
+library(hrbrthemes)
+g_smooth + 
+  theme_ipsum() + 
+  scale_color_ipsum() +
+  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title = "Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") 
+```
+
+---
+
+# Exercise / Q & A  {-}
+
+
+  * Does alcohol consumption change through time?
+  * Does there appear to a relationship between alcohol and the number of kills?
+  * Change method from `smooth` to `lm`.
+  
+---
+
+# Histograms
+
+  * A histogram is a graphical representation of the distribution of continuous, numerical data.
+  * If the area under the graph adds up to one, then it is a _probability_ distribution.
+  
+--
+  * Divide the entire range into a series of intervals and count how many values fall into each interval.
+  * Bins do not have to be the same size (but they probably should be in general).
+  
+--
+
+  * Nice example at [Tin Lizzie](http://tinlizzie.org/histograms/)
+
+---
+
+# Histograms: OKCupid
+
+```{r, fig.keep="none"}
+ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) 
+```
+
+```{r 3-8,echo=FALSE, out.width="80%"}
+g1 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 1")
+g2 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 5) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 5")
+g3 = ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 10) + xlim(c(18, 120)) + 
+  ggtitle("binwidth = 10")
+gridExtra::grid.arrange(g1, g2, g3, ncol=3)
+```
+
+---
+
+# Facets
+
+```{r, out.width="80%"}
+ggplot(cupid, aes(x = age)) + 
+  geom_histogram(binwidth = 1) + 
+  facet_wrap(~ sex) + 
+  coord_cartesian(xlim = c(18, 80))
+```
+
+---
+
+# Insights
+
+1. There are many more male OK Cupid users than female (not surprising).
+2. The general age distribution looks similar between sexes.
+3. The most surprising aspect is that the spike in age 42 is due to female users. This
+could be by pure chance, users lying about their age, or a mistake in data entry.
+
+---
+
+# Density plots
+
+>  Essentially we draw a line around the histogram.
+
+```{r, message = FALSE, warning=FALSE}
+ggplot(cupid, aes(x = age)) + 
+  geom_density(aes(colour = sex)) +
+  xlim(c(18, 80))
+```
+
+---
+
+# How does a kernel density plot work?
+
+
+```{r, out.width="90%", echo=FALSE}
+local(source("code/f3_kernel.R"))
+```
+---
+
+# Boxplots
+
+```{r, echo=FALSE}
+local(source("code/f3_boxplot.R"))
+```
+
+---
+
+# Boxplot: OKcupid
+
+```{r,  out.width="80%"}
+# Missing values are represented with a -1
+ggplot(cupid, aes(x = income, y = age)) + 
+  geom_boxplot()
+```
+
+---
+
+# Barplots
+
+> A bar chart or bar graph is a chart that presents grouped data with rectangular bars 
+with lengths proportional to the values that they represent. 
+
+---
+
+# Barplots (Bond)
+
+```{r}
+ggplot(bond) + 
+  geom_bar(aes(x = Actor))
+```
+
+---
+
+# Barplots (Bond)
+
+```{r, fig.keep="none"}
+ggplot(bond) + 
+  geom_bar(aes(x = Actor))
+```
+
+  * Typically ordering the axis alphabetically isn't best
+   * We could order the either by the number of movies
+   * By the date the actor first appeared.
+
+---
+
+# Barplots (Bond)
+
+```{r, message=FALSE, echo=FALSE, out.width="100%", dev="svg", warning=FALSE}
+library("dplyr")
+library(hrbrthemes)
+g1 = count(bond, Actor) %>% 
+  mutate(n=n) %>% 
+  arrange(n) %>%
+  mutate(Actor=factor(Actor, levels=Actor)) %>%
+  ggplot(aes(x = Actor, y =n)) + 
+  geom_col() + 
+  coord_flip() + 
+  labs(x = NULL, y = "No. of Movies",
+       title="The Bond data set",
+       subtitle="Ordering a bar chart is a useful trick",
+       caption="jumpingrivers.com") + 
+  theme_ipsum(grid="X")
+
+g1
+
+```
