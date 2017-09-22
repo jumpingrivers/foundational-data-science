@@ -23,19 +23,14 @@ on the fundamentals. To make this section concrete, we'll use the [**ggplot2**](
 package within R. However, there are many libraries available to generate the graphics
 in other languages. For example, in Javascript we could use `d3`, or `seaborn` in python.
 
-The **ggplot2** package can be easily installed via
+The **ggplot2** and **hrbrthemes** packages can be easily installed via
 ```{r, eval=FALSE}
-install.packages("ggplot2")
+install.packages(c("ggplot2", "hrbrthemes"))
 ````
-and loaded in the usual way
+and loaded in the usual way, e.g.
 ```{r message = FALSE}
 library("ggplot2")
-```
-We'll also use the [**hrbrthemes**](https://github.com/hrbrmstr/hrbrthemes) package for styling the graph. 
-This is still developmental and can be installed using the devtools package
-```{r, eval=FALSE}
-install.packages("devtools")
-devtools::install_github("hrbrmstr/hrbrthemes")
+library("hrbrthemes")
 ```
 
 ## Historical visualisations 

@@ -12,9 +12,8 @@ x = round(rnorm(20, mean=47, 20))
 mean(x); sd(x)
 ```
 
-
-<!-- This chapter is terse (I'm running out of time). Any additional material 
-helpful-->
+> Testing leads to failure, and failure leads to understanding
+> _Burt Rutan_
 
 ## Introduction & motativating example
 
@@ -204,7 +203,7 @@ mean(y);sd(y)
 ```
 
 
-## Two sample t-test
+## Two sample z-test
 
 Suppose we want to test another improvement to our website. We think that adding
 a [blink](https://en.wikipedia.org/wiki/Blink_element) tag would be a good way of
@@ -214,8 +213,8 @@ attracting customers. Monitoring the first twenty customers we get
 21 32 46 19 29 31 37 28 50 29 34 40 26 20 48  7 39 30 40 34
 ```
 
-How do we compare the website that uses the Comic Sans font to the blinking site? We use a two sampled t-test! 
-As with the one–sample test, we must start by setting up our hypotheses. In a two–sample t
+How do we compare the website that uses the Comic Sans font to the blinking site? We use a two sampled z-test! 
+As with the one–sample test, we must start by setting up our hypotheses. In a two–sample z
 test, the null hypothesis is always that the population means for the two groups are the same
 \[
 H_0: \mu_1 = \mu_2

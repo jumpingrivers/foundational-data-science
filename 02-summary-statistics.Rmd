@@ -30,7 +30,7 @@ situations with a simple shorthand.
 
 Very often in statistics we replace actual numbers with letters in
 order to be able to write general formulae. As discussed earlier, we generally use a single upper case letter to represent our random variable and the lower case to represent sample data, with subscripts to distinguish individual observations in the sample.  Amongst the most common letters to use is $x$, although $y$ and $z$ are frequently used as well. For
-example, suppose we ask a random sample of three people how many
+example, suppose we ask three people how many
 mobile phone calls they made yesterday. We might get the following data: 1, 5, 7. If
 we take another sample we will most likely get different data, say 2,
 0, 3. Using algebra we can represent the general case as $x_1$, $x_2$,
@@ -331,7 +331,10 @@ The R function has also has a `probs` argument where we can specify our
 own percentiles
 ```{r}
 ## The middle 90% 
-quantile(cupid$age, probs = c(0.05, 0.95))
+quantile(cupid$age, probs = c(0.025, 0.975))
+# Rule of thumb
+mean(cupid$age) - 2*sd(cupid$age)
+mean(cupid$age) + 2*sd(cupid$age)
 ```
 
 ```{block, type="rmdtip"}
