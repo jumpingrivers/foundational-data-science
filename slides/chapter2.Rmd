@@ -43,7 +43,7 @@ source("code/load_data.R")
   
   * There are many possible choices when simplifying data
   
-    - not "one size fits all".
+    - "One size __doesn't__ fits all"
 
   * Look at standard measures of location and spread
   
@@ -57,27 +57,30 @@ source("code/load_data.R")
 
   * Basic notation
     
-    - This will allow us to generalise all situations with a simple shorthand.
+    - Generalise all situations with a simple shorthand.
     
-  * Very often in statistics we replace actual numbers with letters in order to be able to write general formulae. 
+  * We replace actual numbers with letters in order to be able to write general formulae. 
   
     - Upper case letter to represent our random variable 
-    - Lower case to represent sample data, with subscripts to distinguish individual observations in the sample.
+    
+    - Lower case to represent sample data, with subscripts to distinguish individual observations in the sample
     
 ---
 
 # Example
 
 
-  * Suppose we ask three people how many mobile phone calls they made yesterday.
+  * Suppose we ask three people how many mobile phone calls they made yesterday
   
-    - We might get the following data: 1, 5, 7.
-    - Another sample we will most likely get different data, say 2, 0, 3. 
-    - Algebra represents the general case as $x_1$, $x_2$, $x_3$:
+    - We might get the following data: 1, 5, 7
+    
+    - Another sample we will most likely get different data, say 2, 0, 3
+    
+    - Algebra represents the general case as $x_1$, $x_2$, $x_3$
 
 --
-| | |
-------------|--|---|---
+| | | |
+------------|--|---|---|---
 1st sample: | 1 | 5 | 7
 2nd sample: | 2 | 0 | 3 
 $\vdots$  | $\vdots$ | $\vdots$ | $\vdots$ 
@@ -87,21 +90,25 @@ typical sample: | $x_1$ | $x_2$ | $x_3$
 
 # Further generalisation
 
-  * Random variable _as a whole_ as $X$ and the $i\text{th}$ observation in the sample as $x_i$.
+  * Represent a random variable _as a whole_ as $X$ and the $i\text{th}$ observation in the sample as $x_i$.
   
   * Previously, we had 1, 5, 7 so
-  * $x_1 = 1$, $x_2 = 5$ and $x_3 = 7$
-The total number of observations in a sample, that is the _sample size_, is usually referred to by the letter $n$.
-Hence in our simple example above $n = 3$.
+  
+    * $x_1 = 1$, $x_2 = 5$ and $x_3 = 7$
+--
+
+  * The total number of observations in a sample i the _sample size_
+  
+    - Referred to by the letter $n$; so $n = 3$ above
 
 ---
 
 # Sums
 
   * The next important piece of notation to introduce is the symbol $\sum$
-    - Upper case of the Greek letter $\sigma$, pronounced ''sigma''.  
+  
+    - Upper case of the Greek letter $\sigma$, pronounced ''sigma''
     
---
 
   * It is used to represent the phrase 'sum the values'. 
 
@@ -111,14 +118,19 @@ $$
 
   - Sum of all the values in our data (from the first $i = 1$ to the last $i = n$)
   
+--
+
   - Often shorten to $\sum x$
 
 ---
 
 # Measures of location (averages)
 
-  - Whats a typical observation
-    - mean and the median.
+  - What's a typical observation
+  
+--
+
+  - Mean and the median
 
 ---
 
@@ -135,7 +147,7 @@ data points in our sample
 
 # Example
 
-So if our data set was $\{0,3,2,0\}$, then $n=4$. Hence,
+So if our data set was $0,3,2,0$, then $n=4$. Hence,
 $$\bar x = \frac{1}{n} \sum_{i=1}^n x_i = \frac{0 + 3 + 2 + 0}{4} = 1.25 $$
 
 In statistics, it is common to use a potential bar over a variable to denote the 
@@ -146,10 +158,30 @@ mean.
 # Example: The beauty data set
 
   * This is __not__ made up
-  
+
+---
+
+# The relationship between beauty and teaching
+
+[Study](https://doi.org/10.3386/w9853) where researchers were 
+interested in whether a lecturers' attractiveness affected 
+their course evaluation! 
+
+ * evaluation: the questionnaire result
+ * tenured: does the lecturer have tenure; 1 == Yes. In R, this value is continuous.
+ * minority: does the lecturer come from an ethnic minority (in the USA)
+ * age: the lecturers' age
+ * gender: a factor: Female or Male
+ * students: number of students in the class
+ * beauty: each of the lecturers' pictures was rated by six undergraduate students: three women and three men. 
+ 
+---
+
+# The relationship between beauty and teaching
+
   * The `beauty` data set contains results for `r nrow(beauty)` classes
   
-  * Does attractiveness affect teaching ability
+  * Does attractiveness affect teaching ability?
   
 ---
 
@@ -172,6 +204,9 @@ We can use the built-in function `mean()`
 ```{r}
 ## Attractiveness score (normalised)
 mean(beauty$beauty)
+```
+--
+```{r}
 ## Number of students per class
 mean(beauty$students)
 ```
@@ -180,10 +215,16 @@ mean(beauty$students)
 
 # Sample median
 
-  * Occasionally used instead of the mean, 
-    - Particularly when the data have an asymmetric profile or when there are outliers (as indicated by graph, perhaps). 
+  * Occasionally used instead of the mean
+  
+    - Particularly when the data have an asymmetric profile or when there are outliers (as indicated by graph, perhaps)
+    
     - Wages!
+--
+
   * Work with _ranked_ observations
+--
+
     - $x_{(1)}, x_{(2)}, \ldots, x_{(n)}$
     - $x_{(1)}$ minimum
     - $x_{(n)}$ maximum
@@ -192,9 +233,13 @@ mean(beauty$students)
 
 # Sample median
 
-* Odd sample size
+  * Odd sample size
+
+--
+
 $$\text{Sample median} =x_{(n+1)/2}$$
- * Even sample size
+
+  * Even sample size
 
 $$\text{Sample median} =\frac{1}{2}x_{(n/2)} + \frac{1}{2} x_{(n/2+1)}$$
 
@@ -206,19 +251,34 @@ $$\text{Sample median} =\frac{1}{2}x_{(n/2)} + \frac{1}{2} x_{(n/2+1)}$$
 For our simple data set $\{0, 3, 2, 0\}$, to calculate the median we
 
   - re-order it to: $\{0, 0, 2, 3\}$
-  - take the average of the middle two observations, to get 1.
+
+--
+  
+  - take the average of the middle two observations, to get 1
 
 ---
 
 # Example: The beauty data set 
 
-R has a built-in function called `median()` that we can use to calculate sample median.
-We'll use the same variables as previous
+R has a built-in function called `median()`
+
 ```{r}
 median(beauty$beauty)
 median(beauty$students)
 ```
 
+---
+
+# Exercise (10 minute or so)
+
+For the beauty data set, calculate the `mean()` and `median()` for the
+columns
+
+  * tenured
+  
+  * minority
+  
+  * age
 
 ---
 layout: true
@@ -235,19 +295,27 @@ layout: true
 
 # Measures of spread
 
-A measure of location is insufficient in itself to summarise data as it only describes the value of a
-typical outcome and not how much variation there is in the data. 
-  
+A measure of location is insufficient in itself to summarise data 
+
+  * It only describes the value of a typical outcome
+
+--
+
   * Compare:
+
     * 10, 20, 30 and 19, 20, 21 
-    * both have the same mean (20) and the same median (20)
-    * both are clearly different
+
+    * Both have the same mean (20) and the same median (20)
+
+    * Both are clearly different
 
 ---
 
 # Range
   
-The range is easy to calculate: largest minus the smallest
+The range is easy to calculate - largest minus the smallest
+
+--
 
 $$\text{Range }= x_{(n)} - x_{(1)}$$
 
@@ -255,16 +323,23 @@ where $x_{(n)}$ is the largest value in our data set and $x_{(1)}$ is the smalle
 
 --
 
-So for our data set of $\{0,3,2,0\}$, the range is $3-0=3$. It is very useful
-for data checking purposes, but in general it's not very robust. 
+So for our data set of $\{0,3,2,0\}$:
+
+  * the range is $3-0=3$
+  
+  * Useful for data checking purposes
 
 ---
 
 # Range: issues
 
-1. Unduly influenced by one particularly large or small value, known as an outlier. 
-1. Only really suitable for comparing (roughly) equally sized samples as
+1. Unduly influenced by one particularly large or small value, known as an outlier
+
+--
+
+1. Only really suitable for comparing (roughly) equally sized samples as 
 it is more likely that large samples contain the extreme values of a population
+
 --
 
 > Useful for data checking
@@ -280,11 +355,16 @@ range(cupid$age)
 
 Perhaps a little on the high side?
 
+--
+
+> Question: What should you do with this observation?
+
 ---
 
 # Sample variance and standard deviation
   
   * The mean and variance are the most popular
+  
   * Nice mathematical properties, unlike the median. 
   
 The sample variance, $s^2$:
@@ -319,14 +399,17 @@ For our toy data set, $\{0,3,2,0\}$, we have
 
 $$\sum_{i=1}^4 x_i^2 = 0^2 + 3^2 + 2^2 + 0^2 = 13$$
 
+--
+
 So
 $$s^2 = \frac{1}{n-1} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right\} = \frac{1}{3} \left( 13 - 4 \times 1.25^2\right) = 2.25$$
 
- * The sample standard deviation, $s$, is the square root of the sample variance, 
-  - $s = \sqrt{2.25} = 1.5$. 
+--
 
-  * Standard deviation is in the same units as the
-original data. 
+ * The sample standard deviation, $s$, is the square root of the sample variance
+  - $s = \sqrt{2.25} = 1.5$
+
+  * Standard deviation is in the same units as the original data
 
 ---
 
@@ -336,9 +419,11 @@ Approximately 95% of data is contained in the interval
 
 $$\bar x \pm 2 \times s$$
 
+> Tomorrow we'll see where this rule comes from
+
 ---
 
-# Example: Beauty
+# Example: Beauty data set
 
 
 ```{r}
@@ -350,8 +435,9 @@ var(beauty$evaluation)
 
 # Quartiles and the interquartile range
   
-  * $Q_1$: Lower quartile = ($n$+1)/4$^{\text{th}}$ smallest observation.
-  * $Q_3$: Upper quartile = 3 ($n$+1)/4$^{\text{th}}$ smallest observation.
+  * $Q_3$: Upper quartile = $3 (n+1)/4^{\text{th}}$ smallest observation
+
+  * $Q_1$: Lower quartile = $(n+1)/4^{th}$ smallest observation
 
 $$IQR = Q_3 - Q_1$$
 
@@ -361,11 +447,11 @@ $$IQR = Q_3 - Q_1$$
 
 The quartiles are special cases of percentiles: 
 
- * The minimum is the 0$^{th}$ percentile
- * $Q_1$ is the 25$^{th}$ percentile
- * The median, $Q_2$ is the 50$^{th}$ percentile
- * $Q_3$ is the 75$^{th}$ percentile
- * The maximum is the 100$^{th}$ percentile
+ * The minimum is the $0^{th}$ percentile
+ * $Q_1$ is the $25^{th}$ percentile
+ * The median, $Q_2$ is the $50^{th}$ percentile
+ * $Q_3$ is the $75^{th}$ percentile
+ * The maximum is the $100^{th}$ percentile
 
 ```{r}
 quantile(cupid$age)
@@ -384,10 +470,27 @@ quantile(cupid$age, probs = c(0.025, 0.975))
 
 ```{r}
 # Rule of thumb
-mean(cupid$age) - 2*sd(cupid$age)
-mean(cupid$age) + 2*sd(cupid$age)
+mean(cupid$age) - 2 * sd(cupid$age)
+mean(cupid$age) + 2 * sd(cupid$age)
 ```
 
+
+---
+
+# Exercise
+
+For the beauty data set calculate the `sd()`, `range()` and `quantiles()` for
+
+  * `tenured`
+  
+  * `age`
+  
+  * `beauty`
+
+
+---
+layout: true
+`r add_border(inverse=TRUE)`
 ---
 class: inverse
 
@@ -395,6 +498,9 @@ class: inverse
 
 > Streaming data is data that is generated continuously by multiple sources. 
 
+---
+layout: true
+`r add_border(inverse=FALSE)`
 ---
 
 # The mean and variance
@@ -406,15 +512,14 @@ class: inverse
   * A new observation, $x_k$ arrives. How would we update our estimate? 
 --
 
-An obvious method is
-$$m_k = \frac{(k-1) \times m_{k - 1} + x_k}{k}$$
+  * An obvious method is
+$$m_k = \frac{1}{k} ((k-1) \times m_{k - 1} + x_k)$$
 
 --
 
- * However this method isn't _numerically stable_. 
+ * However this method isn't _numerically stable_ 
 
-Basically $(k-1) \times m_{k - 1}$ can 
-get large and we'll lose precision. 
+    * Basically $(k-1) \times m_{k - 1}$ gets large and we'll lose precision. 
 
 ---
 
@@ -424,11 +529,7 @@ Instead we should use
 
 $$m_k = m_{k-1} + \frac{x_k - m_{k-1}}{k}$$
 
-We have a similar algorithm for the variance
-
-$$v_k = v_{k-1} + (x_k - m_{k-1})(x_k - m_k)$$
-
-Again this algorithm is [numerically stable](https://en.wikipedia.org/wiki/Numerical_stability).
+We have a similar algorithm for the [variance](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance)
 
 ---
 

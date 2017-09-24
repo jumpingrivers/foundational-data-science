@@ -28,11 +28,14 @@ layout: true
 ```{r echo=FALSE, cache=TRUE}
 load("data/bond.RData")
 cupid = readRDS("data/okcupid.rds")
+library(ggplot2)
 ```
 
 class: center, inverse, middle
 
-> A picture paints a thousand words - _Frederick R. Barnard_
+> A picture paints a thousand words
+>
+> -_Frederick R. Barnard_
 
 ---
 layout:true
@@ -41,28 +44,40 @@ layout:true
 
 # Visualisation
 
-  * Data visualisation is an old topic; but in the last few years, it's become particularly trendy.
+  * Data visualisation is an old topic; but in the last few years, it's become particularly trendy
+  
   * With the correct visualisation, we can highlight key features that don't require any fancy statistics.
 
----
+--
 
-# Prerequisites (R)
+## Prerequisites (R)
 
 ```{r, eval=FALSE}
 install.packages(c("ggplot2", "hrbrthemes"))
 ````
+```{r, message=FALSE}
+library("ggplot2")
+library("hrbrthemes")
+```
 
 ---
+layout:true
+`r add_border(inverse=TRUE)`
+---
 
+class: middle, center, inverse
 # Historical visualisations 
 
 ---
+layout:true
+`r add_border(inverse=FALSE)`
+---
 
-# John Snow
+# John Snow (not __that__ John Snow)
 
-  * John Snow (who did know something) created a simple dot map to illustrate the cluster of cholera cases around a water pump 
+John Snow (who did know something) created a simple dot map to illustrate the cluster of cholera cases around a water pump 
 
-```{r, 3-1, echo=FALSE, out.width = "40%"}
+```{r, 3-1, echo=FALSE, out.width = "50%"}
 knitr::include_graphics("graphics/Snow-cholera-map-1.jpg")
 ```
 
@@ -70,12 +85,12 @@ knitr::include_graphics("graphics/Snow-cholera-map-1.jpg")
 
 # Hereford Mappa Mundi (1300)
 
-  * It is the largest medieval [map](https://en.wikipedia.org/wiki/Hereford_Mappa_Mundi) known still to exist
-    * At the centre of the map is Jerusalem
-    * In the bottom left is the UK
-    * At the top is the garden of Eden (some of the data points are approximate!)
+It is the largest medieval [map](https://en.wikipedia.org/wiki/Hereford_Mappa_Mundi) known still to exist
+  * At the centre of the map is Jerusalem
+  * In the bottom left is the UK
+  * At the top is the garden of Eden!
 
-```{r, 3-2, echo=FALSE, out.width = "40%"}
+```{r, 3-2, echo=FALSE, out.width = "35%"}
 knitr::include_graphics("graphics/hereford.jpg")
 ```
 
@@ -83,10 +98,10 @@ knitr::include_graphics("graphics/hereford.jpg")
 
 # Florence Nightingale
 
-  * [Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale): a true pioneer in the graphical representation of statistics
+[Florence Nightingale](https://en.wikipedia.org/wiki/Florence_Nightingale): a true pioneer in the graphical representation of statistics
 
 
-```{r, 3-3, echo=FALSE, out.width = "60%"}
+```{r, 3-3, echo=FALSE, out.width = "70%"}
 knitr::include_graphics("graphics/Nightingale-mortality.jpg")
 ```
 
@@ -94,7 +109,7 @@ knitr::include_graphics("graphics/Nightingale-mortality.jpg")
 
 # DatasauRus
 
-```{r echo=FALSE, out.width="80%"}
+```{r echo=FALSE, out.width="90%"}
 knitr::include_graphics("graphics/DinoSequential.gif")
 ```
 
@@ -102,8 +117,9 @@ knitr::include_graphics("graphics/DinoSequential.gif")
 
 # Scatter plots
 
-  * A scatter plot has horizontal and vertical axes to plot data points.
-  * Typically they are used to show how one variables is affected by another. 
+  * A scatter plot has horizontal and vertical axes to plot data points
+  
+  * Typically they are used to show how one variables is affected by another
 
 ---
 
@@ -113,9 +129,20 @@ knitr::include_graphics("graphics/DinoSequential.gif")
 
 --
 
-```{r 3-4}
-ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
+```{r}
+{{ggplot(bond, aes(x = Number, y = Kills))}} + # Create a canvas
   geom_point() # Add a layer of points
+```
+
+---
+
+# Example: Bond
+
+> Has Bond become more violent over time?
+
+```{r}
+ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
+{{  geom_point()}} # Add a layer of points
 ```
 
 ---
@@ -125,8 +152,7 @@ ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
 
 ```{r, 3-5}
 g = ggplot(bond, aes(x = Number, y = Kills)) + # Create a canvas
-  geom_point(aes(colour = Actor)) + # Add a layer of points
-  ylim(c(0, 50))
+{{  geom_point(aes(colour = Actor))}}  # Add a layer of points
 g
 ```
 
@@ -136,23 +162,30 @@ g
 
 ```{r,message=FALSE, warning=FALSE}
 (g_smooth = g + 
-   stat_smooth(colour = "steelblue", se = FALSE, method = "loess"))
+   stat_smooth(colour = "steelblue", 
+              se = FALSE, 
+              method = "loess"))
 ```
 
 ---
 
 # Insights
 
-1. The number of kills appears to be increasing with each bond movie.
-2. Pierce Brosnan (the green points) liked killing people.
-3. Daniel Craig's movies didn't contain (that) many deaths.
+1. The number of kills appears to be increasing with each bond movie
+
+2. Pierce Brosnan (the green points) liked killing people
+
+3. Daniel Craig's movies didn't contain (that) many deaths
 
 ---
 
 # Styling your plot
 
-  * **ggplot2** has the concept of themes that can style the plot.
-    * [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) package
+  * **ggplot2** has the concept of themes that can style the plot
+
+--
+  
+  * [hrbrthemes](https://github.com/hrbrmstr/hrbrthemes) package
 
 > typography-centric themes and theme components for ggplot2
 
@@ -163,7 +196,7 @@ Basically, it's opinionated.
 # Pretty picture
 
 ```{r, message=FALSE, dev='svg', out.width="75%", dpi=300, fig.keep="none", warning=FALSE}
-library(hrbrthemes)
+{{library("hrbrthemes")}}
 g_smooth + 
   theme_ipsum() + 
   scale_color_ipsum() +
@@ -172,6 +205,51 @@ g_smooth +
        title = "Kills through time",
        subtitle = "Is there a relationship?",
        caption = "Pierce wasn't a nice man!") 
+```
+---
+
+# Pretty picture
+
+```{r, message=FALSE, dev='svg', out.width="75%", dpi=300, fig.keep="none", warning=FALSE}
+library("hrbrthemes")
+g_smooth + 
+{{  theme_ipsum()}} +
+  scale_color_ipsum() +
+  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title = "Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") 
+```
+---
+
+# Pretty picture
+
+```{r, message=FALSE, dev='svg', out.width="75%", dpi=300, fig.keep="none", warning=FALSE}
+library("hrbrthemes")
+g_smooth + 
+  theme_ipsum() + 
+{{  scale_color_ipsum()}} +
+  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title = "Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") 
+```
+---
+
+# Pretty picture
+
+```{r, message=FALSE, dev='svg', out.width="75%", dpi=300, fig.keep="none", warning=FALSE}
+library("hrbrthemes")
+g_smooth + 
+  theme_ipsum() + 
+  scale_color_ipsum() +
+{{  labs(x = "Movie number", 
+       y = "No. of Bond Kills",
+       title = "Kills through time",
+       subtitle = "Is there a relationship?",
+       caption = "Pierce wasn't a nice man!") }}
 ```
 
 ---

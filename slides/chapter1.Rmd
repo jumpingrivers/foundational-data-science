@@ -33,6 +33,26 @@ layout:true
 
 ---
 
+background-image: url(graphics/doll.jpg)
+background-size: cover
+
+# About
+.pull-right[
+* Academic: 
+
+  * Senior [Statistics](http://www.mas.ncl.ac.uk/~ncsg3/) lecturer, [Newcastle University](https://en.wikipedia.org/wiki/Newcastle_University), UK
+
+* Consultant at [Jumping Rivers](https://jumpingrivers.com)
+
+* Data science training & consultancy
+
+  * R, [Stan](https://www.jumpingrivers.com/courses/13_introductions-to-bayesian-inference-using-rstan), Scala
+
+* [Efficient R programming](http://shop.oreilly.com/product/0636920047995.do), O'Reilly
+]
+
+---
+
 background-image: url(graphics/scream.jpg)
 background-size: cover
 
@@ -44,12 +64,22 @@ background-size: cover
   
     - Lots of small tasks, breaks
 
+--
+
+  * First time this course has run, be nice ;)
+  
+--
+
+  * Slides are a subset of the [lecture notes](https://github.com/jumpingrivers/foundational-data-science)
+  
+    - These are notes, not a polished book
 
 ---
 layout: true
-`r add_border(inverse=FALSE)`
-
 ---
+
+background-image: url(graphics/venn.jpg)
+background-size: cover
 
 # Book/Course/Lecture overview
 
@@ -61,22 +91,28 @@ layout: true
   
     - No Venn diagrams are allowed!
 
---
+---
+layout:true
+`r add_border(inverse=FALSE)`
+---
 
-# 4 minute exercise
+# Four minute exercise
 
-  - In the slack channel, what skills does a data scientist need
+  - In the slack channel, what skills does a data scientist need?
+  
   - No fights!
 
 ---
 
 # Data Science
 
-  *  My background is in statistics and I see data science as
-the logical extension of applying statistical methods to large scale data sets.
+  *  My background is in statistics 
+  
+    - I see data science as the logical extension of applying statistical methods to large scale data sets.
 
   * A computer science person, would switch that idea on it's head
-    - large data sets first, analytics second. 
+  
+    - Large data sets first, analytics second. 
 
   * Both of us are correct _and_ also wrong
   
@@ -108,7 +144,7 @@ layout: true
 
 ---
 
-# Missing data
+# Example: Missing data
 
  * Most real world data sets have missing data
  
@@ -125,8 +161,14 @@ layout: true
 --
 
   * If I ask you  your age, and you flip a coin. 
+  
     - If heads, you tell me the answer
-    - If tails, you refuse.
+  
+    - If tails, you refuse
+    
+--
+
+  * Easy to fill in the blanks
 
 ---
 
@@ -138,7 +180,7 @@ layout: true
 
   * Scottish participants are more likely to refuse a survey on soccer excellence
   
-    - but it does not depend on the level of their soccer skills.
+    - But it does not depend on the level of their soccer skills.
 
 ---
 
@@ -155,7 +197,23 @@ layout: true
 
 # Key Skills
 
-  * Spot where potential issues lie using a combination of basic and advanced techniques
+  * Spot where potential issues lie using a combination
+
+--
+
+   * Statistics
+
+--
+
+   * Programming
+
+--
+
+   * Visualisation
+
+--
+
+   * Domain specific knowledge
   
 ---
 
@@ -164,7 +222,9 @@ layout: true
  * Quantities measured in a study are called _random variables_ 
  
  * A particular outcome is called an _observation_
- 
+
+--
+
  * A collection of observations is the _data_ (or _sample_)
  
  * The collection of all possible outcomes is the _population_
@@ -179,14 +239,20 @@ layout: true
 
   * The time spent on a website is our random variable
   
+--
+
   * A particular customer's time would be an observation 
-  
-  * If we recorded the time for every person during the day, those times would be our data, which would form a _sample_ from the population of all customers.  
+
+--
+
+  * If we recorded the time for every person during the day, those times would be our data
+    - A _sample_ from the population of all customers
   
 --
 
-  * We often use a capital letter (say $X$) to represent our random variable, 
-  * and the lower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
+  * We often use a capital letter (say $X$) to represent our random variable
+  
+  * aLower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
 
 ---
 
@@ -209,10 +275,14 @@ layout: true
 # Data types
 
   * _quantitative_ (numeric)
-    - discrete: data moves in steps, e.g. shoe sizes
-    - Continuous: take _any_ value, but accuracy may make it look discrete
   
+    - Discrete: data moves in steps, e.g. shoe sizes
+    
+    - Continuous: take _any_ value, but accuracy may make it look discrete
+--
+
   * _qualitative_ (non-numeric), aka ordinal or categorical
+
     - e.g. colours, survival
     
 ---
@@ -238,11 +308,15 @@ Also consider potential sources of error in the four scenarios
 # Sample size
 
   * Larger samples will generally give more precise information about the population
-    - but, quality matters!
+
+    - Quality matters!
+    
     - Facebook users aren't representation of the population
     
   * National opinion polls often rely on samples in the region of just $1,000$
+
     - Carefully choosen sample
+    
     - Need to account for the [shy tory](https://en.wikipedia.org/wiki/Shy_Tory_Factor) or
     the [Bradley effect](https://en.wikipedia.org/wiki/Bradley_effect)
     
@@ -262,15 +336,18 @@ Also consider potential sources of error in the four scenarios
 --
 
  * Is traffic on facebook the same on each day, e.g. is Friday different from Saturday?
+ 
  * Is the week before Christmas the same as the week after Christmas?
+ 
  * Was your advert on the same page as a more popular advert?
  
 ---
 
 # Randomisation
 
-  * Display the advert with a probability. 
-  * The probability could be equal,
-    - Or if you were trying a new and untested approach, 
-    you might have probability $0.95$ standard advert, $0.05$ new advert.
+  * Display the advert with a probability
+  
+  * The probability could be equal
+  
+    - Or if you were trying a new and untested approach, you might have probability $0.95$ standard advert, $0.05$ new advert
 

@@ -118,7 +118,7 @@ where
   * $\beta_0$ is the $y$-intercept (in the UK, we used $c$ instead of $\beta_0$);
   * $\beta_1$ is the gradient (in the UK, we used $m$ instead of $\beta_1$).
   
-In statistics, we usually $Y$ the response variable (the thing we want to predict) 
+In statistics, we usually call $Y$ the response variable (the thing we want to predict) 
 and $x$ the predictor (or covariate). The aim of the model is to estimate the
 values of $\beta_0$ and $\beta_1$. However, since we only have a sample, there is uncertainity
 surrounding our estimate.
@@ -190,7 +190,7 @@ This is equivalent to fitting a plane (a sheet of paper) through the points (fig
 ```{r 6-4, echo=FALSE,fig.cap = "Illustration of multiple linear regression with two predictor variables.", out.width="95%"}
 local(source("code/f6_3d.R"))
 ```
-When we have more than two predictor variable, the geometric interpretation 
+When we have more than two predictor variables, the geometric interpretation 
 gets messy, but it's still the same idea.
 
 The parameter estimating procedure is identical to simple linear regression - we wish to minimise
@@ -200,7 +200,7 @@ statistical and machine learning.
 Fitting the model in R is a simple extension
 
 ```{r}
-(m = lm(Calories ~ Fat + Carb , data = starbucks))
+(m = lm(Calories ~ Fat + Carb, data = starbucks))
 ```
 Notice that the coefficient  for `Fat` has decreased from 12.8 to 10.52 due to the influence
 of the Carbohydrate component.
