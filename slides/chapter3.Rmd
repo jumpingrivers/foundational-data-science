@@ -158,7 +158,25 @@ g
 
 ---
 
-# Trend line
+# Exercise
+
+Using the beauty data set, produce some interesting plots, e.g.
+
+  * `beauty` vs `students`
+
+```{r, fig.keep="none"}
+# Perhaps use colour?
+ggplot(beauty, aes(x = age, y=students)) + 
+  geom_point()
+```
+
+  * `beauty` vs `age`, coloured by `tenured`
+
+  * Anything else?
+
+---
+
+# Trend lines
 
 ```{r,message=FALSE, warning=FALSE}
 (g_smooth = g + 
@@ -177,6 +195,12 @@ g
 
 3. Daniel Craig's movies didn't contain (that) many deaths
 
+```{r,message=FALSE, warning=FALSE, echo=FALSE}
+(g_smooth = g + 
+   stat_smooth(colour = "steelblue", 
+              se = FALSE, 
+              method = "loess"))
+```
 ---
 
 # Styling your plot
@@ -189,7 +213,13 @@ g
 
 > typography-centric themes and theme components for ggplot2
 
-Basically, it's opinionated. 
+Basically, it's opinionated
+
+---
+
+# Less is more
+
+![](graphics/data-ink.gif)
 
 ---
 
@@ -270,24 +300,37 @@ g_smooth +
 
 ---
 
-# Exercise / Q & A  {-}
-
+# Exercise / Q & A
 
   * Does alcohol consumption change through time?
+```{r, fig.keep="none"}
+g = ggplot(bond, aes(x = Number, y = Alcohol_Units)) + 
+  geom_point(aes(colour = Actor))
+g
+```
+
   * Does there appear to a relationship between alcohol and the number of kills?
-  * Change method from `smooth` to `lm`.
+    
+    - Add on `stat_smooth()`
+    
+  * Change method from `smooth` to `lm`
+  
+    - Add on `stat_smooth(method = "lm")`
   
 ---
 
 # Histograms
 
-  * A histogram is a graphical representation of the distribution of continuous, numerical data.
-  * If the area under the graph adds up to one, then it is a _probability_ distribution.
+  * A histogram is a graphical representation of the distribution of continuous, numerical data
+  
+  * If the area under the graph adds up to one, then it is a _probability_ distribution
   
 --
-  * Divide the entire range into a series of intervals and count how many values fall into each interval.
-  * Bins do not have to be the same size (but they probably should be in general).
+
+  * Divide the entire range into a series of intervals and count how many values fall into each interval
   
+  * Bins do not have to be the same size (but they probably should be in general)
+
 --
 
   * Nice example at [Tin Lizzie](http://tinlizzie.org/histograms/)
@@ -303,13 +346,13 @@ ggplot(cupid, aes(x = age)) +
 
 ```{r 3-8,echo=FALSE, out.width="80%"}
 g1 = ggplot(cupid, aes(x = age)) + 
-  geom_histogram(binwidth = 1) + xlim(c(18, 120)) + 
+  geom_histogram(binwidth = 1) + xlim(c(18, 110)) + 
   ggtitle("binwidth = 1")
 g2 = ggplot(cupid, aes(x = age)) + 
-  geom_histogram(binwidth = 5) + xlim(c(18, 120)) + 
+  geom_histogram(binwidth = 5) + xlim(c(18, 110)) + 
   ggtitle("binwidth = 5")
 g3 = ggplot(cupid, aes(x = age)) + 
-  geom_histogram(binwidth = 10) + xlim(c(18, 120)) + 
+  geom_histogram(binwidth = 10) + xlim(c(18, 110)) + 
   ggtitle("binwidth = 10")
 gridExtra::grid.arrange(g1, g2, g3, ncol=3)
 ```
@@ -324,15 +367,34 @@ ggplot(cupid, aes(x = age)) +
   facet_wrap(~ sex) + 
   coord_cartesian(xlim = c(18, 80))
 ```
+---
+
+# Exercise
+
+Generate histograms for 
+
+  * `height`
+```{r, fig.keep="none", message = FALSE, warning=FALSE}
+ggplot(cupid, aes(x = height)) + 
+  geom_histogram() 
+```
+
+  * Try different binwidths, e.g. `geom_histogram(binwidth = 1)`
+  
+  * Use facets to split by `sex`
 
 ---
 
 # Insights
 
-1. There are many more male OK Cupid users than female (not surprising).
-2. The general age distribution looks similar between sexes.
-3. The most surprising aspect is that the spike in age 42 is due to female users. This
-could be by pure chance, users lying about their age, or a mistake in data entry.
+1. There are many more male OK Cupid users than female (not surprising)
+
+2. The general age distribution looks similar between sexes
+
+3. The most surprising aspect is that the spike in age 42 is due to female users
+  - This could be by pure chance
+  - users lying about their age
+  - a mistake in data entry
 
 ---
 
@@ -422,5 +484,25 @@ g1 = count(bond, Actor) %>%
   theme_ipsum(grid="X")
 
 g1
-
 ```
+
+---
+
+# Summary
+
+  * We need measures of location __and__ spread
+    
+    - Also be wary of just point estimates
+    
+  * Means and variances can be used for streaming data
+  
+  * Simple charts can highlight interesting features
+
+--
+
+> Garbage in, Garbage out!
+
+--
+
+> "See" you tomorrow, Good night (it's midnight here)
+

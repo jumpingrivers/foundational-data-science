@@ -108,13 +108,15 @@ layout:true
 
   *  My background is in statistics 
   
-    - I see data science as the logical extension of applying statistical methods to large scale data sets.
+    - I see data science as the logical extension of applying statistical methods to large scale data sets
 
-  * A computer science person, would switch that idea on it's head
+  * A computer science person would switch that idea on it's head
   
-    - Large data sets first, analytics second. 
+    - Large data sets first, analytics second
 
   * Both of us are correct _and_ also wrong
+  
+
   
 ---
 
@@ -124,7 +126,20 @@ layout:true
   
   * Small, interesting data sets
   
-  * Small enough to be informative, but still have real world interest.
+  * Small enough to be informative, but still have real world interest
+  
+--
+
+  * Introduce some mathematical notation
+  
+  * We'll cover means (the average). Why do we use:
+    
+      * $\mu$ and $\bar x$ for the same(?) thing?
+
+      * Simple cases to give insight in more complex examples
+--
+
+  * Allegedly interesting examples
 
 ---
 layout:true
@@ -154,13 +169,13 @@ layout: true
 
 # Missing completely at random (MCAR)
 
-  * This is the easiest to deal with. 
+  * This is the easiest to handle
   
-  * The data are missing independently of both observed and unobserved data. 
+  * The data are missing independently of both observed and unobserved data 
 
 --
 
-  * If I ask you  your age, and you flip a coin. 
+  * If I ask you  your age, and you flip a coin
   
     - If heads, you tell me the answer
   
@@ -180,18 +195,57 @@ layout: true
 
   * Scottish participants are more likely to refuse a survey on soccer excellence
   
-    - But it does not depend on the level of their soccer skills.
+    - But it does not depend on the level of their soccer skills
 
 ---
 
 # Missing not at random (MNAR)
 
-  * Missing observations related to values of unobserved data.
+  * Missing observations related to values of unobserved data
 
 --
 
   * As a concrete example, a good predictor of whether someone survived the titanic disaster was whether or not they
-  had their age recorded.
+  had their age recorded
+
+---
+
+# Example: German Tank Problem
+
+  * During WWII, the allies want to estimate the number of tanks the [Germans had produced](https://en.wikipedia.org/wiki/German_tank_problem)
+  
+  * It was noticed that tank parts were numbered sequentially, e.g. 1, 2, 3, 4, ...
+  
+  * How do you estimate the number of tanks?
+  
+---
+
+# Example: German Tank Problem
+
+  * Reformulate the problem
+  
+  * Imagine I'm picking at random integers from 1, ..., $N$. We observe the values
+  
+    * 187, 35, 743, 86, 627
+--
+
+  * What do you think the value of $N$ is?
+  
+    - 744 - seems to low
+    - 10,000 - seems a bit big
+    - ...
+  
+---
+
+# Example: German Tank Problem
+
+Month	| Statistical estimate	| Intelligence estimate	| German records
+------|-----------------------|-----------------------|-------------
+June 1940	|169	| 1,000	| 122
+June 1941	|244	|1,550	|271
+August 1942	|327	|1,550 |	342
+
+
 
 ---
 
@@ -251,8 +305,10 @@ layout: true
 --
 
   * We often use a capital letter (say $X$) to represent our random variable
-  
-  * aLower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
+
+--
+
+  * A lower case, with subscripts (e.g. $x_1$, $x_2$, $\ldots$, ), to represent observations _in a general sense_.
 
 ---
 
@@ -303,6 +359,11 @@ Identify the type of data described in each of the following examples.
 Also consider potential sources of error in the four scenarios
 
 
+<!-- Qualitative → Categorical -->
+<!-- Quantitative → Continuous -->
+<!-- Quantitative → Discrete → Ordinal -->
+<!-- Quantitative → Discrete -->
+
 ---
 
 # Sample size
@@ -350,4 +411,38 @@ Also consider potential sources of error in the four scenarios
   * The probability could be equal
   
     - Or if you were trying a new and untested approach, you might have probability $0.95$ standard advert, $0.05$ new advert
+---
 
+# Exercise
+
+Rashid, Ellen and Hamish all work as business analysts for a leading clothing manufacturer.  The design team want to know how successful a new pair of jeans will be, and so they ask the analysts to conduct some research.  
+
+  *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_
+
+  * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_
+
+  * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_
+
+---
+
+# Solutions
+
+  *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_
+
+> Accessibility sampling. Could be flawed as it is non–random and is prone to bias.
+
+---
+
+# Solutions
+
+  * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_
+
+
+> Difficult – if not impossible – to get a complete list of everyone in the target population.
+
+---
+
+# Solutions
+  * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_
+ 
+> Judgemental sampling - potentially bias
