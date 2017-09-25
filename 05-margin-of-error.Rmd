@@ -1,9 +1,10 @@
 ---
-output: html_document
+knit: "bookdown::preview_chapter"
 editor_options: 
   chunk_output_type: console
 ---
-# Margin of Error
+
+# Margin of Error {#chapter5}
 
 ```{r, echo=FALSE, results="hide"}
 source("code/load_data.R")

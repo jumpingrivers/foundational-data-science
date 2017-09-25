@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Foundational Data Science</title>
+  <meta name="description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Foundational Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://csgillespie.github.io/foundational-data-science/" />
+  
+  <meta property="og:description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory." />
+  <meta name="github-repo" content="csgillespie/foundational-data-science" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Foundational Data Science" />
+  <meta name="twitter:site" content="@csgillespie" />
+  <meta name="twitter:description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory." />
+  
+
+<meta name="author" content="Colin Gillespie">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="chapter1.html">
+<link rel="next" href="chapter3.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Foundational Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Author</a></li>
+<li class="chapter" data-level="1" data-path="chapter1.html"><a href="chapter1.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="chapter1.html"><a href="chapter1.html#book-overview"><i class="fa fa-check"></i><b>1.1</b> Book overview</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="chapter1.html"><a href="chapter1.html#the-trouble-with-tibbles-data"><i class="fa fa-check"></i><b>1.1.1</b> The trouble with <del>tibbles</del> data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="chapter1.html"><a href="chapter1.html#talking-about-data"><i class="fa fa-check"></i><b>1.2</b> Talking about data</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="chapter1.html"><a href="chapter1.html#sample-size"><i class="fa fa-check"></i><b>1.2.1</b> Sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="chapter1.html"><a href="chapter1.html#designing-the-experiment"><i class="fa fa-check"></i><b>1.3</b> Designing the experiment</a></li>
+<li class="chapter" data-level="1.4" data-path="chapter1.html"><a href="chapter1.html#data-sets"><i class="fa fa-check"></i><b>1.4</b> Data sets</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="chapter1.html"><a href="chapter1.html#the-relationship-between-beauty-and-teaching"><i class="fa fa-check"></i><b>1.4.1</b> The relationship between beauty and teaching</a></li>
+<li class="chapter" data-level="1.4.2" data-path="chapter1.html"><a href="chapter1.html#bond-james-bond"><i class="fa fa-check"></i><b>1.4.2</b> Bond, James Bond</a></li>
+<li class="chapter" data-level="1.4.3" data-path="chapter1.html"><a href="chapter1.html#okcupid"><i class="fa fa-check"></i><b>1.4.3</b> OKCupid</a></li>
+<li class="chapter" data-level="1.4.4" data-path="chapter1.html"><a href="chapter1.html#starbucks"><i class="fa fa-check"></i><b>1.4.4</b> Starbucks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Condensing data with numerical summaries</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#mathematical-notation"><i class="fa fa-check"></i><b>2.1</b> Mathematical notation</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#measures-of-location"><i class="fa fa-check"></i><b>2.2</b> Measures of location</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="chapter2.html"><a href="chapter2.html#sample-mean"><i class="fa fa-check"></i><b>2.2.1</b> Sample mean</a></li>
+<li class="chapter" data-level="" data-path="chapter2.html"><a href="chapter2.html#example-the-beauty-data-set"><i class="fa fa-check"></i>Example: The beauty data set</a></li>
+<li class="chapter" data-level="2.2.2" data-path="chapter2.html"><a href="chapter2.html#sample-median"><i class="fa fa-check"></i><b>2.2.2</b> Sample median</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#measures-of-spread"><i class="fa fa-check"></i><b>2.3</b> Measures of spread</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#range"><i class="fa fa-check"></i><b>2.3.1</b> Range</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#sample-variance-and-standard-deviation"><i class="fa fa-check"></i><b>2.3.2</b> Sample variance and standard deviation</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapter2.html"><a href="chapter2.html#quartiles-and-the-interquartile-range"><i class="fa fa-check"></i><b>2.3.3</b> Quartiles and the interquartile range</a></li>
+<li class="chapter" data-level="2.3.4" data-path="chapter2.html"><a href="chapter2.html#numerical-examples"><i class="fa fa-check"></i><b>2.3.4</b> Numerical examples</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#streaming-data"><i class="fa fa-check"></i><b>2.4</b> Streaming data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#the-mean-and-variance"><i class="fa fa-check"></i><b>2.4.1</b> The mean and variance</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#the-median-and-quantiles"><i class="fa fa-check"></i><b>2.4.2</b> The median and quantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="chapter2.html"><a href="chapter2.html#relevant-r-functions"><i class="fa fa-check"></i>Relevant R functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="chapter3.html"><a href="chapter3.html"><i class="fa fa-check"></i><b>3</b> What, why and how of visualisation</a><ul>
+<li class="chapter" data-level="3.1" data-path="chapter3.html"><a href="chapter3.html#historical-visualisations"><i class="fa fa-check"></i><b>3.1</b> Historical visualisations</a></li>
+<li class="chapter" data-level="3.2" data-path="chapter3.html"><a href="chapter3.html#scatter-plots"><i class="fa fa-check"></i><b>3.2</b> Scatter plots</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="chapter3.html"><a href="chapter3.html#styling-your-plot"><i class="fa fa-check"></i><b>3.2.1</b> Styling your plot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="chapter3.html"><a href="chapter3.html#histograms"><i class="fa fa-check"></i><b>3.3</b> Histograms</a></li>
+<li class="chapter" data-level="3.4" data-path="chapter3.html"><a href="chapter3.html#density-plots"><i class="fa fa-check"></i><b>3.4</b> Density plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="chapter3.html"><a href="chapter3.html#detailed-explanation"><i class="fa fa-check"></i><b>3.4.1</b> Detailed explanation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="chapter3.html"><a href="chapter3.html#boxplots"><i class="fa fa-check"></i><b>3.5</b> Boxplots</a></li>
+<li class="chapter" data-level="3.6" data-path="chapter3.html"><a href="chapter3.html#barplots"><i class="fa fa-check"></i><b>3.6</b> Barplots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter4.html"><a href="chapter4.html"><i class="fa fa-check"></i><b>4</b> The normal distribution - what’s the point?</a><ul>
+<li class="chapter" data-level="4.1" data-path="chapter4.html"><a href="chapter4.html#the-bernoulli-distribution"><i class="fa fa-check"></i><b>4.1</b> The Bernoulli distribution</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="chapter4.html"><a href="chapter4.html#motivating-example"><i class="fa fa-check"></i><b>4.1.1</b> Motivating example</a></li>
+<li class="chapter" data-level="4.1.2" data-path="chapter4.html"><a href="chapter4.html#description"><i class="fa fa-check"></i><b>4.1.2</b> Description</a></li>
+<li class="chapter" data-level="4.1.3" data-path="chapter4.html"><a href="chapter4.html#example"><i class="fa fa-check"></i><b>4.1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="chapter4.html"><a href="chapter4.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> The Binomial distribution</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="chapter4.html"><a href="chapter4.html#motivating-example-1"><i class="fa fa-check"></i><b>4.2.1</b> Motivating example</a></li>
+<li class="chapter" data-level="4.2.2" data-path="chapter4.html"><a href="chapter4.html#description-1"><i class="fa fa-check"></i><b>4.2.2</b> Description</a></li>
+<li class="chapter" data-level="4.2.3" data-path="chapter4.html"><a href="chapter4.html#what-does-the-binomial-distribution-look-like"><i class="fa fa-check"></i><b>4.2.3</b> What does the Binomial distribution look like?</a></li>
+<li class="chapter" data-level="4.2.4" data-path="chapter4.html"><a href="chapter4.html#motivating-example-2"><i class="fa fa-check"></i><b>4.2.4</b> Motivating example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="chapter4.html"><a href="chapter4.html#the-normalgaussian-distribution"><i class="fa fa-check"></i><b>4.3</b> The Normal/Gaussian distribution</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="chapter4.html"><a href="chapter4.html#continuous-and-discrete-distributions"><i class="fa fa-check"></i><b>4.3.1</b> Continuous and discrete distributions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="chapter4.html"><a href="chapter4.html#the-standard-deviations-rule"><i class="fa fa-check"></i><b>4.3.2</b> The standard deviations rule</a></li>
+<li class="chapter" data-level="4.3.3" data-path="chapter4.html"><a href="chapter4.html#the-z-score"><i class="fa fa-check"></i><b>4.3.3</b> The Z-Score</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapter5.html"><a href="chapter5.html"><i class="fa fa-check"></i><b>5</b> Margin of Error</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapter5.html"><a href="chapter5.html#introduction-motativating-example"><i class="fa fa-check"></i><b>5.1</b> Introduction &amp; motativating example</a></li>
+<li class="chapter" data-level="5.2" data-path="chapter5.html"><a href="chapter5.html#one-sample-test"><i class="fa fa-check"></i><b>5.2</b> One sample test</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="chapter5.html"><a href="chapter5.html#example-okcupid-1"><i class="fa fa-check"></i><b>5.2.1</b> Example: OKCupid</a></li>
+<li class="chapter" data-level="5.2.2" data-path="chapter5.html"><a href="chapter5.html#errors"><i class="fa fa-check"></i><b>5.2.2</b> Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="chapter5.html"><a href="chapter5.html#two-sample-z-test"><i class="fa fa-check"></i><b>5.3</b> Two sample z-test</a></li>
+<li class="chapter" data-level="5.4" data-path="chapter5.html"><a href="chapter5.html#confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> Confidence intervals</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="chapter5.html"><a href="chapter5.html#construction"><i class="fa fa-check"></i><b>5.4.1</b> Construction</a></li>
+<li class="chapter" data-level="5.4.2" data-path="chapter5.html"><a href="chapter5.html#example-comic-sans"><i class="fa fa-check"></i><b>5.4.2</b> Example: Comic Sans</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="chapter5.html"><a href="chapter5.html#the-central-limit-therem-clt"><i class="fa fa-check"></i><b>5.5</b> The Central Limit Therem (CLT)</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="chapter5.html"><a href="chapter5.html#example-customer-waiting-times"><i class="fa fa-check"></i><b>5.5.1</b> Example: Customer waiting times</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="chapter6.html"><a href="chapter6.html"><i class="fa fa-check"></i><b>6</b> Capturing relationships with linear regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapter6.html"><a href="chapter6.html#capturing-linear-relationships"><i class="fa fa-check"></i><b>6.1</b> Capturing linear relationships</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="chapter6.html"><a href="chapter6.html#example-starbucks-calorie-content"><i class="fa fa-check"></i><b>6.1.1</b> Example: Starbucks calorie content</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="chapter6.html"><a href="chapter6.html#linear-regression"><i class="fa fa-check"></i><b>6.2</b> Linear Regression</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="chapter6.html"><a href="chapter6.html#prediction-and-interpretation"><i class="fa fa-check"></i><b>6.2.1</b> Prediction and Interpretation</a></li>
+<li class="chapter" data-level="6.2.2" data-path="chapter6.html"><a href="chapter6.html#how-do-we-estimate-the-model-coefficients"><i class="fa fa-check"></i><b>6.2.2</b> How do we estimate the model coefficients?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="chapter6.html"><a href="chapter6.html#multiple-linear-regression-models"><i class="fa fa-check"></i><b>6.3</b> Multiple linear regression models</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chapter7.html"><a href="chapter7.html"><i class="fa fa-check"></i><b>7</b> Wrap-up</a></li>
+<li class="divider"></li>
+<li>Developed by <a href="https://jumpingrivers.com" target="blank">Jumping Rivers</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Foundational Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapter2" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Condensing data with numerical summaries</h1>
+<blockquote>
+<p>James Bond: [to Vesper] Why is it that people who can’t take advice always insist on giving it?</p>
+</blockquote>
+<!-- (90 minutes) -->
+<p>One of the roles of a data scientist is to condense large amounts of information into a few key summaries. There are many possible choices when simplifying data and it is certainly not the case that “one size fits all”. In this chapter, we will look at standard measures of location and spread, which are the building blocks for many statistical and machine learning algorithms. We discover that some measures fit naturally into a big data scenario while others do not.</p>
+<div id="mathematical-notation" class="section level2">
+<h2><span class="header-section-number">2.1</span> Mathematical notation</h2>
+<p>Before we can talk more about numerical techniques we first need to define some basic notation. This will allow us to generalise all situations with a simple shorthand.</p>
+<p>Very often in statistics we replace actual numbers with letters in order to be able to write general formulae. As discussed earlier, we generally use a single upper case letter to represent our random variable and the lower case to represent sample data, with subscripts to distinguish individual observations in the sample. Amongst the most common letters to use is <span class="math inline">\(x\)</span>, although <span class="math inline">\(y\)</span> and <span class="math inline">\(z\)</span> are frequently used as well. For example, suppose we ask three people how many mobile phone calls they made yesterday. We might get the following data: 1, 5, 7. If we take another sample we will most likely get different data, say 2, 0, 3. Using algebra we can represent the general case as <span class="math inline">\(x_1\)</span>, <span class="math inline">\(x_2\)</span>, <span class="math inline">\(x_3\)</span>:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td>1st sample:</td>
+<td>1</td>
+<td>5</td>
+<td>7</td>
+</tr>
+<tr class="even">
+<td>2nd sample:</td>
+<td>2</td>
+<td>0</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td>typical sample:</td>
+<td><span class="math inline">\(x_1\)</span></td>
+<td><span class="math inline">\(x_2\)</span></td>
+<td><span class="math inline">\(x_3\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>This can be generalised further by referring to the random variable <em>as a whole</em> as <span class="math inline">\(X\)</span> and the <span class="math inline">\(i\text{th}\)</span> observation in the sample as <span class="math inline">\(x_i\)</span>. Hence, in the first sample above, the second observation is <span class="math inline">\(x_2=5\)</span> whilst in the second sample it is <span class="math inline">\(x_2=0\)</span>. The letters <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are most commonly used as the index numbers for the subscripts.</p>
+<p>The total number of observations in a sample, that is the <em>sample size</em>, is usually referred to by the letter <span class="math inline">\(n\)</span>. Hence in our simple example above <span class="math inline">\(n = 3\)</span>.</p>
+<p>The next important piece of notation to introduce is the symbol <span class="math inline">\(\sum\)</span>. This is the upper case of the Greek letter <span class="math inline">\(\sigma\)</span>, pronounced ‘’sigma’‘. It is used to represent the phrase ’sum the values’. This symbol is used as follows <span class="math display">\[
+\sum_{i=1}^n x_i = x_1 + x_2 + \dots + x_n.
+\]</span> This notation is used to represent the sum of all the values in our data (from the first <span class="math inline">\(i = 1\)</span> to the last <span class="math inline">\(i = n\)</span>), and is often abbreviated to <span class="math inline">\(\sum x\)</span> when we sum over all the data in our sample.</p>
+</div>
+<div id="measures-of-location" class="section level2">
+<h2><span class="header-section-number">2.2</span> Measures of location</h2>
+<p>These are also referred to as averages. In general terms, they tell us the value of a “typical” observation. There are two measures which are commonly used: the mean and the median. We will consider these in turn. When these are obtained from a sample of data, rather than the entire population, we often prefix with the word “sample”.</p>
+<div id="sample-mean" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Sample mean</h3>
+<p>One of the most important and widely used measures of location is the (arithmetic) mean, more commonly known as the average <span class="math display">\[
+ \bar x = \frac{x_1 + x_2 + \ldots + x_n}{n} = \frac{1}{n} \sum_{i=1}^n x_i 
+\]</span> where <span class="math inline">\(x_i\)</span> are our data points and <span class="math inline">\(n\)</span> is the sample size, i.e. the number of data points in our sample. So if our data set was <span class="math inline">\(\{0,3,2,0\}\)</span>, then <span class="math inline">\(n=4\)</span>. Hence, <span class="math display">\[
+\bar x = \frac{1}{n} \sum_{i=1}^n x_i = \frac{0 + 3 + 2 + 0}{4} = 1.25 \;.
+\]</span> In statistics, it is common to use a potential bar over a variable to denote the mean.</p>
+<div class="rmdnote">
+<p>
+Why do we say “sample mean” instead of just mean? In statistics we make the distinction between the population mean (the <em>true</em> value) and the estimate mean. To differentiate between the population and sample means, we use <span class="math inline"><em>μ</em></span> and <span class="math inline"><span class="math inline">\(\bar x\)</span></span> respectively.
+</p>
+<p>
+Statistics uses the sample to inform us about the population.
+</p>
+</div>
+</div>
+<div id="example-the-beauty-data-set" class="section level3 unnumbered">
+<h3>Example: The beauty data set</h3>
+<p>The <code>beauty</code> data set contains results for 463 classes. After loading the data set into R, we can extract a particular column using the dollar operator</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Attractiveness score
+beauty<span class="op">$</span>beauty
+## Number of students per class
+beauty<span class="op">$</span>students</code></pre></div>
+<p>We can use the built-in function <code>mean()</code> to calculate the average attractiveness score and class size</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Attractiveness score (normalised)
+<span class="kw">mean</span>(beauty<span class="op">$</span>beauty)
+<span class="co">#&gt; [1] -0.0883</span>
+## Number of students per class
+<span class="kw">mean</span>(beauty<span class="op">$</span>students)
+<span class="co">#&gt; [1] 55.2</span></code></pre></div>
+</div>
+<div id="sample-median" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Sample median</h3>
+<p>The median is occasionally used instead of the mean, particularly when the data have an asymmetric profile or when there are outliers (as indicated by graph, perhaps). The median is the middle value of the observations when they are listed in ascending order. It is straightforward to determine the median for small data sets. For larger data sets, the calculation is more easily done using a computer package such as R.</p>
+<p>Ranked observations are denoted as <span class="math inline">\(x_{(1)}, x_{(2)}, \ldots, x_{(n)}\)</span>. The sample median is defined as: <span class="math display">\[
+\text{Sample median} = 
+\begin{cases}
+  x_{(n+1)/2}, &amp; n \text{ odd;} \\
+  \frac{1}{2}x_{(n/2)} + \frac{1}{2} x_{(n/2+1)}, &amp; n \text{ even}\;.
+\end{cases}
+\]</span></p>
+<p>The median is less sensitive to outliers than the sample mean, but has less useful mathematical properties.</p>
+<p>For our simple data set <span class="math inline">\(\{0, 3, 2, 0\}\)</span>, to calculate the median we re-order it to: <span class="math inline">\(\{0, 0, 2, 3\}\)</span>; then take the average of the middle two observations, to get 1.</p>
+<div id="example-the-beauty-data-set-1" class="section level4 unnumbered">
+<h4>Example: The beauty data set</h4>
+<p>R has a built-in function called <code>median()</code> that we can use to calculate sample median. We’ll use the same variables as previous</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">median</span>(beauty<span class="op">$</span>beauty)
+<span class="co">#&gt; [1] -0.156</span>
+<span class="kw">median</span>(beauty<span class="op">$</span>students)
+<span class="co">#&gt; [1] 29</span></code></pre></div>
+<p>Notice that the mean and median beauty scores are approximately the same; this implies that the data are roughly symmetric. However the class size values differ: <span class="math inline">\(\bar x = 55\)</span> and the median is <span class="math inline">\(29\)</span>. This is because the class sizes are <a href="https://en.wikipedia.org/wiki/Skewness">skewed</a>; there are many more large values than smaller values.</p>
+<div class="rmdnote">
+<p>
+The classic case of where it can be misleading to use the mean, is income. Here a few very rich individuals can dominate the statistic.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="measures-of-spread" class="section level2">
+<h2><span class="header-section-number">2.3</span> Measures of spread</h2>
+<!-- (25 minutes) -->
+<p>A measure of location is insufficient in itself to summarise data as it only describes the value of a typical outcome and not how much variation there is in the data. For example, the two datasets 10, 20, 30 and 19, 20, 21 both have the same mean (20) and the same median (20). However the first set of data ranges considerably from this value while the second stays very close. They are quite clearly very different data sets. The mean or the median does not fully represent the data. There are three basic measures of spread which we will consider: the range, the inter–quartile range and the sample variance/standard deviation.</p>
+<div id="range" class="section level3">
+<h3><span class="header-section-number">2.3.1</span> Range</h3>
+<p>The range is easy to calculate. It is simply the largest minus the smallest.<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> <span class="math display">\[
+\text{Range }= x_{(n)} - x_{(1)} 
+\]</span> where <span class="math inline">\(x_{(n)}\)</span> is the largest value in our data set and <span class="math inline">\(x_{(1)}\)</span> is the smallest value. So for our data set of <span class="math inline">\(\{0,3,2,0\}\)</span>, the range is <span class="math inline">\(3-0=3\)</span>. It is very useful for data checking purposes, but in general it’s not very robust.</p>
+<p>There are two problems with the range as a measure of spread. When calculating the range you are looking at the two most extreme points in the data, and hence the value of the range can be unduly influenced by one particularly large or small value, known as an outlier. The second problem is that the range is only really suitable for comparing (roughly) equally sized samples as it is more likely that large samples contain the extreme values of a population.</p>
+<div id="example-okcupid" class="section level4 unnumbered">
+<h4>Example: OKCupid</h4>
+<p>Starting any analysis it’s a good idea to calculate the range of the variables. It’s a straightforward way of ensuring everything is correct. For example, the range of ages in the OK Cupid data set is</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">range</span>(cupid<span class="op">$</span>age)
+<span class="co">#&gt; [1]  18 110</span></code></pre></div>
+<p>Perhaps a little on the high side?</p>
+</div>
+</div>
+<div id="sample-variance-and-standard-deviation" class="section level3">
+<h3><span class="header-section-number">2.3.2</span> Sample variance and standard deviation</h3>
+<p>In statistics, the mean and variance are used most often. This is primarily because they have nice mathematical properties, unlike the median. The sample variance, <span class="math inline">\(s^2\)</span>, is defined as <span class="math display">\[
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i - \bar x)^2
+\]</span> Essentially we are measuring the difference between the sample mean, <span class="math inline">\(\bar x\)</span>, and each observation in turn. By squaring the difference, we avoid positive and negative values cancelling.</p>
+<p>The formula can be rewritten as <span class="math display">\[
+s^2= \frac{1}{(n-1)} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2 \right\} \;.
+\]</span> The second formula is easier for calculations.<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a> However <span class="math inline">\(\sum x^2\)</span> becomes very large as <span class="math inline">\(n\)</span> increases. This could lead to a potential loss of precision, in practice we would use <span class="math display">\[
+s^2= \sum_{i=1}^n \frac{x_i^2}{n-1}  - \left(\frac{n}{n-1}\right) \bar x^2  \;.
+\]</span><br />
+For our toy data set, <span class="math inline">\(\{0,3,2,0\}\)</span>, we have <span class="math display">\[
+\sum_{i=1}^4 x_i^2 = 0^2 + 3^2 + 2^2 + 0^2 = 13.
+\]</span> So <span class="math display">\[
+s^2 = \frac{1}{n-1} \left\{ \left(\sum_{i=1}^n x_i^2\right) - n \bar x^2
+\right\} = \frac{1}{3} \left( 13 - 4 \times 1.25^2\right) = 2.25.
+\]</span> The sample standard deviation, <span class="math inline">\(s\)</span>, is the square root of the sample variance, i.e. for our toy example <span class="math inline">\(s = \sqrt{2.25} = 1.5\)</span>. The standard deviation is preferred as a summary measure as it is in the same units as the original data. However, it is often easier from a theoretical perspective to work with variances.</p>
+<p>A rule of thumb for getting a feel for your data, is that approximately 95% of data is contained in the interval <span class="math display">\[
+\bar x \pm 2 \times s
+\]</span> We’ll see in chapter <a href="chapter4.html#chapter4">4</a> the mathematical underpinning for this rule.</p>
+<div class="rmdnote">
+<p>
+If this was a “Maths class”, we would spend some time discussing why we divide by <span class="math inline"><em>n</em> − 1</span> and not <span class="math inline"><em>n</em></span>. If we had access to all of the population, we would use <span class="math inline"><em>n</em></span>. However, we don’t and to correct for that we use <span class="math inline"><em>n</em> − 1</span>.
+</p>
+</div>
+<div id="example-r" class="section level4">
+<h4><span class="header-section-number">2.3.2.1</span> Example: R</h4>
+<p>R has built-in functions to calculate the standard deviation and variance respectively</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sd</span>(beauty<span class="op">$</span>evaluation)
+<span class="co">#&gt; [1] 0.555</span>
+<span class="kw">var</span>(beauty<span class="op">$</span>evaluation)
+<span class="co">#&gt; [1] 0.308</span></code></pre></div>
+</div>
+</div>
+<div id="quartiles-and-the-interquartile-range" class="section level3">
+<h3><span class="header-section-number">2.3.3</span> Quartiles and the interquartile range</h3>
+<p>The upper and lower quartiles are defined as follows:</p>
+<ul>
+<li><span class="math inline">\(Q_1\)</span>: Lower quartile = (<span class="math inline">\(n\)</span>+1)/4<span class="math inline">\(^{\text{th}}\)</span> smallest observation.</li>
+<li><span class="math inline">\(Q_3\)</span>: Upper quartile = 3 (<span class="math inline">\(n\)</span>+1)/4<span class="math inline">\(^{\text{th}}\)</span> smallest observation.</li>
+</ul>
+<p>We can linearly interpolate between adjacent observations if necessary. The interquartile range is the difference between the third and first quartile, i.e. <span class="math display">\[
+IQR = Q_3 - Q_1.
+\]</span> Like the median, the IQR isn’t influenced by large values (outliers). However it is more computationally difficult to calculate.</p>
+</div>
+<div id="numerical-examples" class="section level3">
+<h3><span class="header-section-number">2.3.4</span> Numerical examples</h3>
+<p>For the following data sets, calculate the inter-quartile range:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(\{5, 6, 7, 8\}\)</span></li>
+</ol>
+<p>The lower quartile is the <span class="math inline">\(5/4 = 1.25^{\text{th}}\)</span> smallest observation, i.e. <span class="math inline">\(x_{(1.25)}\)</span>. The value of <span class="math inline">\(x_{(1)} = 5\)</span> and <span class="math inline">\(x_{(2)} = 6\)</span>. So the first quartile is one quarter of the way between <span class="math inline">\(x_{(1)}\)</span> and <span class="math inline">\(x_{(2)}\)</span>, i.e a quarter of the way between 5 and 6, <span class="math display">\[
+  x_{(1.25)} = x_{(1)} + 0.25 \times (x_{(2)} - x_{(1)}) = 5 + \frac{6-5}{4} = 5.25.
+  \]</span> Similarly, the upper quartile is the <span class="math inline">\(3 \times (4+1)/4 = 3.75^{\text{th}}\)</span> smallest observation. So <span class="math display">\[
+  x_{(3.75)}  = x_{(3)} + 0.75 \times (x_{(4)} - x_{(3)}) = 7.75.
+  \]</span> Therefore, <span class="math display">\[
+  IQR = 7.75 - 5.25 = 2.5.
+  \]</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li><span class="math inline">\(\{10, 15, 20, 25, 50\}\)</span>.</li>
+</ol>
+<p>The lower quartile is the <span class="math inline">\((5+1)/4 = 1.5^{\text{th}}\)</span> smallest observation, i.e. <span class="math inline">\(x_{1.5}\)</span>, so <span class="math display">\[
+  x_{(1.5)} = x_{(1)} + 0.5 \times (x_{(2)} - x_{(1)}) = 12.5.
+  \]</span> Similarly, the upper quartile is the <span class="math inline">\(3 \times (5+1)/4 = 4.5^{\text{th}}\)</span> smallest observation. So <span class="math display">\[
+  x_{(4.5)} = x_{(4)} + 0.5 \times (x_{(5)}-x_{(4)}) = 37.5.
+  \]</span> Thus, <span class="math display">\[
+  IQR = 37.5 - 12.5 = 15.
+  \]</span></p>
+<div id="r-example" class="section level4">
+<h4><span class="header-section-number">2.3.4.1</span> R example</h4>
+<p>The quartiles are special cases of percentiles:</p>
+<ul>
+<li>The minimum is the 0<span class="math inline">\(^{th}\)</span> percentile</li>
+<li><span class="math inline">\(Q_1\)</span> is the 25<span class="math inline">\(^{th}\)</span> percentile</li>
+<li>The median, <span class="math inline">\(Q_2\)</span> is the 50<span class="math inline">\(^{th}\)</span> percentile</li>
+<li><span class="math inline">\(Q_3\)</span> is the 75<span class="math inline">\(^{th}\)</span> percentile</li>
+<li>The maximum is the 100<span class="math inline">\(^{th}\)</span> percentile</li>
+</ul>
+<p>The <code>quantile()</code> function calculate these values</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">quantile</span>(cupid<span class="op">$</span>age)
+<span class="co">#&gt;   0%  25%  50%  75% 100% </span>
+<span class="co">#&gt;   18   26   30   37  110</span></code></pre></div>
+<p>The R function has also has a <code>probs</code> argument where we can specify our own percentiles</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## The middle 90% 
+<span class="kw">quantile</span>(cupid<span class="op">$</span>age, <span class="dt">probs =</span> <span class="kw">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))
+<span class="co">#&gt;  2.5% 97.5% </span>
+<span class="co">#&gt;    20    58</span>
+<span class="co"># Rule of thumb</span>
+<span class="kw">mean</span>(cupid<span class="op">$</span>age) <span class="op">-</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(cupid<span class="op">$</span>age)
+<span class="co">#&gt; [1] 13.4</span>
+<span class="kw">mean</span>(cupid<span class="op">$</span>age) <span class="op">+</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span><span class="kw">sd</span>(cupid<span class="op">$</span>age)
+<span class="co">#&gt; [1] 51.2</span></code></pre></div>
+<div class="rmdtip">
+<p>
+There are actually (at least) 9 different versions of how to calculate quantiles (see <code>?quantile</code> in R). The version described in these notes is <code>type = 6</code> in R. Typically, the quantiles give approximately the same answer.
+</p>
+</div>
+<!-- (25 minutes) -->
+</div>
+</div>
+</div>
+<div id="streaming-data" class="section level2">
+<h2><span class="header-section-number">2.4</span> Streaming data</h2>
+<p>Streaming data is data that is generated continuously by multiple sources. Developing algorithms for dealing with streaming data is an active area of research, both statistically and computationally. Even though we’ve only covered a few statistics, some of them can be easily adapted to deal with streaming data while others can’t.</p>
+<div id="the-mean-and-variance" class="section level3">
+<h3><span class="header-section-number">2.4.1</span> The mean and variance</h3>
+<p>Suppose we have observed <span class="math inline">\(k-1\)</span> values and our current estimate of the mean is <span class="math inline">\(m_{k-1}\)</span>. A new observation, <span class="math inline">\(x_k\)</span> arrives. How would we update our estimate? An obvious method is <span class="math display">\[
+m_k = \frac{(k-1) \times m_{k - 1} + x_k}{k}
+\]</span> However this method isn’t <em>numerically stable</em>. Basically <span class="math inline">\((k-1) \times m_{k - 1}\)</span> can get large and we’ll lose precision. Instead we should use <span class="math display">\[
+m_k = m_{k-1} + \frac{x_k - m_{k-1}}{k}
+\]</span> We have a similar algorithm for the variance <span class="math display">\[
+v_k = v_{k-1} + (x_k - m_{k-1})(x_k - m_k)
+\]</span> Again this algorithm is <a href="https://en.wikipedia.org/wiki/Numerical_stability">numerically stable</a>.</p>
+<div id="example-r-1" class="section level4">
+<h4><span class="header-section-number">2.4.1.1</span> Example: R</h4>
+The OKCupid data set contains almost 60,000 individuals. Figure <a href="chapter2.html#fig:2-1">2.1</a> plots the estimate of the mean age as we progress through the data set.
+<div class="figure" style="text-align: center"><span id="fig:2-1"></span>
+<img src="_main_files/figure-html/2-1-1.png" alt="The estimate of the mean age as we progress through the data set." width="60%" />
+<p class="caption">
+Figure 2.1: The estimate of the mean age as we progress through the data set.
+</p>
+</div>
+<p>After some variation in the first few observations, we quickly settle to a consistent estimate of the mean. The spike up to age <span class="math inline">\(34\)</span> is due to the outlying age of <span class="math inline">\(110\)</span></p>
+</div>
+</div>
+<div id="the-median-and-quantiles" class="section level3">
+<h3><span class="header-section-number">2.4.2</span> The median and quantiles</h3>
+<p>In contrast to the mean keeping a <a href="https://stackoverflow.com/q/10657503/203420">running median</a> is a non-trivial task. Essentially we need to maintain a sorted data structure containing the data. The key issues are storage cost of the data and retrieval time.</p>
+</div>
+</div>
+<div id="relevant-r-functions" class="section level2 unnumbered">
+<h2>Relevant R functions</h2>
+<table>
+<caption><span id="tab:unnamed-chunk-19">Table 2.1: </span>Summary of R commands in this chapter.</caption>
+<thead>
+<tr class="header">
+<th align="left">Command</th>
+<th align="left">Comment</th>
+<th align="left">Example</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">mean</td>
+<td align="left">Calculates the mean of a vector</td>
+<td align="left"><code>mean(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left">sd</td>
+<td align="left">Calculates the standard deviation of a vector</td>
+<td align="left"><code>sd(x)</code></td>
+</tr>
+<tr class="odd">
+<td align="left">var</td>
+<td align="left">Calculates the variance of a vector</td>
+<td align="left"><code>var(x)</code></td>
+</tr>
+<tr class="even">
+<td align="left">quantile</td>
+<td align="left">The vector quartiles.</td>
+<td align="left"><code>quantile(x, type = 6)</code></td>
+</tr>
+<tr class="odd">
+<td align="left">range</td>
+<td align="left">Calculates the vector range</td>
+<td align="left"><code>range(x)</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="2">
+<li id="fn2"><p>When you get a new data set, calculating the range is useful when checking for obvious data-input errors.<a href="chapter2.html#fnref2">↩</a></p></li>
+<li id="fn3"><p>The divisor is <span class="math inline">\(n-1\)</span> rather than <span class="math inline">\(n\)</span> in order to correct for the bias which occurs because we are measuring deviations from the sample mean rather than the ``true&quot; mean of the population we are sampling from.<a href="chapter2.html#fnref3">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/02-summary-statistics.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

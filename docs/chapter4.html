@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html >
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Foundational Data Science</title>
+  <meta name="description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory.">
+  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+
+  <meta property="og:title" content="Foundational Data Science" />
+  <meta property="og:type" content="book" />
+  <meta property="og:url" content="https://csgillespie.github.io/foundational-data-science/" />
+  
+  <meta property="og:description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory." />
+  <meta name="github-repo" content="csgillespie/foundational-data-science" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Foundational Data Science" />
+  <meta name="twitter:site" content="@csgillespie" />
+  <meta name="twitter:description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory." />
+  
+
+<meta name="author" content="Colin Gillespie">
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  
+  
+<link rel="prev" href="chapter3.html">
+<link rel="next" href="chapter5.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
+
+<link rel="stylesheet" href="css/style.css" type="text/css" />
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Foundational Data Science</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Author</a></li>
+<li class="chapter" data-level="1" data-path="chapter1.html"><a href="chapter1.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="chapter1.html"><a href="chapter1.html#book-overview"><i class="fa fa-check"></i><b>1.1</b> Book overview</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="chapter1.html"><a href="chapter1.html#the-trouble-with-tibbles-data"><i class="fa fa-check"></i><b>1.1.1</b> The trouble with <del>tibbles</del> data</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="chapter1.html"><a href="chapter1.html#talking-about-data"><i class="fa fa-check"></i><b>1.2</b> Talking about data</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="chapter1.html"><a href="chapter1.html#sample-size"><i class="fa fa-check"></i><b>1.2.1</b> Sample size</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="chapter1.html"><a href="chapter1.html#designing-the-experiment"><i class="fa fa-check"></i><b>1.3</b> Designing the experiment</a></li>
+<li class="chapter" data-level="1.4" data-path="chapter1.html"><a href="chapter1.html#data-sets"><i class="fa fa-check"></i><b>1.4</b> Data sets</a><ul>
+<li class="chapter" data-level="1.4.1" data-path="chapter1.html"><a href="chapter1.html#the-relationship-between-beauty-and-teaching"><i class="fa fa-check"></i><b>1.4.1</b> The relationship between beauty and teaching</a></li>
+<li class="chapter" data-level="1.4.2" data-path="chapter1.html"><a href="chapter1.html#bond-james-bond"><i class="fa fa-check"></i><b>1.4.2</b> Bond, James Bond</a></li>
+<li class="chapter" data-level="1.4.3" data-path="chapter1.html"><a href="chapter1.html#okcupid"><i class="fa fa-check"></i><b>1.4.3</b> OKCupid</a></li>
+<li class="chapter" data-level="1.4.4" data-path="chapter1.html"><a href="chapter1.html#starbucks"><i class="fa fa-check"></i><b>1.4.4</b> Starbucks</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="chapter2.html"><a href="chapter2.html"><i class="fa fa-check"></i><b>2</b> Condensing data with numerical summaries</a><ul>
+<li class="chapter" data-level="2.1" data-path="chapter2.html"><a href="chapter2.html#mathematical-notation"><i class="fa fa-check"></i><b>2.1</b> Mathematical notation</a></li>
+<li class="chapter" data-level="2.2" data-path="chapter2.html"><a href="chapter2.html#measures-of-location"><i class="fa fa-check"></i><b>2.2</b> Measures of location</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="chapter2.html"><a href="chapter2.html#sample-mean"><i class="fa fa-check"></i><b>2.2.1</b> Sample mean</a></li>
+<li class="chapter" data-level="" data-path="chapter2.html"><a href="chapter2.html#example-the-beauty-data-set"><i class="fa fa-check"></i>Example: The beauty data set</a></li>
+<li class="chapter" data-level="2.2.2" data-path="chapter2.html"><a href="chapter2.html#sample-median"><i class="fa fa-check"></i><b>2.2.2</b> Sample median</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="chapter2.html"><a href="chapter2.html#measures-of-spread"><i class="fa fa-check"></i><b>2.3</b> Measures of spread</a><ul>
+<li class="chapter" data-level="2.3.1" data-path="chapter2.html"><a href="chapter2.html#range"><i class="fa fa-check"></i><b>2.3.1</b> Range</a></li>
+<li class="chapter" data-level="2.3.2" data-path="chapter2.html"><a href="chapter2.html#sample-variance-and-standard-deviation"><i class="fa fa-check"></i><b>2.3.2</b> Sample variance and standard deviation</a></li>
+<li class="chapter" data-level="2.3.3" data-path="chapter2.html"><a href="chapter2.html#quartiles-and-the-interquartile-range"><i class="fa fa-check"></i><b>2.3.3</b> Quartiles and the interquartile range</a></li>
+<li class="chapter" data-level="2.3.4" data-path="chapter2.html"><a href="chapter2.html#numerical-examples"><i class="fa fa-check"></i><b>2.3.4</b> Numerical examples</a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="chapter2.html"><a href="chapter2.html#streaming-data"><i class="fa fa-check"></i><b>2.4</b> Streaming data</a><ul>
+<li class="chapter" data-level="2.4.1" data-path="chapter2.html"><a href="chapter2.html#the-mean-and-variance"><i class="fa fa-check"></i><b>2.4.1</b> The mean and variance</a></li>
+<li class="chapter" data-level="2.4.2" data-path="chapter2.html"><a href="chapter2.html#the-median-and-quantiles"><i class="fa fa-check"></i><b>2.4.2</b> The median and quantiles</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="chapter2.html"><a href="chapter2.html#relevant-r-functions"><i class="fa fa-check"></i>Relevant R functions</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="chapter3.html"><a href="chapter3.html"><i class="fa fa-check"></i><b>3</b> What, why and how of visualisation</a><ul>
+<li class="chapter" data-level="3.1" data-path="chapter3.html"><a href="chapter3.html#historical-visualisations"><i class="fa fa-check"></i><b>3.1</b> Historical visualisations</a></li>
+<li class="chapter" data-level="3.2" data-path="chapter3.html"><a href="chapter3.html#scatter-plots"><i class="fa fa-check"></i><b>3.2</b> Scatter plots</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="chapter3.html"><a href="chapter3.html#styling-your-plot"><i class="fa fa-check"></i><b>3.2.1</b> Styling your plot</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="chapter3.html"><a href="chapter3.html#histograms"><i class="fa fa-check"></i><b>3.3</b> Histograms</a></li>
+<li class="chapter" data-level="3.4" data-path="chapter3.html"><a href="chapter3.html#density-plots"><i class="fa fa-check"></i><b>3.4</b> Density plots</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="chapter3.html"><a href="chapter3.html#detailed-explanation"><i class="fa fa-check"></i><b>3.4.1</b> Detailed explanation</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="chapter3.html"><a href="chapter3.html#boxplots"><i class="fa fa-check"></i><b>3.5</b> Boxplots</a></li>
+<li class="chapter" data-level="3.6" data-path="chapter3.html"><a href="chapter3.html#barplots"><i class="fa fa-check"></i><b>3.6</b> Barplots</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="chapter4.html"><a href="chapter4.html"><i class="fa fa-check"></i><b>4</b> The normal distribution - what’s the point?</a><ul>
+<li class="chapter" data-level="4.1" data-path="chapter4.html"><a href="chapter4.html#the-bernoulli-distribution"><i class="fa fa-check"></i><b>4.1</b> The Bernoulli distribution</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="chapter4.html"><a href="chapter4.html#motivating-example"><i class="fa fa-check"></i><b>4.1.1</b> Motivating example</a></li>
+<li class="chapter" data-level="4.1.2" data-path="chapter4.html"><a href="chapter4.html#description"><i class="fa fa-check"></i><b>4.1.2</b> Description</a></li>
+<li class="chapter" data-level="4.1.3" data-path="chapter4.html"><a href="chapter4.html#example"><i class="fa fa-check"></i><b>4.1.3</b> Example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="chapter4.html"><a href="chapter4.html#the-binomial-distribution"><i class="fa fa-check"></i><b>4.2</b> The Binomial distribution</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="chapter4.html"><a href="chapter4.html#motivating-example-1"><i class="fa fa-check"></i><b>4.2.1</b> Motivating example</a></li>
+<li class="chapter" data-level="4.2.2" data-path="chapter4.html"><a href="chapter4.html#description-1"><i class="fa fa-check"></i><b>4.2.2</b> Description</a></li>
+<li class="chapter" data-level="4.2.3" data-path="chapter4.html"><a href="chapter4.html#what-does-the-binomial-distribution-look-like"><i class="fa fa-check"></i><b>4.2.3</b> What does the Binomial distribution look like?</a></li>
+<li class="chapter" data-level="4.2.4" data-path="chapter4.html"><a href="chapter4.html#motivating-example-2"><i class="fa fa-check"></i><b>4.2.4</b> Motivating example</a></li>
+</ul></li>
+<li class="chapter" data-level="4.3" data-path="chapter4.html"><a href="chapter4.html#the-normalgaussian-distribution"><i class="fa fa-check"></i><b>4.3</b> The Normal/Gaussian distribution</a><ul>
+<li class="chapter" data-level="4.3.1" data-path="chapter4.html"><a href="chapter4.html#continuous-and-discrete-distributions"><i class="fa fa-check"></i><b>4.3.1</b> Continuous and discrete distributions</a></li>
+<li class="chapter" data-level="4.3.2" data-path="chapter4.html"><a href="chapter4.html#the-standard-deviations-rule"><i class="fa fa-check"></i><b>4.3.2</b> The standard deviations rule</a></li>
+<li class="chapter" data-level="4.3.3" data-path="chapter4.html"><a href="chapter4.html#the-z-score"><i class="fa fa-check"></i><b>4.3.3</b> The Z-Score</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="chapter5.html"><a href="chapter5.html"><i class="fa fa-check"></i><b>5</b> Margin of Error</a><ul>
+<li class="chapter" data-level="5.1" data-path="chapter5.html"><a href="chapter5.html#introduction-motativating-example"><i class="fa fa-check"></i><b>5.1</b> Introduction &amp; motativating example</a></li>
+<li class="chapter" data-level="5.2" data-path="chapter5.html"><a href="chapter5.html#one-sample-test"><i class="fa fa-check"></i><b>5.2</b> One sample test</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="chapter5.html"><a href="chapter5.html#example-okcupid-1"><i class="fa fa-check"></i><b>5.2.1</b> Example: OKCupid</a></li>
+<li class="chapter" data-level="5.2.2" data-path="chapter5.html"><a href="chapter5.html#errors"><i class="fa fa-check"></i><b>5.2.2</b> Errors</a></li>
+</ul></li>
+<li class="chapter" data-level="5.3" data-path="chapter5.html"><a href="chapter5.html#two-sample-z-test"><i class="fa fa-check"></i><b>5.3</b> Two sample z-test</a></li>
+<li class="chapter" data-level="5.4" data-path="chapter5.html"><a href="chapter5.html#confidence-intervals"><i class="fa fa-check"></i><b>5.4</b> Confidence intervals</a><ul>
+<li class="chapter" data-level="5.4.1" data-path="chapter5.html"><a href="chapter5.html#construction"><i class="fa fa-check"></i><b>5.4.1</b> Construction</a></li>
+<li class="chapter" data-level="5.4.2" data-path="chapter5.html"><a href="chapter5.html#example-comic-sans"><i class="fa fa-check"></i><b>5.4.2</b> Example: Comic Sans</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="chapter5.html"><a href="chapter5.html#the-central-limit-therem-clt"><i class="fa fa-check"></i><b>5.5</b> The Central Limit Therem (CLT)</a><ul>
+<li class="chapter" data-level="5.5.1" data-path="chapter5.html"><a href="chapter5.html#example-customer-waiting-times"><i class="fa fa-check"></i><b>5.5.1</b> Example: Customer waiting times</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="chapter6.html"><a href="chapter6.html"><i class="fa fa-check"></i><b>6</b> Capturing relationships with linear regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="chapter6.html"><a href="chapter6.html#capturing-linear-relationships"><i class="fa fa-check"></i><b>6.1</b> Capturing linear relationships</a><ul>
+<li class="chapter" data-level="6.1.1" data-path="chapter6.html"><a href="chapter6.html#example-starbucks-calorie-content"><i class="fa fa-check"></i><b>6.1.1</b> Example: Starbucks calorie content</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="chapter6.html"><a href="chapter6.html#linear-regression"><i class="fa fa-check"></i><b>6.2</b> Linear Regression</a><ul>
+<li class="chapter" data-level="6.2.1" data-path="chapter6.html"><a href="chapter6.html#prediction-and-interpretation"><i class="fa fa-check"></i><b>6.2.1</b> Prediction and Interpretation</a></li>
+<li class="chapter" data-level="6.2.2" data-path="chapter6.html"><a href="chapter6.html#how-do-we-estimate-the-model-coefficients"><i class="fa fa-check"></i><b>6.2.2</b> How do we estimate the model coefficients?</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="chapter6.html"><a href="chapter6.html#multiple-linear-regression-models"><i class="fa fa-check"></i><b>6.3</b> Multiple linear regression models</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="chapter7.html"><a href="chapter7.html"><i class="fa fa-check"></i><b>7</b> Wrap-up</a></li>
+<li class="divider"></li>
+<li>Developed by <a href="https://jumpingrivers.com" target="blank">Jumping Rivers</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Foundational Data Science</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="chapter4" class="section level1">
+<h1><span class="header-section-number">Chapter 4</span> The normal distribution - what’s the point?</h1>
+<!-- (30 minutes) -->
+<p>Many events can’t be predicted with total certainty. The best we can say is how likely they are to happen. Day to day, probability is often used to describe the world around. The chance of rain, the likelihood of our football team winning, or who will win the election. What do these statements actually mean and how are they calculated?</p>
+<p>Hiding behind these statements is the idea of a probability distribution. This is a mathematical function that can be thought of as providing the probabilities of occurrence of different possible outcomes in an experiment. It is our way of trying to capture the real world using mathematics.</p>
+<p>Probability is massive topic, that we cannot possibility hope to cover in a single chapter. Instead, the goal of this chapter is to give an intuitive feel for some of the standard probability distributions. Even if you have never taken a course in statistics, you’ll have come the simplest probability distribution already, the Uniform distribution. This distribution represents the situation where all events are equally likely</p>
+<p>The most famous distribution is the Normal or Gaussian distribution. Instead of producing this distribution from thin air, we will provide some background to explain how this distribution naturally arises with few assumptions. In later chapters, the Normal distribution will form the basis for our <em>inferential</em> models.</p>
+<div class="rmdnote">
+<p>
+<em>Do I need to know this for data science?</em> There are many people who no little about distributions, but “do data science”. In my opinion, having insight in the foundations will help you understand the subject, and hence allow you to build better models.
+</p>
+<p>
+As an analogy, you can build web-pages using tools without knowing any HTML, CSS, or Javascript. However there comes a point where knowing the underlying technology is essential.
+</p>
+</div>
+<div id="the-bernoulli-distribution" class="section level2">
+<h2><span class="header-section-number">4.1</span> The Bernoulli distribution</h2>
+<p>The simplest distribution is the Bernoulli distribution. It models events that have only two outcomes. For example, your football team will either win or not. Since there are a <em>countable</em> number of events, this is a <em>discrete</em> distribution. This distribution forms the building block for all other distributions.</p>
+<div id="motivating-example" class="section level3">
+<h3><span class="header-section-number">4.1.1</span> Motivating example</h3>
+<p>Suppose you are using a well know cloud provider. Reading the small print, they state that the chance of downtime on any particular day, is 0.001. What is the probability of having no downtime throughout the year?</p>
+</div>
+<div id="description" class="section level3">
+<h3><span class="header-section-number">4.1.2</span> Description</h3>
+<p>The easiest way to think of the Bernoulli distribution is to toss a (fair) coin. We have equally likely outcomes: heads and tails. Since they are equally likely, the probability<a href="#fn6" class="footnoteRef" id="fnref6"><sup>6</sup></a> of getting either event is 0.5. This means on average, 50% of throws will be heads and 50% of throws will be tails. The distribution that describes a coin throw is known as the <a href="https://en.wikipedia.org/wiki/Bernoulli_distribution">Bernoulli distribution</a> named after the Swiss scientist <a href="https://en.wikipedia.org/wiki/Jacob_Bernoulli">Jacob Bernoulli</a>.</p>
+<p>Mathematically we would describe the Bernoulli distribution as follows. Suppose <span class="math inline">\(X\)</span> is a <em>random variable</em><a href="#fn7" class="footnoteRef" id="fnref7"><sup>7</sup></a>, then we have <span class="math display">\[
+\Pr(X = 0) = 1 - p \quad \text{and} \quad \Pr(X = 1) = p.
+\]</span> Note that the total probability sums to <span class="math inline">\(1\)</span>, i.e. when we toss a coin, we will observe either a head or a tail.</p>
+<p>If we simulated or observed a series of ten Bernoulli trials where <span class="math inline">\(p = 0.5\)</span>, this means we observe a series of <span class="math inline">\(0\)</span>’s and <span class="math inline">\(1\)</span>’s that follow the above probability distribution. It would look something like</p>
+<pre><code>0 0 1 0 0 1 0 1 0 0</code></pre>
+<p>Notice that we don’t have exactly <span class="math inline">\(5\)</span> ones. Instead, the probability distribution tells us that on average we’ll observe <span class="math inline">\(5\)</span> ones.</p>
+<div class="rmdwarning">
+<p>
+Beware of the <a href="https://en.wikipedia.org/wiki/Law_of_averages">law of averages</a>. Basically, just because you observe 3 heads in a row, the chance of observing a fourth head is still 0.5.
+</p>
+</div>
+<!-- XXX Don't know whether it's worth saying something abut independence somewhere -->
+</div>
+<div id="example" class="section level3">
+<h3><span class="header-section-number">4.1.3</span> Example</h3>
+<p>Suppose you are using a data centre where the probability of failure is 0.001 per day. That means the probability of the data centre working is 0.999 per day. So the probability that the data centre will work two days in a row is <span class="math inline">\(0.999 \times 0.999 = 0.998\)</span>. The probability that it will work every day for a year is <span class="math display">\[
+0.999 \times 0.999 \times \ldots =  0.999^{365} = 0.694.
+\]</span>That means that even though we only expect one failure every one thousand days. The chance of a failure happening in the coming year is approximately 1 in 3, or <span class="math inline">\(1- 0.694 \simeq 0.3.\)</span></p>
+</div>
+</div>
+<div id="the-binomial-distribution" class="section level2">
+<h2><span class="header-section-number">4.2</span> The Binomial distribution</h2>
+<div id="motivating-example-1" class="section level3">
+<h3><span class="header-section-number">4.2.1</span> Motivating example</h3>
+<p>You are in charge of back-ups. Looking at a recent <a href="https://www.backblaze.com/blog/hard-drive-reliability-q3-2015/">study</a> you estimate the chance of a particular hard drive failing within one year to be 5% (or 0.05). Your organisation has around 1,000 hard drives. You would like to know</p>
+<ul>
+<li>How many hard drives are likely to fail this year?</li>
+<li>Can we get a reasonable upper limit for the number of failures?</li>
+</ul>
+</div>
+<div id="description-1" class="section level3">
+<h3><span class="header-section-number">4.2.2</span> Description</h3>
+<p>The <a href="https://en.wikipedia.org/wiki/Binomial_distribution">Binomial</a> distribution is an extension to the Bernoulli distribution. The Binomial distribution concerns sums of <em>Bernoulli</em> random variables. So in our our above example we have <span class="math display">\[
+0 + 0 + 1 + 0 + 0 + 1 + 0 + 1 + 0 + 0 = 3
+\]</span> The Binomial distribution has two parameters, <span class="math inline">\(n\)</span> the number of trials and <span class="math inline">\(p\)</span> the probability of success. The probability of getting exactly <span class="math inline">\(k\)</span> successes in <span class="math inline">\(n\)</span> trials is given by <span class="math display">\[
+\Pr(X = k) = \binom{n}{k} p^k (1-p)^{n-k}
+\]</span> where <span class="math display">\[
+\binom {n}{k} = \frac {n!}{k!(n-k)!}
+\]</span> and <span class="math inline">\(n! = n \times (n-1) \times (n-2) \times (n-3) \ldots\)</span>. Notice that when <span class="math inline">\(n = 1\)</span>, the Binomial distribution just becomes the Bernoulli distribution: <span class="math display">\[
+\Pr(X = 0) = \binom{1}{0} p^0 (1-p)^{1-0} = 1 \times 1 \times (1-p) = (1-p) .
+\]</span> With a little bit of mathematics, we can show that if we performed <span class="math inline">\(n\)</span> experiments, with each experiment having probability <span class="math inline">\(p\)</span> of success, then the mean number of successful outcomes is <span class="math inline">\(n \times p\)</span> and the variance is <span class="math inline">\(n \times p \times (1 - p)\)</span>.</p>
+<!-- XXX Is it worth saying something about n choose k, what it represents? -->
+</div>
+<div id="what-does-the-binomial-distribution-look-like" class="section level3">
+<h3><span class="header-section-number">4.2.3</span> What does the Binomial distribution look like?</h3>
+<p>Let’s take a concrete example of <span class="math inline">\(n = 100\)</span> and <span class="math inline">\(p = 0.25\)</span>, <span class="math inline">\(0.5\)</span> and <span class="math inline">\(0.75\)</span>. The probability distributions are shown in figure <a href="chapter4.html#fig:4-1">4.1</a>.</p>
+<div class="figure" style="text-align: center"><span id="fig:4-1"></span>
+<img src="_main_files/figure-html/4-1-1.png" alt="The Binomial distribution with $n=100$ and $p =0.25$, $0.5$ and $0.75$." width="95%" />
+<p class="caption">
+Figure 4.1: The Binomial distribution with <span class="math inline">\(n=100\)</span> and <span class="math inline">\(p =0.25\)</span>, <span class="math inline">\(0.5\)</span> and <span class="math inline">\(0.75\)</span>.
+</p>
+</div>
+<!-- XXX personally really don't like the scatterplot for this, I think a bar chart would be better but obviously up to you -->
+<p>Some points to note:</p>
+<ul>
+<li>The sum of points in each plot in figure <a href="chapter4.html#fig:4-1">4.1</a> is <span class="math inline">\(1\)</span>. It’s a probability mass function, so it must sum to 1.</li>
+<li>The distribution is centred around the mean, <span class="math inline">\(n \times p\)</span>. So when <span class="math inline">\(p=0.5\)</span>, the plot is centred around <span class="math inline">\(50\)</span>.</li>
+<li>There is <em>some</em> variation around the mean. Again we can be more precise and state that the variance is <span class="math inline">\(n \times p \times (1-p)\)</span>. So when <span class="math inline">\(p = 0.5\)</span>, the variance is <span class="math inline">\(n/4 = 100/4 = 25\)</span></li>
+</ul>
+</div>
+<div id="motivating-example-2" class="section level3">
+<h3><span class="header-section-number">4.2.4</span> Motivating example</h3>
+<p>In our example we have <span class="math inline">\(n = 1000\)</span> hard drives that fail with rate <span class="math inline">\(p = 0.05\)</span>. On average we would expect <span class="math inline">\(n \times p = 1000 \times 0.05 = 50\)</span> failures per year. To obtain an upper bound, we would look at the cumulative distribution, that is,</p>
+<p><span class="math display">\[
+Pr(X \le k) = Pr(X = 0) + Pr(X = 1) + \ldots + Pr(X = k)
+\]</span></p>
+<!--   * What is the probability of 0 successes; -->
+<!--   * What is the probability of 1 success; -->
+<!--   * What is the probability of 2 successes, etc. -->
+<p>This is easily done in R. The function <code>pbinom()</code> calculates the probability of observing less than or equal to the value of it’s first argument. So to obtain a reasonable upper bound, we calculate the cumulative probability from <span class="math inline">\(0\)</span> to <span class="math inline">\(1000\)</span> and determine where it crosses the 0.99 probability threshold</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n =<span class="st"> </span><span class="dv">1000</span>; p =<span class="st"> </span><span class="fl">0.05</span>
+<span class="kw">which</span>(<span class="kw">pbinom</span>(<span class="dv">0</span><span class="op">:</span>n, n, p) <span class="op">&gt;</span><span class="st"> </span><span class="fl">0.99</span>)[<span class="dv">1</span>]
+<span class="co">#&gt; [1] 68</span></code></pre></div>
+<p>Hence the probability that we observe more than <span class="math inline">\(67\)</span> failures in one year is less that 0.01. So while the mean number of failures is 50, a reasonable upper bound would be 67.</p>
+</div>
+</div>
+<div id="the-normalgaussian-distribution" class="section level2">
+<h2><span class="header-section-number">4.3</span> The Normal/Gaussian distribution</h2>
+<div class="rmdnote">
+<p>
+A number of mathematicians contributed to the development of this distribution. The distributions namesake, <a href="https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss">Carl Friedrich Gauss</a> was a German mathematician who developed a number of key statistical concepts, such as least squares optimisation.
+</p>
+</div>
+<p>The Normal distribution (or Gaussian) distribution is perhaps the most famous probability distribution. The previous distributions have been discrete, the Normal distribution is a <em>continuous</em> distribution. It takes the form <span class="math display">\[
+f_X(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{- \frac{(x - \mu)^2}{2 \sigma^2}}
+\]</span> where</p>
+<ul>
+<li><span class="math inline">\(\mu\)</span> is the mean or expectation of the distribution (and also its median and mode);</li>
+<li><span class="math inline">\(\sigma\)</span> is the standard deviation;</li>
+<li><span class="math inline">\(\sigma^2\)</span> is the variance.</li>
+</ul>
+<p>The <em>standard</em> normal distribution (figure <a href="chapter4.html#fig:4-2">4.2</a>) is a special case of the normal distribution where <span class="math inline">\(\mu = 0\)</span> and <span class="math inline">\(\sigma = 1\)</span> <span class="math display">\[
+f_X(x) = \frac{1}{\sqrt{2 \pi}} e^{- \frac{x^2}{2}}
+\]</span></p>
+<div class="figure" style="text-align: center"><span id="fig:4-2"></span>
+<img src="_main_files/figure-html/4-2-1.png" alt="The standard normal distribution: $\mu=0$ and $\sigma = 1$." width="60%" />
+<p class="caption">
+Figure 4.2: The standard normal distribution: <span class="math inline">\(\mu=0\)</span> and <span class="math inline">\(\sigma = 1\)</span>.
+</p>
+</div>
+<p>The distribution can be derived in a variety of ways, but the easiest is as a <em>special</em> case of the Binomial distribution. Letting <span class="math inline">\(n\)</span> get large (basically when <span class="math inline">\(n &gt; 20\)</span>), and provided <span class="math inline">\(p\)</span> isn’t too close to <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, the normal distribution is almost identical to the Binomial. Again, we can use mathematics to show that the binomial distribution <em>converges</em> to the normal, but to avoid unnecessary mathematical detail, we’ll just use a few plots (figure <a href="chapter4.html#fig:4-3">4.3</a>).</p>
+<div class="figure" style="text-align: center"><span id="fig:4-3"></span>
+<img src="_main_files/figure-html/4-3-1.png" alt="Binomial distributions with their normal approximations." width="95%" />
+<p class="caption">
+Figure 4.3: Binomial distributions with their normal approximations.
+</p>
+</div>
+<div id="continuous-and-discrete-distributions" class="section level3">
+<h3><span class="header-section-number">4.3.1</span> Continuous and discrete distributions</h3>
+<p>The Binomial and Bernoulli are examples of discrete distributions. A discrete distribution gives you the probability of observing a particular event such as rolling a dice or tossing a coin. For a discrete distribution, the probabilities will sum to <span class="math inline">\(1\)</span>, e.g. we will either get a head or tail, but one of the two events must happen.</p>
+<p>A continuous distribution is a bit different. Looking at the formula for the normal distribution we see that it is valid for all values of <span class="math inline">\(x\)</span>. That means if we added up <span class="math inline">\(f_X(x)\)</span> for all values of <span class="math inline">\(x\)</span>, we would reach <span class="math inline">\(\infty\)</span>, since <span class="math inline">\(x\)</span> has infinitely many decimal places. Instead, for continuous distributions we look at area under the curve. So the area under the normal distribution sums (or integrates) to one.</p>
+</div>
+<div id="the-standard-deviations-rule" class="section level3">
+<h3><span class="header-section-number">4.3.2</span> The standard deviations rule</h3>
+<p>When your data are normally distribution, then the</p>
+<ul>
+<li>mean <span class="math inline">\(\pm\)</span> 1 standard deviation: <span class="math inline">\(\simeq\)</span> 70% of data;</li>
+<li>mean <span class="math inline">\(\pm\)</span> 2 standard deviation: <span class="math inline">\(\simeq\)</span> 95% of data;</li>
+<li>mean <span class="math inline">\(\pm\)</span> 3 standard deviation: <span class="math inline">\(\simeq\)</span> 99.9% of data.</li>
+</ul>
+<p>This is way the mean and variance are useful summary statistics.</p>
+<!-- #### Example -->
+<!-- #### Exercise / Q&A (10 minutes) -->
+</div>
+<div id="the-z-score" class="section level3">
+<h3><span class="header-section-number">4.3.3</span> The Z-Score</h3>
+<p>The <span class="math inline">\(z\)</span>-score is where we transform, or scale, the dataset to have mean <span class="math inline">\(0\)</span> and variance <span class="math inline">\(1\)</span>. If our original data is <span class="math inline">\(x\)</span>, then our <em>transformed</em> data <span class="math inline">\(z\)</span> is defined as <span class="math display">\[
+z = \frac{x - \bar x}{s}
+\]</span> where <span class="math inline">\(\bar x\)</span> is the mean of <span class="math inline">\(x\)</span> and <span class="math inline">\(s\)</span> is the standard deviation. The transformed data tells us how many standard deviations above or below the mean each data point is. If our data is normal, this would produce a standard normal distribution.</p>
+<p>This is also known as “slide and squash rule”. Looking at the OKCupid data set again. The original distribution of ages is shown in figure <a href="chapter4.html#fig:4-4">4.4</a> a.</p>
+<ul>
+<li>Subtract the mean, slides the distribution to <span class="math inline">\(0\)</span> - figure <a href="chapter4.html#fig:4-4">4.4</a> b.</li>
+<li>Dividing by the standard deviation, squashes the distribution to have a variance of <span class="math inline">\(1\)</span> - figure <a href="chapter4.html#fig:4-4">4.4</a> c.</li>
+</ul>
+<p>Using <span class="math inline">\(Z\)</span>-scores is a standard technique to put different variables on the same scale. This also helps many machine learning algorithms converge quicker.</p>
+<!-- XXX graph titles, also why different bin rules? -->
+<div class="figure" style="text-align: center"><span id="fig:4-4"></span>
+<img src="_main_files/figure-html/4-4-1.png" alt="The slide and squash rule." width="60%" />
+<p class="caption">
+Figure 4.4: The slide and squash rule.
+</p>
+</div>
+
+</div>
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="6">
+<li id="fn6"><p>In most statistics courses, we would have had a couple of lectures on what do we mean by probability.<a href="chapter4.html#fnref6">↩</a></p></li>
+<li id="fn7"><p>A random variable is a variable whose value is unknown or a function that assigns values to each of an experiment’s outcomes<a href="chapter4.html#fnref7">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="chapter3.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="chapter5.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"weibo": false,
+"instapper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-probability.Rmd",
+"text": "Edit"
+},
+"download": null,
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(script.src))
+      script.src  = script.src.replace(/^https?:/, '');
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
