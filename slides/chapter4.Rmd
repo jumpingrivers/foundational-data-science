@@ -1,6 +1,6 @@
 ---
-title: "A title page"
-subtitle: "A subtitle"
+title: "Distributions: what & why"
+subtitle: "Chapter 4"
 author: '`r jrPresentation::get_author()`'
 output:
   xaringan::moon_reader:
@@ -20,12 +20,549 @@ library("jrPresentation")
 set_presentation_options()
 ```
 
-layout: true
+layout:true
+---
+
+background-image: url(graphics/doll.jpg)
+background-size: cover
+
+# About me
+.pull-right[
+* Academic: 
+
+  * Senior [Statistics](http://www.mas.ncl.ac.uk/~ncsg3/) lecturer, [Newcastle University](https://en.wikipedia.org/wiki/Newcastle_University), UK
+
+* Consultant at [Jumping Rivers](https://jumpingrivers.com)
+
+  * Data science training & consultancy
+
+  * R, [Stan](https://www.jumpingrivers.com/courses/13_introductions-to-bayesian-inference-using-rstan), Scala
+  
+  * Algorithm development and validation
+  
+  * Public courses and in-house training
+
+* [Efficient R programming](http://shop.oreilly.com/product/0636920047995.do), O'Reilly
+]
+
+---
+layout:true
 `r add_border(inverse=FALSE)`
 ---
 
-# Jumping Rivers 
+# Probability Distribution
 
-  * Standard header and footer
-  * Colour from website
+  * A distribution is a mathematical function that describes probability
+  
+  * Probability _mass_ function: discrete
 
+--
+  
+  * Probability _density_ function: continuous
+
+```{r echo=FALSE, out.width="80%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+```
+---
+
+# Probability _Mass_ Distribution
+
+Properties
+
+  * Strictly positive
+  
+  * Area under the curve sums to 1
+
+---
+
+# The Uniform Distribution
+
+  * Values from 0 to 1 are equally likely
+  
+  * Values less than 0 or greater than one, are impossible
+
+```{r echo=FALSE, out.width="80%"}
+setnicepar()
+x = seq(-1, 2, length.out = 1000)
+y = dunif(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(1, 1, "Uniform distribution", pos=4, col="steelblue")
+axis(1)
+axis(2, tick=FALSE)
+```
+---
+
+# The Uniform Distribution
+
+Area under the curve sums to 1
+
+```{r echo=FALSE, out.width="80%"}
+setnicepar()
+x = seq(-1, 2, length.out = 1000)
+y = dunif(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(1, 1, "Uniform distribution", pos=4, col="steelblue")
+axis(1)
+axis(2, tick=FALSE)
+polygon(c( 0, 0, 1, 1 ),  c(0,1, 1,0 ), col="grey80", border = "steelblue")
+text(1, 0.5, "Area = 1", pos=4, col="grey40")
+```
+
+---
+
+# The Uniform Distribution
+
+  * We don't tend to use the Uniform directly, __but__
+  
+    * it's fundemental to everything we do
+    
+  * If you've ever simulated __anything__ you have been using the uniform distribution
+  
+  * Behind every random number, is a uniform 
+  
+---
+
+# Aside: Random numbers
+
+  * Computers generate _pseudo random numbers_
+    * Pretend random numbers generated using an algorithm
+    
+  * If there's an algorithm, they're not really random
+  
+  * They just _appear_ random
+  
+---
+    
+# Algorithms
+
+A basic algorithm is the [Linear congruential](https://en.wikipedia.org/wiki/Linear_congruential_generator) generator
+
+$$r_i = a \times r_{i-1} + c \mod m$$
+
+where $a$, $c$ and $m$ are integers
+
+--
+
+For example, if $a = 7$, $c=0$, $m = 5$ and $r_0 = 1$, then
+
+$$r_1 = 7 \times 1 \mod 5 = 2$$
+--
+
+$$r_2 = 7 \times r_1 \mod 4 = 7 \times 2 \mod 4 = 4$$
+--
+
+$$r_3 = 7 \times r_2 \mod 4 =... $$
+
+---
+
+# Hard choosing initial conditions
+
+  * [RANDU](https://en.wikipedia.org/wiki/RANDU): $a = 65539$, $c = 0$, $m = 2^{31}$
+
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("graphics/randu.png")
+```
+
+---
+
+# Random number generators
+
+  * Never write your own - it's hard!
+  
+  * For serial applications, use [Merseene Twister](https://en.wikipedia.org/wiki/Mersenne_Twister)
+  
+    - Be careful how you _seed_ the application
+  
+  * Parallel variants
+  
+  
+---
+
+# Exercise
+
+```{r, fig.keep = "none"}
+# n = number of random numbers to generate
+# r0, a, b, m should be positive integers
+lcg = function(r0, a, c, m, n= 100) {
+  rngs = numeric(n)
+  rngs[1] = r0
+  for(i in 2:n) {
+    rngs[i] = (a * rngs[i-1] + c) %% m
+  }
+  return(rngs)
+}
+rngs = lcg(5, a = 5, c = 7, m = 29)
+# type = "l" - the letter "l"
+plot(rngs, type="l")
+```
+The above function generates a stream of random numbers. Try different values of a, c and m.
+
+
+---
+layout: true
+`r add_border(inverse=T)`
+---
+
+class: center, inverse, middle
+
+# Back to business
+
+---
+layout: true
+`r add_border(inverse=F)`
+---
+
+# The Bernoulli distribution
+
+  * Discrete [probability](https://en.wikipedia.org/wiki/Bernoulli_distribution) distribution, .e.g. Tossing a coin
+    - Heads probability 0.5, tails probability 0.5
+    - During his interment, [John Kerrich](https://en.wikipedia.org/wiki/John_Edmund_Kerrich) tossed 
+    a coin 10,000 times
+
+--
+
+  * Tails represented as 0, Heads as 1
+
+```{r echo=FALSE, out.width="60%"}
+setnicepar()
+x = c(0, 1)
+y = c(0.5, 0.5)
+plot(x, y, type="h", 
+     xlab="Z", ylab = NA,
+     lwd = 4, col="steelblue",
+     frame =FALSE, axes=FALSE, xlim=c(-0.5, y = 1.5), ylim=c(0, 0.6))
+text(1, 0.5, "Bernoulli distribution", pos=4, col="steelblue")
+axis(1)
+axis(2, tick=FALSE)
+```
+
+---
+
+# The Binomial distribution
+
+  * The Binomial distribution concerns __sums__ of Bernoulli random variables
+--
+  
+    * E.g. we toss a coin $n=5$ times and get: 0, 1, 0,1, 0 so $x =2$
+    * E.g. we toss a coin $n=5$ times and get: 1, 1, 0, 1, 0 so $x =3$
+    * E.g. we toss a coin $n=5$ times and get: 0, 0, 1, 0, 0 so $x =1$
+--
+
+  * What's the probability of observing
+  
+    * No heads in five throws
+    * One head in five throws
+    * Two heads in five throws
+    * ...
+    
+---
+
+# The Binomial distribution
+
+```{r, echo=FALSE, out.width="100%"}
+x = 0:5
+n = max(x)
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,4))
+p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 5")
+grid()
+```
+
+---
+
+# The Binomial distribution
+
+```{r, echo=FALSE, out.width="100%"}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,4))
+x = 0:5
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 5")
+grid()
+x = 0:10
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 10")
+grid()
+
+```
+
+---
+
+# The Binomial distribution
+
+```{r, echo=FALSE, out.width="100%"}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,4))
+x = 0:5
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 5")
+grid()
+x = 0:10
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 10")
+grid()
+x = 0:100
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.1))
+axis(1); axis(2, tick = FALSE)
+title("n = 100")
+grid()
+```
+---
+
+# The Binomial distribution
+
+```{r, echo=FALSE, out.width="100%"}
+par(mar=c(3,3,2,1), mgp=c(2,0.4,0), tck=-.01, cex.axis=0.9, las=1, mfrow=c(1,4))
+x = 0:5
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 5")
+grid()
+x = 0:10
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.4))
+axis(1); axis(2, tick = FALSE)
+title("n = 10")
+grid()
+x = 0:100
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.1))
+axis(1); axis(2, tick = FALSE)
+title("n = 100")
+grid()
+x = 0:1000
+n = max(x); p = 0.5
+plot(x, dbinom(x, n, p),
+  frame=FALSE, axes=FALSE,
+     pch=21, bg ="steelblue", ylab=NA, ylim=c(0, 0.03), 
+  xlim=c(400, 600))
+axis(1); axis(2, tick = FALSE)
+title("n = 1000")
+grid()
+```
+
+---
+
+# Limiting
+
+> As $n$ increases, we approach a limit. 
+>
+> What's the limit?
+
+---
+
+# The normal/Guassian distribution
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(0, 0, 0, dnorm(0), col="grey60")
+text(1.8, 0.2, "Area = 1", pos=4, col="grey60")
+polygon(x, y, col = "grey80", border = "steelblue")
+```
+
+---
+
+
+# The normal distribution
+
+  * The normal/Guassian distribution is the most famous distribution
+ 
+  * It has two parameters
+ 
+    * mean &  variance
+    
+    * Remember all those nice mathematical properties?
+
+--
+  
+  * Symmetric about the mean
+  
+  * The standard normal is when the mean is 0 and variance equals to 1
+
+---
+
+# The standard normal
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(0, 0, 0, dnorm(0), col="grey60")
+text(0.1, 0.02, "Area = 0.5", pos=4, col="grey60")
+polygon(c( x[x<= 0], 0 ),  c(y[x<= 0],0 ), col="grey80")
+```
+---
+
+# The standard normal
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(0, 0, 0, dnorm(0), col="grey60")
+text(-2, 0.02, "Area = 0.5", pos=4, col="grey60")
+polygon(c( x[x >= 0], 0 ),  c(y[x >= 0],0 ), col="grey80")
+```
+---
+
+# The standard normal
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(-2, 0, -2, dnorm(-2), col="grey60")
+text(0.1, 0.02, "Area = 0.023", pos=4, col="grey60")
+polygon(c( x[x<= -2], -2 ),  c(y[x<= -2],0 ), col="grey80")
+```
+
+---
+
+# The standard normal
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(2, 0, 2, dnorm(2), col="grey60")
+text(0, 0.02, "Area = 0.023", pos=4, col="grey60")
+polygon(c( x[x >= 2], 2 ),  c(y[x >= 2],0 ), col="grey80")
+```
+
+---
+
+# The standard normal
+
+Mean $\pm$ 2 standard deviations
+
+```{r echo=FALSE, out.width="100%"}
+setnicepar()
+x = seq(-4, 4, length.out = 1000)
+y = dnorm(x)
+plot(x, y, type="l", 
+     xlab="Z", ylab = NA,
+     lwd = 2, col="steelblue",
+     frame =FALSE, axes=FALSE)
+text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
+axis(1)
+segments(2, 0, 2, dnorm(2), col="grey60")
+text(1.8, 0.2, "Area = 0.954", pos=4, col="grey60")
+polygon(c( x[x >= -2 & x <= 2], 2, -2 ),  c(y[x >= -2 & x <= 2],0, 0 ), col="grey80")
+```
+
+---
+layout: true
+`r add_border(inverse=TRUE)`
+---
+
+class: center, middle, inverse
+
+# Break time
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  

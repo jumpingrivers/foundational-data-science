@@ -14,11 +14,16 @@ editor_options:
   chunk_output_type: console
 ---
 
-```{r setup, include=FALSE, message=FALSE}
+```{r setup, include=FALSE, message=FALSE, results="hide"}
 options(htmltools.dir.version = FALSE)
 library("jrPresentation")
 set_presentation_options()
+source("code/load_data.R")
+set.seed(1)
+x = round(rnorm(20, mean=47, 20))
+mean(x); sd(x)
 ```
+
 
 layout: true
 `r add_border(inverse=TRUE)`
@@ -26,150 +31,38 @@ layout: true
 class: inverse, center, middle
 
 > Testing leads to failure, and failure leads to understanding
-> _Burt Rutan_
+>
+> -_Burt Rutan_
 
 ---
 layout: true
 `r add_border(inverse=FALSE)`
 ---
 
-```{r, echo=FALSE, results="hide"}
-source("code/load_data.R")
-set.seed(1)
-x = round(rnorm(20, mean=47, 20))
-mean(x); sd(x)
-```
-
-# The normal distribution
-
-In many situations, if we plotted the population it would look like a bell 
-  shaped curve
-
-```{r echo=FALSE, out.width="80%"}
-setnicepar()
-x = seq(-4, 4, length.out = 1000)
-y = dnorm(x)
-plot(x, y, type="l", 
-     xlab="Z", ylab = NA,
-     lwd = 2, col="steelblue",
-     frame =FALSE, axes=FALSE)
-text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
-axis(1)
-```
-
----
-
-# The normal distribution
-
- * A probability distribution is similar to a "normalised" histogram
-  - The area under the curve equals 1
-
- * The normal distribution is the most famous and common
- 
- * It has two parameters: mean and variance
-
----
-
-# The standard normal
-
-  * The standard normal is when the mean is 0 and variance equals to 1
-  
-  * It's symmetric about zero
-
----
-
-# The standard normal
-
-```{r echo=FALSE, out.width="80%"}
-setnicepar()
-x = seq(-4, 4, length.out = 1000)
-y = dnorm(x)
-plot(x, y, type="l", 
-     xlab="Z", ylab = NA,
-     lwd = 2, col="steelblue",
-     frame =FALSE, axes=FALSE)
-text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
-axis(1)
-segments(0, 0, 0, dnorm(0), col="grey60")
-text(0.1, 0.02, "Area = 0.5", pos=4, col="grey60")
-polygon(c( x[x<= 0], 0 ),  c(y[x<= 0],0 ), col="grey80")
-```
----
-
-# The standard normal
-
-```{r echo=FALSE, out.width="80%"}
-setnicepar()
-x = seq(-4, 4, length.out = 1000)
-y = dnorm(x)
-plot(x, y, type="l", 
-     xlab="Z", ylab = NA,
-     lwd = 2, col="steelblue",
-     frame =FALSE, axes=FALSE)
-text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
-axis(1)
-segments(0, 0, 0, dnorm(0), col="grey60")
-text(-2, 0.02, "Area = 0.5", pos=4, col="grey60")
-polygon(c( x[x >= 0], 0 ),  c(y[x >= 0],0 ), col="grey80")
-```
----
-
-# The standard normal
-
-```{r echo=FALSE, out.width="80%"}
-setnicepar()
-x = seq(-4, 4, length.out = 1000)
-y = dnorm(x)
-plot(x, y, type="l", 
-     xlab="Z", ylab = NA,
-     lwd = 2, col="steelblue",
-     frame =FALSE, axes=FALSE)
-text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
-axis(1)
-segments(-2, 0, -2, dnorm(-2), col="grey60")
-text(0.1, 0.02, "Area = 0.023", pos=4, col="grey60")
-polygon(c( x[x<= -2], -2 ),  c(y[x<= -2],0 ), col="grey80")
-```
-
----
-
-# The standard normal
-
-```{r echo=FALSE, out.width="80%"}
-setnicepar()
-x = seq(-4, 4, length.out = 1000)
-y = dnorm(x)
-plot(x, y, type="l", 
-     xlab="Z", ylab = NA,
-     lwd = 2, col="steelblue",
-     frame =FALSE, axes=FALSE)
-text(0.2, 0.4, "Normal distribution", pos=4, col="steelblue")
-axis(1)
-segments(2, 0, 2, dnorm(2), col="grey60")
-text(0, 0.02, "Area = 0.023", pos=4, col="grey60")
-polygon(c( x[x >= 2], 2 ),  c(y[x >= 2],0 ), col="grey80")
-```
-
----
 
 # Big picture
 
 > By assuming an underlying normal distribution we can use information from a
 sample to inform us about the population
 
+
+This sounds like a big assumption, but it's not too bad
+
 ---
 
 # Introduction & motativating example
 
-  * We want to compare two advert designs
+We want to compare two advert designs
   
-    - At great expense, it has been decided to change the font to Comic Sans
+  - At great expense, it has been decided to change the font to Comic Sans
     
-    - Does this change work? 
+  - Does this change work? 
     
 --
 
-  * Being a (data) scientist we decide to (humanely) experiment on people by randomly showing them the advert. 
+  * Being a (data) scientist we decide to (humanely) experiment on people by randomly showing them the advert
+
+--
   
   * Past experience, you know that customers spent 45 seconds (on average) on your site. 
 
@@ -194,31 +87,36 @@ $$\bar x = \frac{34 + 51 + 30 + \ldots + 59}{20} = 50.9$$
 
 --
 
-  * The new website does seem to be perform slightly better
+  * The new website does seem to be perform slightly better (compared to 45)
   
-  * But we have a very small sample.
-  
+  * But we have a very small sample
+
+--
+
   * How to account for variability?
-    - hypothesis test
+  
+    - Hypothesis test
 
 ---
 
 # One sample test
 
   * One–sample z–test 
-    * Compare the mean of a set of sample observations compares to some target value
-
+  
+    * Compare the mean of a set of sample observations to a target value
 --
 
   * The mean in our sample is denoted by $\bar x$
   
-  * The population mean is denoted as $\mu$ (pronounced "mu"")
+  * The population mean is denoted as $\mu$ (pronounced "mu")
   
-  * Obviously $\bar x$ is our sample estimate of $\mu$
+    * $\bar x$ is our sample _estimate_ of $\mu$
 
 ---
 
 # Hypothesis testing
+
+Null hypothesis
 
 $$H_0: \mu = 45$$
 
@@ -228,13 +126,19 @@ We usually test against a general alternative hypothesis $H_1$
 $$H_1: \mu \ne 45$$
 
 which says $\mu$ is not equal to 45
+
+--
+
+  * Null hypthesis is always the dull/boring one
+
+
 ---
 
 # Hypothesis testing
 
   * When performing the hypothesis test, we _assume_ $H_0$ to be true
   
-  * We then ask ourselves the question:
+  * We then ask ourselves the question
 
 > How likely is it that we would observe the data we have, or 
 > indeed anything more extreme than this, if the null hypothesis is true?
@@ -249,7 +153,7 @@ which says $\mu$ is not equal to 45
 
 $$Z = \frac{\bar x - \mu}{s/\sqrt{n}}$$
 
-follows a normal distribution (when $n$ is reasonably large). In this formula
+follows a normal distribution (when $n$ is reasonably large)
 
   * $\bar x$ is our sample mean
   * $\mu$ is the assumed value of the population mean under the null hypothesis $H_0$
@@ -260,11 +164,10 @@ follows a normal distribution (when $n$ is reasonably large). In this formula
 
 # Hypothesis testing
 
-Using our example data set, if the null hypothesis is true, then $\mu = 45$, so we 
-have
+If the null hypothesis is true, then $\mu = 45$, so
 
 $$Z = \frac{\bar x - \mu}{s/\sqrt{n}} = \frac{50.9 - 45}{18.2/\sqrt{20}} = 1.45$$
-The obvious question is, how likely is it to have observed this value?
+How likely is it to have observed this value?
 
 
 
@@ -291,13 +194,15 @@ polygon(c( x[x>=1.45], 1.45 ),  c(y[x>=1.45],0 ), col="grey80")
 
 # How likely is this value?
 
-  * Since the normal distribution is symmetric, $Z = 1.45$ is just as extreme as $Z = −1.45$, 
-    *  so the shaded region in the following diagram illustrates the $p$–value 
-    * the probability of observing the data we have, 
+  * Since the normal distribution is symmetric, $Z = 1.45$ is just as extreme as $Z = −1.45$
+    
+    * The shaded region in the following diagram illustrates the $p$–value 
+    
+    * The probability of observing the data we have
 
-  * The closer the area of the shaded region (the $p$–value) is to 0, the less plausible it is that we
-would observe the data we have if the null hypothesis is true, that is, the more evidence we have
-to reject $H_0$. 
+  * The closer the area of the shaded region (the $p$–value) is to 0
+  
+    - The less plausible it is, the more evidence we have to reject $H_0$
 
 ---
 
@@ -317,7 +222,7 @@ So the $p$-value is 0.15.
 Earlier, we said that the smaller this $p$–value is, the more evidence we have to reject $H_0$. 
 The question now, is:
 
-> What constitutes a p–value small enough to reject H_0?
+> What constitutes a p–value small enough to reject $H_0$?
 
 The convention (but by no means a hard–and–fast cut–off) is to reject $H_0$ if the p–value is
 smaller than 5%. Thus, here we would say:
@@ -326,7 +231,9 @@ smaller than 5%. Thus, here we would say:
 
   * Our p–value is greater than 5% (in fact, it’s larger than 10% – a computer
 can tell us that it’s exactly 14.7%)
+
   * Thus, we do not reject $H_0$
+  
   * There is insufficient evidence to suggest a real deviation from the previous value
   
 
@@ -353,7 +260,8 @@ t.test(comic, mu = 45)
   
   * How consistent are the heights given by users with the average height across the USA?
   
-  * From the [CDC](https://www.cdc.gov/nchs/data/series/sr_11/sr11_252.pdf) paper we discover the average height in the USA is 69.3 inches.  
+  * From the [CDC](https://www.cdc.gov/nchs/data/series/sr_11/sr11_252.pdf) paper we discover the 
+  average height in the USA is 69.3 inches
   
 ---
 
@@ -365,9 +273,6 @@ height = cupid$height[cupid$sex == "m"]
 
 ## Remove missing values
 height = height[!is.na(height)]
-
-## Convert to cm
-height = height * 2.54
 mean(height)
 ```
 
@@ -377,6 +282,23 @@ mean(height)
 
 ```{r}
 t.test(height, mu = 69.3)
+```
+
+---
+
+# Exercise
+
+  * From the CDC, the average female height is 63.8 inches
+  
+  * Test whether females are taller in the OKcupid sample
+  
+```{r, echo =FALSE, message=FALSE, results="hide"}
+height = cupid$height[cupid$sex == "f"]
+
+## Remove missing values
+height = height[!is.na(height)]
+mean(height)
+t.test(height, mu = 63.8)
 ```
 
 ---
@@ -506,5 +428,42 @@ t.test(comic)
 to get the interval $(42.38,59.42)$. Notice this interval is slightly wider, since it's using the
 exact $t$-distribution.
 
+---
 
+# Summary
+
+The region
+$$\bar x \pm 2 s$$
+contains approximately 95% of the data
+
+--
+
+The region
+$$\bar x \pm 2 s/\sqrt(n)$$
+is a 95% confidence interval for the mean
+
+---
+
+# Summary
+
+```{r}
+s = sd(cupid$age)
+n = length(cupid$age)
+m = mean(cupid$age)
+```
+```{r}
+# Approx 95% of the data
+c(m - 2 * s, m + 2 * s) 
+```
+```{r}
+# A confidence interval around the mean
+c(m - 2 * s/sqrt(n), m + 2 * s/sqrt(n)) 
+```
+
+---
+layout: true
+`r add_border(inverse=TRUE)`
+---
+class: inverse, center, middle
+# Break time
 

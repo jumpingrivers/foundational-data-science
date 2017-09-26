@@ -20,6 +20,10 @@ library("jrPresentation")
 set_presentation_options()
 ```
 
+```{r cache=FALSE, echo=FALSE}
+source("code/load_data.R")
+```
+
 layout: true
 `r add_border(inverse=TRUE)`
 ---
@@ -36,12 +40,11 @@ layout: true
 
 # Introduction
 
-  * Use information about some variables to help predict the outcome of another variable.
+  * Use information about some variables to help predict the outcome of another variable
   
-    - Use a persons financial history to predict the likelihood of them defaulting
-on a mortgage. 
+    - Use a persons financial history to predict the likelihood of them defaulting on a mortgage
 
-  * The idea of using past data to predict future events is central to data science and statistics. 
+  * The idea of using past data to predict future events is central to data science and statistics
 
 --
 
@@ -51,8 +54,7 @@ on a mortgage.
 
 # Capturing linear relationships
 
-```{r 6-1,echo=FALSE, fig.keep='all', dev = "png", res=400,out.width="80%"}
-source("code/load_data.R")
+```{r 6-1,echo=FALSE, fig.keep='all', dev = "svg", res=400,out.width="80%"}
 local(source("code/f6_correlation.R"))
 ```
 
@@ -61,27 +63,30 @@ local(source("code/f6_correlation.R"))
 # Correlation
 
   *  This is a measure of the _linear_ association
-  * The sample correlation
-coefficient is defined as
+  
+  * The sample correlation coefficient is defined as
 
 $$r=\frac {\sum _{i=1}^{n}(x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{\sqrt {\sum _{i=1}^{n}(x_{i}-{\bar {x}})^{2}}}{\sqrt {\sum _{i=1}^{n}(y_{i}-{\bar {y}})^{2}}}}$$
 
 where
 
- * $n$ is the sample size;.
- * $x_{i},y_{i}$ are the single samples indexed with $i$.
- * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean).
+ * $n$ is the sample size
+ 
+ * $x_{i},y_{i}$ are the single samples indexed with $i$
+ 
+ * $\bar {x} = \frac {1}{n} \sum _{i=1}^{n} x_{i}$ is the  (the sample mean)
 
 ---
 
 # Example: Starbucks calorie content
 
-  * The Starbucks data set contains nutritional value of `r nrow(starbucks)` items. 
+  * The Starbucks data set contains nutritional value of `r nrow(starbucks)` items
+  
   * For each item on the menu we have the number of calories, and the carbohydrate, fat, fiber and protein
-amount. 
+amount
 
 
-We can quickly get an overview in R, 
+We can quickly get an overview in R
 
 ```{r}
 head(starbucks)
@@ -90,7 +95,7 @@ head(starbucks)
 
 # Example: Starbucks calorie content
 
-```{r 6-2,echo=FALSE, message=FALSE, out.width="90%"}
+```{r 6-2,echo=FALSE, message=FALSE, out.width="100%"}
 library("tidyr")
 library(ggplot2)
 dd = gather(starbucks, Type, Value, -Calories, -Product )
@@ -113,34 +118,59 @@ cor(starbucks[, -1])
 
 --
 
- * There is a diagonal of 1, since the correlation of a variable with itself is 1.
- * The matrix is _symmetric_ since the correlation between $X$ and $Y$ is the same
- as the correlation between $Y$ and $X$.
+ * There is a diagonal of 1, since the correlation of a variable with itself is 1
+ 
+--
+  
+ * The matrix is _symmetric_ since the correlation between $X$ and $Y$ is the same as the correlation between $Y$ and $X$
+
+--
 
 Out of the four component parts, `Fat` is very highly correlated with `Calories`.
  
 ---
 
+# Exercise
+
+Calculate the correlation coefficients for the beauty datasets
+
+```{r}
+# Hint, to remove the gender column, use 
+# beauty[, -5]
+```
+
+Also check out [http://www.tylervigen.com/spurious-correlations](http://www.tylervigen.com/spurious-correlations)
+
+---
+
 # Linear Regression
 
-  * The next step is use information about one variable to inform you about another. 
-  * If you recall back to your school days, you'll hopefully remember that the
-equation of a straight line is
-\[
-Y = \beta_0 + \beta_1 x
-\]
+  * The next step is use information about one variable to inform you about another
+
+--
+
+  * Equation of a straight line
+
+$$Y = \beta_0 + \beta_1 x$$
+
 where 
 
-  * $\beta_0$ is the $y$-intercept (in the UK, we used $c$ instead of $\beta_0$);
-  * $\beta_1$ is the gradient (in the UK, we used $m$ instead of $\beta_1$).
+  * $\beta_0$ is the $y$-intercept (in the UK, we used $c$ instead of $\beta_0$)
+  
+  * $\beta_1$ is the gradient (in the UK, we used $m$ instead of $\beta_1$)
   
 ---
 
 # Linear Regression
 
-  * $Y$ the response variable (the thing we want to predict) 
-  * $x$ the predictor (or covariate)
+$$Y = \beta_0 + \beta_1 x$$
+
+  * $Y$ the response variable (the thing we want to predict)
   
+  * $x$ the predictor (or covariate)
+
+--
+
   * The aim of the model is to estimate the values of $\beta_0$ and $\beta_1$. 
   
   * Sample means uncertainity
@@ -158,37 +188,35 @@ The output from R gives estimates of $\beta_0 = 148.0$ and $\beta_1 = 12.8$.
 
 ---
 
+# Linear Regression
+
+```{r}
+summary(m)
+```
+
+---
+
 # Prediction and Interpretation 
 
 The estimated model,
+
 $$\text{Calories} = 148 + 12.8 \times \text{Fat}$$
 
 allows us to predict the calorie content based on the fat. 
 
-  * If the fat content was 10, then the estimated calorie content would be 276. 
-  * But if $\text{Fat} = 0$, then our model would estimate the calorie
-content as $148$. 
+  * If the fat content was 10, then the estimated calorie content would be 276
+  
+--
+  
+  * But if $\text{Fat} = 0$, then our model would estimate the calorie content as $148$
 
   * This seems a bit high for a glass of water! 
-  
-  * The obvious reason for this 
-poor fit is that our model isn't capturing our aspects of the relationship or is missing 
-other significant covariates.
 
 ---
 
 # How do we estimate the model coefficients?
 
-> "minimising the sum of squared residuals".
-
---
-
-  * A residual is the difference between the observed value and the predicted 
-value.
-
----
-
-# How do we estimate the model coefficients?
+> "Minimising the sum of squared residuals"
 
 ```{r, 6-3,echo=FALSE, out.width="90%"}
 local(source("code/f6_residual_illustration.R"))
@@ -199,21 +227,23 @@ local(source("code/f6_residual_illustration.R"))
 # Classical statistics interpretation
   
 $$Y = \beta_0 + \beta_1 x + \epsilon$$
-where $\epsilon$ is normally distributed. 
 
-  * If assume that the errors ($\epsilon$) follow a normal distribution
-  *  then to estimate the parameter values we minimise the sum of squared residuals. 
+where $\epsilon$ is normally distributed
+
+  * If assume that the errors follow a normal distribution
+  
+  * Then to estimate the parameter values we minimise the sum of squared residuals. 
 
 ---
 
 # Machine learning interpretation
 
-  * The _machine learning_ interpretation is that we have a cost function that we wish to minimise. 
+  * We have a cost function that we wish to minimise
   
-  * It just so happens that in this particular case, that the cost function corresponds to 
-assuming normality.
+  * It just so happens that the cost function corresponds to assuming normality
 
 --
+
 > One approach isn't better than the other.
 
 ---
@@ -222,16 +252,16 @@ assuming normality.
 
 A multiple linear regression model is the natural extension of the simple linear 
 regression model. If we have two predictors, e.g.
-\[
-Y = \beta_0 + \beta_1 \text{Fat} + \beta_2 \text{Carb}
-\]
+
+$$Y = \beta_0 + \beta_1 \text{Fat} + \beta_2 \text{Carb}$$
+
 This is equivalent to fitting a plane (a sheet of paper) through the points 
 
 ---
 
 # Multiple linear regression models
 
-```{r 6-4, echo=FALSE,out.width="10%"}
+```{r 6-4, echo=FALSE,out.width="100%"}
 local(source("code/f6_3d.R"))
 ```
 
@@ -246,3 +276,12 @@ Fitting the model in R is a simple extension
 ```
 Notice that the coefficient  for `Fat` has decreased from 12.8 to 10.52 due to the influence
 of the Carbohydrate component.
+
+
+
+
+
+
+
+
+
