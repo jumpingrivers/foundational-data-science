@@ -73,7 +73,7 @@ axis(1)
 ```
 ---
 
-# Probability _Mass_ Distribution
+# Probability _Density_ function
 
 Properties
 
@@ -162,10 +162,10 @@ For example, if $a = 7$, $c=0$, $m = 5$ and $r_0 = 1$, then
 $$r_1 = 7 \times 1 \mod 5 = 2$$
 --
 
-$$r_2 = 7 \times r_1 \mod 4 = 7 \times 2 \mod 4 = 4$$
+$$r_2 = 7 \times r_1 \mod 5 = 7 \times 2 \mod 5 = 4$$
 --
 
-$$r_3 = 7 \times r_2 \mod 4 =... $$
+$$r_3 = 7 \times r_2 \mod 5 =... $$
 
 ---
 
