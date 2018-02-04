@@ -1344,7 +1344,7 @@ follows a normal distribution (when $n$ is reasonably large). In this formula
 
 
 <div class="rmdnote">
-<p>When <span class="math inline"><em>n</em></span> is small, the central limit theorem tells us that <span class="math inline"><em>Z</em></span> follows a <span class="math inline"><em>t</em></span>-distribution. A <span class="math inline"><em>t</em></span> distribution is similar to the normal, except it has fatter tails (imagine pushing down on the normal distribution and spreading the weight). Provided your sample is large (<span class="math inline"><em>n</em> &gt; 10</span>), then the <span class="math inline"><em>z</em></span> and <span class="math inline"><em>t</em></span> tests are equivalent.</p>
+<p>When <span class="math inline">\(n\)</span> is small, the central limit theorem tells us that <span class="math inline">\(Z\)</span> follows a <span class="math inline">\(t\)</span>-distribution. A <span class="math inline">\(t\)</span> distribution is similar to the normal, except it has fatter tails (imagine pushing down on the normal distribution and spreading the weight). Provided your sample is large (<span class="math inline">\(n &gt; 10\)</span>), then the <span class="math inline">\(z\)</span> and <span class="math inline">\(t\)</span> tests are equivalent.</p>
 </div>
 
 Using our example data set, if the null hypothesis is true, then $\mu = 45$, so we 
@@ -1642,7 +1642,7 @@ From chapter 2, we can quickly estimate the mean and standard deviation as 1.946
 that with probability 95%, the true mean lies between $2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).$
 
 <div class="rmdwarning">
-<p>Mathematically the central limit theorem only holds as <span class="math inline"><em>n</em></span> tends to infinity. However in this simple example, the underlying distribution is clearly not normal, so the confidence interval, given our finite sample, isn't actually 95%, it's more like 91%. Which is still not too bad.</p>
+<p>Mathematically the central limit theorem only holds as <span class="math inline">\(n\)</span> tends to infinity. However in this simple example, the underlying distribution is clearly not normal, so the confidence interval, given our finite sample, isn't actually 95%, it's more like 91%. Which is still not too bad.</p>
 </div>
 
 

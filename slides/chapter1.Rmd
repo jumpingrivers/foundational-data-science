@@ -66,10 +66,6 @@ background-size: cover
 
 --
 
-  * First time this course has run, be nice ;)
-  
---
-
   * Slides are a subset of the [lecture notes](https://github.com/jumpingrivers/foundational-data-science)
   
     - These are notes, not a polished book
@@ -83,7 +79,7 @@ background-size: cover
 
 # Book/Course/Lecture overview
 
-  * Data science is a vague term. 
+  * Data science is a vague term
   
   * Everyone can agree what a vet or a plumber does
   
@@ -321,9 +317,11 @@ August 1942	|327	|1,550 |	342
 # Population
 
   * In practice it is difficult to observe whole populations
+  
     - Unless we are interested in a very limited population
     
   * We reality we usually observe a subset of the population
+  
     - A _sample_
     
 ---

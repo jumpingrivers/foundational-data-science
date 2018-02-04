@@ -7,7 +7,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Foundational Data Science</title>
   <meta name="description" content="This course provides a firm foundation on the fundamentals of data science using R, with a focus on key statistical methods, exploratory data analysis, and visualizations. Before worrying about advanced analytics and neural nets, it is important to master the core skills. While this is certainly not a mathematical course, we won’t shy away from giving insight into the underlying mathematical theory.">
-  <meta name="generator" content="bookdown 0.5 and GitBook 2.6.7">
+  <meta name="generator" content="bookdown 0.6 and GitBook 2.6.7">
 
   <meta property="og:title" content="Foundational Data Science" />
   <meta property="og:type" content="book" />
@@ -251,7 +251,7 @@ Z = \frac{\bar x - \mu}{s/\sqrt{n}}
 </ul>
 <div class="rmdnote">
 <p>
-When <span class="math inline"><em>n</em></span> is small, the central limit theorem tells us that <span class="math inline"><em>Z</em></span> follows a <span class="math inline"><em>t</em></span>-distribution. A <span class="math inline"><em>t</em></span> distribution is similar to the normal, except it has fatter tails (imagine pushing down on the normal distribution and spreading the weight). Provided your sample is large (<span class="math inline"><em>n</em> &gt; 10</span>), then the <span class="math inline"><em>z</em></span> and <span class="math inline"><em>t</em></span> tests are equivalent.
+When <span class="math inline"><span class="math inline">\(n\)</span></span> is small, the central limit theorem tells us that <span class="math inline"><span class="math inline">\(Z\)</span></span> follows a <span class="math inline"><span class="math inline">\(t\)</span></span>-distribution. A <span class="math inline"><span class="math inline">\(t\)</span></span> distribution is similar to the normal, except it has fatter tails (imagine pushing down on the normal distribution and spreading the weight). Provided your sample is large (<span class="math inline"><span class="math inline">\(n &amp;gt; 10\)</span></span>), then the <span class="math inline"><span class="math inline">\(z\)</span></span> and <span class="math inline"><span class="math inline">\(t\)</span></span> tests are equivalent.
 </p>
 </div>
 <p>Using our example data set, if the null hypothesis is true, then <span class="math inline">\(\mu = 45\)</span>, so we have <span class="math display">\[
@@ -421,7 +421,7 @@ Figure 5.1: Waiting times from 40 customers. The data is skewed and is not norma
 <p>From chapter 2, we can quickly estimate the mean and standard deviation as 1.946 and 0.433, i.e. <span class="math inline">\(S_n = 1.946\)</span> . The CLT allows us to take this inference one step further. Since we know that <span class="math inline">\(S_n\)</span> is approximately normal, that implies that with probability 95%, the true mean lies between <span class="math inline">\(2.19 \pm 2 \times 2.04/20 = (1.28, 3.1).\)</span></p>
 <div class="rmdwarning">
 <p>
-Mathematically the central limit theorem only holds as <span class="math inline"><em>n</em></span> tends to infinity. However in this simple example, the underlying distribution is clearly not normal, so the confidence interval, given our finite sample, isn’t actually 95%, it’s more like 91%. Which is still not too bad.
+Mathematically the central limit theorem only holds as <span class="math inline"><span class="math inline">\(n\)</span></span> tends to infinity. However in this simple example, the underlying distribution is clearly not normal, so the confidence interval, given our finite sample, isn’t actually 95%, it’s more like 91%. Which is still not too bad.
 </p>
 </div>
 <p>The central limit theorem is a powerful idea. It allows to get a handle on the uncertainty whenever we estimate means. One word of warning though. If the distribution is particularly odd, then we’ll need a larger sample size for the normality approximation to be accurate.</p>
@@ -488,9 +488,11 @@ gitbook.start({
   (function () {
     var script = document.createElement("script");
     script.type = "text/javascript";
-    script.src  = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:" && /^https?:/.test(script.src))
-      script.src  = script.src.replace(/^https?:/, '');
+    var src = "";
+    if (src === "" || src === "true") src = "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:" && /^https?:/.test(src))
+      src = src.replace(/^https?:/, '');
+    script.src = src;
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
