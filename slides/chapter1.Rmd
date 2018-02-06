@@ -20,13 +20,12 @@ library("jrPresentation")
 set_presentation_options()
 ```
 
-layout: true
-`r add_border(inverse=TRUE)`
----
-class: inverse, center, middle
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 
-> It is the mark of a truly intelligent person to be moved by statistics
-> -- George Bernard Shaw
+---
+`r add_class(inverse=TRUE, center=TRUE, middle=TRUE)`
+
+## It is the mark of a truly intelligent person to be moved by statistics __George Bernard Shaw__
 
 ---
 layout:true
@@ -62,7 +61,9 @@ background-size: cover
   
   * Oddly, combining it with programming doesn't help (much)
   
-    - Lots of small tasks, breaks
+    - Lots of small tasks
+    
+  * Regular, small breaks
 
 --
 
@@ -88,7 +89,6 @@ background-size: cover
     - No Venn diagrams are allowed!
 
 ---
-layout:true
 `r add_border(inverse=FALSE)`
 ---
 
@@ -106,14 +106,14 @@ layout:true
   
     - I see data science as the logical extension of applying statistical methods to large scale data sets
 
+--
+
   * A computer science person would switch that idea on it's head
   
     - Large data sets first, analytics second
 
   * Both of us are correct _and_ also wrong
-  
 
-  
 ---
 
 # Course aim
@@ -147,10 +147,9 @@ background-size: cover
 
 # The trouble with ~~tibbles~~ data
 
-> The trouble with interesting data, is that there are so many potential problems. 
+> The trouble with interesting data, is that there are so many potential problems
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 
 ---
@@ -241,11 +240,21 @@ June 1940	|169	| 1,000	| 122
 June 1941	|244	|1,550	|271
 August 1942	|327	|1,550 |	342
 
+---
 
+# 5 Minute exercise
+
+Think of a concrete example of
+
+  * Missing completely at random (MCAR)
+  
+  * Missing at random (MAR)
+  
+  * Missing not at random (MNAR)
 
 ---
 
-# Key Skills
+# Key skills
 
   * Spot where potential issues lie using a combination
 
@@ -345,14 +354,14 @@ August 1942	|327	|1,550 |	342
 
 Identify the type of data described in each of the following examples.
 
-  * An opinion poll was taken asking people which party they would vote for in a general election.
+  * An opinion poll was taken asking people which party they would vote for in a general election
 
-  * In a steel production process the temperature of the molten steel is measured and recorded every 60 seconds.
+  * In a steel production process the temperature of the molten steel is measured and recorded every 60 seconds
 
   * A market researcher stops you on the street and asks you to rate between 1 (disagree strongly) and 5 (agree strongly) 
-  your response to opinions presented to you.
+  your response to opinions presented to you
   
-  * The hourly number of units produced by a beer bottling plant is recorded.
+  * The hourly number of units produced by a beer bottling plant is recorded
 
 Also consider potential sources of error in the four scenarios
 

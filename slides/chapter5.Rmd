@@ -25,20 +25,16 @@ mean(x); sd(x)
 ```
 
 
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE,background_image = "assets/white_logo.png")`
 ---
-class: inverse, center, middle
+`r add_class(inverse=TRUE, center=TRUE, middle=TRUE)`
 
-> Testing leads to failure, and failure leads to understanding
->
-> -_Burt Rutan_
+### Testing leads to failure, and failure leads to understanding 
+### __Burt Rutan__
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 ---
-
 
 # Big picture
 
@@ -461,9 +457,9 @@ c(m - 2 * s/sqrt(n), m + 2 * s/sqrt(n))
 ```
 
 ---
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
-class: inverse, center, middle
+`r add_class(center = TRUE, middle=TRUE, inverse=TRUE)`
+
 # Break time
 

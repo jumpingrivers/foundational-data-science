@@ -24,17 +24,15 @@ set_presentation_options()
 source("code/load_data.R")
 ```
 
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
-class: inverse, middle, center
+`r add_class(center = TRUE, middle=TRUE, inverse=TRUE)`
 
-> One of the first things taught in introductory statistics textbooks is that correlation is not causation. It is also one of the first things forgotten.
->
-> _-Thomas Sowel_
+### One of the first things taught in introductory statistics textbooks is that correlation is not causation. It is also one of the first things forgotten.
+
+### __Thomas Sowel__
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 ---
 

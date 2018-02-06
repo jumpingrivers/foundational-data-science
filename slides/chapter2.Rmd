@@ -21,15 +21,13 @@ set_presentation_options()
 ```
 
 
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
 class: inverse, center, middle
 
 > James Bond: [to Vesper] Why is it that people who can't take advice always insist on giving it? 
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 
 ---
@@ -178,15 +176,20 @@ their course evaluation!
 --
 
  * evaluation: the questionnaire result
- * tenured: does the lecturer have tenure; 1 == Yes. In R, this value is continuous.
+ 
+ * tenured: does the lecturer have tenure; 1 == Yes. In R, this value is continuous
+ 
  * minority: does the lecturer come from an ethnic minority (in the USA)
 
 --
 
  * age: the lecturers' age
+ 
  * gender: a factor: Female or Male
+ 
  * students: number of students in the class
- * beauty: each of the lecturers' pictures was rated by six undergraduate students: three women and three men. 
+ 
+ * beauty: each of the lecturers' pictures was rated by six undergraduate students: three women and three men
  
 ---
 
@@ -294,15 +297,13 @@ columns
   * age
 
 ---
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
-class: inverse, middle, center
+`r add_class(inverse=TRUE, middle=TRUE, center=TRUE)`
 
 # Measures of spread
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 ---
 
@@ -514,15 +515,13 @@ For the beauty data set calculate the `sd()`, `range()` and `quantiles()` for
 
 
 ---
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
-class: inverse, center,middle
+`r add_class(inverse = TRUE, center = TRUE, middle = TRUE)`
 
-> Streaming data is data that is generated continuously by multiple sources. 
+## Streaming data is data that is generated continuously by multiple sources. 
 
 ---
-layout: true
 `r add_border(inverse=FALSE)`
 ---
 

@@ -20,8 +20,8 @@ library("jrPresentation")
 set_presentation_options()
 ```
 
-layout: true
-`r add_border(inverse=T)`
+
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 
 ---
 
@@ -31,14 +31,12 @@ cupid = readRDS("data/okcupid.rds")
 library(ggplot2)
 ```
 
-class: center, inverse, middle
+`r add_class(center = TRUE, middle = TRUE, inverse = TRUE)`
 
-> A picture paints a thousand words
->
-> -_Frederick R. Barnard_
+A picture paints a thousand words __Frederick R. Barnard__
 
 ---
-layout:true
+
 `r add_border(inverse=FALSE)`
 ---
 
@@ -61,15 +59,15 @@ library("hrbrthemes")
 ```
 
 ---
-layout:true
-`r add_border(inverse=TRUE)`
----
 
-class: middle, center, inverse
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
+---
+`r add_class(middle = TRUE, center = TRUE, inverse = TRUE)`
+
 # Historical visualisations 
 
 ---
-layout:true
+
 `r add_border(inverse=FALSE)`
 ---
 
@@ -504,5 +502,5 @@ g1
 
 --
 
-> "See" you tomorrow, Good night (it's midnight here)
+> "See" you tomorrow, Good night
 

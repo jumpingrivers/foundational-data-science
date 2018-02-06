@@ -1,0 +1,20 @@
+## Day 1
+
+  * 0mins Start
+  * 15 mins: 4 min, what does a data scientist need
+  * 30 - Exercise: examples of missing data
+    * Skipped last exercise in chapter 1
+    
+  * 65 mins: 10 min exercise, mean/median
+  * 75 mins: restart
+  * 85 mins: What would you do with this observation - dump!
+  * 105 mins: sd/range/quantile
+  * 120: Chapter 2 start
+  * 130: Chapter 3: Start
+  * 170: density
+    - Skipped most graphics exercises
+    
+Todo: 
+  - Trim chapter 1 a lot
+  - Quicker through chapter 2
+  - More graphics

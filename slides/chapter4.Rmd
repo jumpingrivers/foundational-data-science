@@ -46,7 +46,6 @@ background-size: cover
 ]
 
 ---
-layout:true
 `r add_border(inverse=FALSE)`
 ---
 
@@ -213,16 +212,14 @@ The above function generates a stream of random numbers. Try different values of
 
 
 ---
-layout: true
-`r add_border(inverse=T)`
----
 
-class: center, inverse, middle
+`r add_border(inverse = TRUE, background_image = "assets/white_logo.png")`
+---
+`r add_class(center=TRUE, inverse=TRUE, middle=TRUE)`
 
 # Back to business
 
 ---
-layout: true
 `r add_border(inverse=F)`
 ---
 
@@ -525,11 +522,9 @@ polygon(c( x[x >= -2 & x <= 2], 2, -2 ),  c(y[x >= -2 & x <= 2],0, 0 ), col="gre
 ```
 
 ---
-layout: true
-`r add_border(inverse=TRUE)`
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
 ---
-
-class: center, middle, inverse
+`r add_class(center = TRUE, middle=TRUE, inverse=TRUE)`
 
 # Break time
 
