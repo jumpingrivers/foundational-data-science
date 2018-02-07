@@ -275,7 +275,14 @@ Fitting the model in R is a simple extension
 Notice that the coefficient  for `Fat` has decreased from 12.8 to 10.52 due to the influence
 of the Carbohydrate component.
 
+---
+`r add_border(inverse=TRUE, background_image = "assets/white_logo.png")`
+---
+`r add_class(center = TRUE, middle=TRUE, inverse=TRUE)`
 
+### Thanks for listening
+
+### Good morning/night/bye
 
 
 
