@@ -94,8 +94,14 @@ background-size: cover
 
 # Four minute exercise
 
-  - In the slack channel, what skills does a data scientist need?
+  - In the slack channel, what's the difference between a
   
+    - A statistician
+    
+    - A data scientist
+    
+    - A computer scientist?
+    
   - No fights!
 
 ---
@@ -113,7 +119,30 @@ background-size: cover
     - Large data sets first, analytics second
 
   * Both of us are correct _and_ also wrong
+  
+---
 
+
+# Key skills
+
+  * Spot where potential issues lie using a combination
+
+--
+
+   * Statistics
+
+--
+
+   * Programming
+
+--
+
+   * Visualisation
+
+--
+
+   * Domain specific knowledge
+  
 ---
 
 # Course aim
@@ -188,9 +217,21 @@ background-size: cover
   
 --
 
-  * Scottish participants are more likely to refuse a survey on soccer excellence
-  
-    - But it does not depend on the level of their soccer skills
+  * People from New York are more likely to refuse to tell us their voting preferences
+
+--
+
+    * But it does not depend on __who__ they are voting for
+
+--
+
+ * National opinion polls often rely on samples in the region of just $1,000$
+
+    - Carefully chosen sample
+    
+    - Need to account for the [shy tory](https://en.wikipedia.org/wiki/Shy_Tory_Factor) or
+    the [Bradley effect](https://en.wikipedia.org/wiki/Bradley_effect)
+ 
 
 ---
 
@@ -203,77 +244,6 @@ background-size: cover
   * As a concrete example, a good predictor of whether someone survived the titanic disaster was whether or not they
   had their age recorded
 
----
-
-# Example: German Tank Problem
-
-  * During WWII, the allies want to estimate the number of tanks the [Germans had produced](https://en.wikipedia.org/wiki/German_tank_problem)
-  
-  * It was noticed that tank parts were numbered sequentially, e.g. 1, 2, 3, 4, ...
-  
-  * How do you estimate the number of tanks?
-  
----
-
-# Example: German Tank Problem
-
-  * Reformulate the problem
-  
-  * Imagine I'm picking at random integers from 1, ..., $N$. We observe the values
-  
-    * 187, 35, 743, 86, 627
---
-
-  * What do you think the value of $N$ is?
-  
-    - 744 - seems to low
-    - 10,000 - seems a bit big
-    - ...
-  
----
-
-# Example: German Tank Problem
-
-Month	| Statistical estimate	| Intelligence estimate	| German records
-------|-----------------------|-----------------------|-------------
-June 1940	|169	| 1,000	| 122
-June 1941	|244	|1,550	|271
-August 1942	|327	|1,550 |	342
-
----
-
-# 5 Minute exercise
-
-Think of a concrete example of
-
-  * Missing completely at random (MCAR)
-  
-  * Missing at random (MAR)
-  
-  * Missing not at random (MNAR)
-
----
-
-# Key skills
-
-  * Spot where potential issues lie using a combination
-
---
-
-   * Statistics
-
---
-
-   * Programming
-
---
-
-   * Visualisation
-
---
-
-   * Domain specific knowledge
-  
 ---
 
 # Talking about data
@@ -347,23 +317,23 @@ Think of a concrete example of
   * _qualitative_ (non-numeric), aka ordinal or categorical
 
     - e.g. colours, survival
-    
----
 
-# Exercise
+<!-- --- -->
 
-Identify the type of data described in each of the following examples.
+<!-- # Exercise -->
 
-  * An opinion poll was taken asking people which party they would vote for in a general election
+<!-- Identify the type of data described in each of the following examples. -->
 
-  * In a steel production process the temperature of the molten steel is measured and recorded every 60 seconds
+<!--   * An opinion poll was taken asking people which party they would vote for in a general election -->
 
-  * A market researcher stops you on the street and asks you to rate between 1 (disagree strongly) and 5 (agree strongly) 
-  your response to opinions presented to you
-  
-  * The hourly number of units produced by a beer bottling plant is recorded
+<!--   * In a steel production process the temperature of the molten steel is measured and recorded every 60 seconds -->
 
-Also consider potential sources of error in the four scenarios
+<!--   * A market researcher stops you on the street and asks you to rate between 1 (disagree strongly) and 5 (agree strongly)  -->
+<!--   your response to opinions presented to you -->
+
+<!--   * The hourly number of units produced by a beer bottling plant is recorded -->
+
+<!-- Also consider potential sources of error in the four scenarios -->
 
 
 <!-- Qualitative → Categorical -->
@@ -381,12 +351,6 @@ Also consider potential sources of error in the four scenarios
     
     - Facebook users aren't representation of the population
     
-  * National opinion polls often rely on samples in the region of just $1,000$
-
-    - Carefully choosen sample
-    
-    - Need to account for the [shy tory](https://en.wikipedia.org/wiki/Shy_Tory_Factor) or
-    the [Bradley effect](https://en.wikipedia.org/wiki/Bradley_effect)
     
 
 ---
@@ -418,38 +382,47 @@ Also consider potential sources of error in the four scenarios
   * The probability could be equal
   
     - Or if you were trying a new and untested approach, you might have probability $0.95$ standard advert, $0.05$ new advert
----
+    
+--
 
-# Exercise
+  * Whenever possible, use simple random sampling as it makes problems disappear
+  
+--
 
-Rashid, Ellen and Hamish all work as business analysts for a leading clothing manufacturer.  The design team want to know how successful a new pair of jeans will be, and so they ask the analysts to conduct some research.  
+  * Also interesting is the art of asking an embarrassing question
 
-  *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_
+<!-- --- -->
 
-  * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_
+<!-- # Exercise -->
 
-  * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_
+<!-- Rashid, Ellen and Hamish all work as business analysts for a leading clothing manufacturer.  The design team want to know how successful a new pair of jeans will be, and so they ask the analysts to conduct some research.   -->
 
----
+<!--   *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_ -->
 
-# Solutions
+<!--   * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_ -->
 
-  *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_
+<!--   * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_ -->
 
-> Accessibility sampling. Could be flawed as it is non–random and is prone to bias.
+<!-- --- -->
 
----
+<!-- # Solutions -->
 
-# Solutions
+<!--   *  Hamish is lazy.  He goes home that night and asks his four flatmates to give the new jeans a score from 1--5, and then reports his findings back to the design team the next day. _What sort of sampling scheme has Hamish adopted, and why might it be flawed?_ -->
 
-  * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_
+<!-- > Accessibility sampling. Could be flawed as it is non–random and is prone to bias. -->
+
+<!-- --- -->
+
+<!-- # Solutions -->
+
+<!--   * Ellen thinks she will try to collect a simple random sample of people who might wear the jeans; she will then try to elicit their opinions.  _Why might a simple random sample be difficult to obtain here?_ -->
 
 
-> Difficult – if not impossible – to get a complete list of everyone in the target population.
+<!-- > Difficult – if not impossible – to get a complete list of everyone in the target population. -->
 
----
+<!-- --- -->
 
-# Solutions
-  * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_
- 
-> Judgemental sampling - potentially bias
+<!-- # Solutions -->
+<!--   * Rashid is more thoughtful than both Hamish and Ellen.  He thinks about the target population for the new jeans: females in the age group 21--30.  He then spends a full day walking up and down Oxford Street, stopping people he thinks fulfil this criteria and asking them to decide whether or not they would buy the new jeans. _What sort of sampling scheme has Rashid adopted?_ -->
+
+<!-- > Judgemental sampling - potentially bias -->

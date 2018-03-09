@@ -101,7 +101,7 @@ Typical sample: | $x_1$ | $x_2$ | $x_3$
     * $x_1 = 1$, $x_2 = 5$ and $x_3 = 7$
 --
 
-  * The total number of observations in a sample i the _sample size_
+  * The total number of observations in a sample $i$ the _sample size_
   
     - Referred to by the letter $n$; so $n = 3$ above
 
@@ -381,9 +381,9 @@ It turns out that there are:
 
 # Exercise: 5 minute thought exercise
 
-> Question: What would you do with this observation?
+In terms of data collection, how would you avoid getting these types of observations?
 
-  * Remember our discussion about missing at random?
+
 
 ---
 
